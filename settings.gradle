@@ -1,0 +1,8 @@
+rootProject.name = 'joy-store'
+
+include "joy-api"
+include "joy-ui"
+include "joy-ad"
+include "joy-auth"
+include "joy-admin"
+include "joy-common"

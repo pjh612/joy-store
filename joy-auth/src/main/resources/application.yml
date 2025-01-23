@@ -1,0 +1,5 @@
+spring:
+    application:
+        name: joy-auth
+server:
+    port: 8083

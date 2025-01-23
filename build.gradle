@@ -1,0 +1,27 @@
+plugins {
+	id 'java'
+}
+
+group = 'com.joy'
+version = '0.0.1-SNAPSHOT'
+
+
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+
+allprojects {
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(17)
+		}
+	}
+
+	repositories {
+		mavenCentral()
+	}
+}
