@@ -19,5 +19,11 @@ spring:
     redis:
       host: localhost
       port: 6379
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://auth-server:8083
+
 server:
-  port: 8081
+    port: 8081
