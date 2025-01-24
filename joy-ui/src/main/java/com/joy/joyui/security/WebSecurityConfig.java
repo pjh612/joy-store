@@ -1,12 +1,13 @@
 package com.joy.joyui.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joy.joycommon.crypto.AesCipher;
 import com.joy.joyui.auth.client.MemberAuthClient;
 import com.joy.joyui.member.client.MemberClient;
-import com.joy.joyui.security.crypto.AesCipher;
 import com.joy.joyui.security.filter.CookieAuthenticationProcessingFilter;
 import com.joy.joyui.security.filter.SignInProcessingFilter;
 import com.joy.joyui.security.handler.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -67,7 +68,6 @@ public class WebSecurityConfig {
         return new CookieAuthenticationProvider(storeMemberDetailsService);
     }
 
-
     @Bean
     public UsernamePasswordAuthenticationFilter signInProcessingFilter(ObjectMapper objectMapper, AesCipher aesCipher, AuthenticationManager authenticationManager) {
         SignInProcessingFilter signInProcessingFilter = new SignInProcessingFilter();
@@ -113,5 +113,10 @@ public class WebSecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(StoreMemberDetailsService storeMemberDetailsService, MemberAuthClient memberAuthClient) {
         return new ProviderManager(List.of(storeMemberAuthenticationProvider(memberAuthClient), cookieAuthenticationProvider(storeMemberDetailsService)));
+    }
+
+    @Bean
+    public AesCipher aesCipher(@Value("${aes.key}") String key) {
+        return new AesCipher(key);
     }
 }

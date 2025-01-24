@@ -1,9 +1,6 @@
-package com.joy.joyui.security.crypto;
+package com.joy.joycommon.crypto;
 
-import com.joy.joyui.security.exception.CryptoException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.codec.Hex;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -16,13 +13,11 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-@Component
 public class AesCipher {
     private final String key;
 
-    public AesCipher(@Value("${aes.key}") String key) {
+    public AesCipher(String key) {
         this.key = key;
-
     }
 
     public String encrypt(String plainText) {

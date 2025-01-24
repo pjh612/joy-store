@@ -1,9 +1,9 @@
 package com.joy.joyui.security;
 
 import com.joy.joycommon.api.response.ApiResponse;
+import com.joy.joycommon.crypto.AesCipher;
 import com.joy.joyui.member.client.MemberClient;
 import com.joy.joyui.member.dto.FindMemberResponse;
-import com.joy.joyui.security.crypto.AesCipher;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 

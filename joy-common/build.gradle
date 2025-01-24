@@ -11,6 +11,7 @@ dependencies {
     compileOnly('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
+    compileOnly 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.register("prepareKotlinBuildScriptModel"){}
