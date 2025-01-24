@@ -1,19 +1,23 @@
 spring:
-    application:
-        name: joy-api
-    datasource:
-        url: jdbc:mysql://localhost:3308/joy
-        password: password
-        username: root
-        driver-class-name: com.mysql.jdbc.Driver
-    jpa:
-        database: mysql
-        show-sql: true
-        properties:
-            hibernate:
-                format_sql: true
-                dialect: org.hibernate.dialect.MySQL8Dialect
-        hibernate:
-            ddl-auto: update
+  application:
+    name: joy-api
+  datasource:
+    url: jdbc:mysql://localhost:3308/joy
+    password: password
+    username: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database: mysql
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  data:
+    redis:
+      host: localhost
+      port: 6379
 server:
-    port: 8081
+  port: 8081
