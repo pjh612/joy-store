@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>Joy Store</title>
+</head>
+<body>
+<div class="container">
+    <header>
+
+        <div class="logo-container">
+            <img src="/img/img_1.png" alt="Joy Store Logo" class="logo">
+        </div>
+        <div class="header-text">
+            <h1>Joy Store</h1>
+            <p>조이 스토어 어드민</p>
+        </div>
+    </header>
+
+    <div>
+        <div><a th:href="@{/items}" class="btn">상품 관리</a></div>
+    </div>
+</div>
+</body>
+</html>
