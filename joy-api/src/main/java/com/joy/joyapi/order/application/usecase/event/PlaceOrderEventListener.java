@@ -9,10 +9,10 @@ import java.util.List;
 
 @Component
 public class PlaceOrderEventListener {
-    private final AlarmManager notificationManager;
+    private final AlarmManager alarmManager;
 
-    public PlaceOrderEventListener(AlarmManager notificationManager) {
-        this.notificationManager = notificationManager;
+    public PlaceOrderEventListener(AlarmManager alarmManager) {
+        this.alarmManager = alarmManager;
     }
 
     @EventListener
@@ -25,7 +25,7 @@ public class PlaceOrderEventListener {
         String message = "주문이 들어왔습니다. (주문번호 : " + orderSequence + ")";
 
         for (String noticeTargetId : noticeTargetIdList) {
-            notificationManager.notice(AlarmChannel.ADMIN_ORDER, noticeTargetId, message);
+            alarmManager.notice(AlarmChannel.ADMIN_ORDER, noticeTargetId, message);
         }
     }
 }

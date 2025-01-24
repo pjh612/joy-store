@@ -30,25 +30,25 @@ public class AlarmMessageSubscriber implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
         try {
+            long id = System.currentTimeMillis();
             MessageDto alarmMessage = objectMapper.readValue(message.getBody(), MessageDto.class);
+
             emitterRepository.getById(alarmMessage.targetId())
-                    .ifPresent(it -> sendEvent(it, alarmMessage));
+                    .ifPresent(it -> sendEvent(it, id, alarmMessage));
+
+            if (Objects.equals(alarmMessage.type(), MESSAGE_TYPE)) {
+                alarmCacheManager.save(ALARM_CACHE_KEY_PREFIX + alarmMessage.targetId(), Long.toString(id), alarmMessage);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void sendEvent(SseEmitter emitter, MessageDto messageDto) {
-        long id = System.currentTimeMillis();
+    private void sendEvent(SseEmitter emitter, long id, MessageDto messageDto) {
         SseEmitter.SseEventBuilder eventBuilder = SseEmitter.event()
                 .name(messageDto.type())
                 .data(messageDto.body())
                 .id(Long.toString(id));
-
-        if (Objects.equals(messageDto.type(), MESSAGE_TYPE)) {
-            alarmCacheManager.save(ALARM_CACHE_KEY_PREFIX + messageDto.targetId(), Long.toString(id), messageDto);
-        }
-
         try {
             emitter.send(eventBuilder.build());
         } catch (IOException e) {
