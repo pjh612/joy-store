@@ -8,4 +8,6 @@ public interface OrderRepository {
     List<Order> findAllByMemberSequence(Long memberSequence);
 
     Order save(Order order);
+
+    List<Order> findAllByItemSequenceIn(List<Long> itemSequences);
 }
