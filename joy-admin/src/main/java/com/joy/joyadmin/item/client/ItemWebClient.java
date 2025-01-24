@@ -24,4 +24,15 @@ public class ItemWebClient implements ItemClient {
                 })
                 .block();
     }
+
+    @Override
+    public ApiResponse<RegisterItemResponse> register(RegisterItemRequest request) {
+        return webClient.post()
+                .uri("/api/items")
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<ApiResponse<RegisterItemResponse>>() {
+                })
+                .block();
+    }
 }

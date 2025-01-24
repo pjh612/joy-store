@@ -22,4 +22,14 @@ public class ItemController {
     public ApiResponse<List<ItemResponse>> getAllMyItems(@AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
         return itemClient.getAllBySellerSequence(storeSellerDetails.getSeq());
     }
+
+    @PostMapping
+    public ApiResponse<RegisterItemResponse> register(@RequestBody RegisterItemRequest request, @AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
+        RegisterItemRequest registerItemRequest = new RegisterItemRequest(request.title(),
+                request.description(),
+                storeSellerDetails.getSeq(),
+                request.price());
+
+        return itemClient.register(registerItemRequest);
+    }
 }

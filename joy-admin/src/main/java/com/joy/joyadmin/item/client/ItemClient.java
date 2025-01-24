@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface ItemClient {
     ApiResponse<List<ItemResponse>> getAllBySellerSequence(Long sellerSequence);
+
+    ApiResponse<RegisterItemResponse> register(RegisterItemRequest request);
 }

@@ -12,4 +12,9 @@ public class ItemManageViewController {
     public String itemManageView() {
         return "itemManage";
     }
+
+    @GetMapping("/register")
+    public String itemRegisterView() {
+        return "registerItem";
+    }
 }
