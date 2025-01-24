@@ -111,7 +111,7 @@ const showAllItemsSuccess = (data) => {
                 <td><span>${item.sequence}</span></td>
                 <td><span>${item.title}</span></td>
                 <td><span>${item.description}</span></td>
-                <td><span>${item.price}</span></td>
+                <td><span>${item.price.toLocaleString()}</span></td>
                 <td><span>${item.createdAt}</span></td>
                 <td>
                     <select class="item-quantity">
