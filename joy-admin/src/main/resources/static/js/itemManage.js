@@ -31,6 +31,7 @@ const getAllItemsSuccess = (data) => {
                     <th>상품 번호</th>
                     <th>상품명</th>
                     <th>상품 설명</th>
+                    <th>상품 가격</th>
                     <th>상품등록일</th>
                 </tr>`;
 
@@ -41,6 +42,7 @@ const getAllItemsSuccess = (data) => {
                 <td><span>${item.sequence}</span></td>
                 <td><span>${item.title}</span></td>
                 <td><span>${item.description}</span></td>
+                <td><span>${item.price.toLocaleString()}</span></td>
                 <td><span>${item.createdAt}</span></td>           
             </tr>`;
     });
