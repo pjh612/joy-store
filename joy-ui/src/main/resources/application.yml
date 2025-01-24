@@ -1,5 +1,9 @@
 spring:
     application:
         name: joy-ui
+    thymeleaf:
+        cache: false
 server:
     port: 8080
+aes:
+    key: "@JYOAIPTER1@JYOAIPTER1@JYOAIPTER"
