@@ -1,5 +1,7 @@
 spring:
-    application:
-        name: joy-admin
+  application:
+    name: joy-admin
 server:
-    port: 8082
+  port: 8082
+aes:
+  key: "@JYOAIPTER1@JYOAIPTER1@JYOAIPTER"
