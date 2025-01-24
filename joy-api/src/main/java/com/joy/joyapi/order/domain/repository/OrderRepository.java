@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface OrderRepository {
     List<Order> findAllByMemberSequence(Long memberSequence);
+
+    Order save(Order order);
 }

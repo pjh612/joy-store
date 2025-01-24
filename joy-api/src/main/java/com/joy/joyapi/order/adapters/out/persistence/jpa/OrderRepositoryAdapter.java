@@ -27,4 +27,12 @@ public class OrderRepositoryAdapter implements OrderRepository {
                 .map(it -> orderEntityConverter.toOrderDomain(it, orderItemJpaRepository.findAllByOrderSeq(it.getSeq())))
                 .toList();
     }
+
+    @Override
+    public Order save(Order order) {
+        OrderEntity orderEntity = orderEntityConverter.toOrderEntity(order);
+        OrderEntity savedOrder = orderJpaRepository.save(orderEntity);
+
+        return orderEntityConverter.toOrderDomain(savedOrder, savedOrder.getOrderItemList());
+    }
 }
