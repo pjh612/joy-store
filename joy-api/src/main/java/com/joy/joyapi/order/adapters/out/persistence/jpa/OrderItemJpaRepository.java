@@ -12,4 +12,7 @@ public interface OrderItemJpaRepository extends JpaRepository<OrderItemEntity, L
 
     @Query("SELECT oi FROM OrderItemEntity oi join fetch oi.order WHERE oi.itemSeq IN :itemSeq")
     List<OrderItemEntity> findAllOrderItemByItemSeqIn(@Param("itemSeq") List<Long> itemSeq);
+
+    @Query("SELECT oi FROM OrderItemEntity oi JOIN FETCH oi.order WHERE oi.itemSeq = :itemSequence")
+    List<OrderItemEntity> findAllByItemSeq(@Param("itemSequence") Long itemSequence);
 }

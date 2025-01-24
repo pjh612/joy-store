@@ -48,4 +48,12 @@ public class OrderRepositoryAdapter implements OrderRepository {
                 .map(it -> orderEntityConverter.toOrderDomain(it, it.getOrderItemList()))
                 .toList();
     }
+
+    @Override
+    public List<Order> findAllByItemSequence(Long itemSequence) {
+        return orderItemJpaRepository.findAllByItemSeq(itemSequence)
+                .stream()
+                .map(it -> orderEntityConverter.toOrderDomain(it.getOrder(), it.getOrder().getOrderItemList()))
+                .toList();
+    }
 }
