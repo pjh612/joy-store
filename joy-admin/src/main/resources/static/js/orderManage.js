@@ -1,5 +1,6 @@
 $(document).ready(function () {
     getOrders();
+    subscribe();
 })
 
 
@@ -66,6 +67,25 @@ const getOrdersSuccess = (data) => {
     html += `</table>`;
 
     $("#orderContainer").append(html);
+}
+
+const subscribe = () => {
+    const alarm = new EventSource("/api/orders/alarm/subscription");
+    alarm.addEventListener('connect', e => {
+        $(".real-time-status").html("<p>주문 현황 수신 중</p>");
+        $(".real-time-status").removeClass("off");
+        $(".real-time-status").addClass("on");
+    })
+
+    alarm.onerror = (e) => {
+        $(".real-time-status").html("<p>주문 현황 수신 연결 중</p>");
+        $(".real-time-status").removeClass("on");
+        $(".real-time-status").addClass("off");
+    }
+
+    alarm.onmessage = (e) => {
+        alert(e.data);
+    }
 }
 
 
