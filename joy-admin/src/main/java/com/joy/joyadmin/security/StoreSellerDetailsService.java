@@ -22,7 +22,7 @@ public class StoreSellerDetailsService implements UserDetailsService {
             ApiResponse<FindSellerResponse> response = sellerClient.findByUsername(username);
             FindSellerResponse seller = response.getData();
 
-            return new StoreSellerDetails(seller.seq(), seller.username(), seller.password(), seller.name());
+            return new StoreSellerDetails(seller.id(), seller.username(), seller.password(), seller.name());
         } catch (Exception e) {
             throw new UsernameNotFoundException("아이디/비밀번호를 확인해주세요.");
         }

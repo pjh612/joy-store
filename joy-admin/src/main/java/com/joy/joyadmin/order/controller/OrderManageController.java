@@ -23,12 +23,12 @@ public class OrderManageController {
 
     @GetMapping
     public ApiResponse<List<FindOrderResponse>> getAll(@AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
-        return orderClient.getAllBySellerSequence(storeSellerDetails.getSeq());
+        return orderClient.getAllBySellerSequence(storeSellerDetails.getId());
     }
 
     @GetMapping(value = "/alarm/subscription", produces = {"text/event-stream"})
     public Flux<ServerSentEvent<String>> subscribeAlarm(@RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId,
                                                         @AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
-        return orderClient.subscribeAlarm(storeSellerDetails.getSeq(), lastEventId);
+        return orderClient.subscribeAlarm(storeSellerDetails.getId(), lastEventId);
     }
 }

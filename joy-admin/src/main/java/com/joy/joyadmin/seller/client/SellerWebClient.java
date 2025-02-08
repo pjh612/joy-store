@@ -39,9 +39,9 @@ public class SellerWebClient implements SellerClient {
     }
 
     @Override
-    public ApiResponse<FindSellerResponse> findByMemberSequence(Long sequence) {
+    public ApiResponse<FindSellerResponse> findByMemberId(String memberId) {
         return webClient.get()
-                .uri("/api/sellers/{sequence}", sequence)
+                .uri("/api/sellers/{memberId}", memberId)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<FindSellerResponse>>() {
                 })

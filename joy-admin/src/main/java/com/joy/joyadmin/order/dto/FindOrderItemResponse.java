@@ -5,7 +5,7 @@ import com.joy.joyadmin.item.dto.ItemResponse;
 import java.math.BigDecimal;
 
 public record FindOrderItemResponse(
-        Long seq,
+        String id,
         ItemResponse item,
         BigDecimal unitPrice,
         Integer quantity,

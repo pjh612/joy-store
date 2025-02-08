@@ -16,10 +16,9 @@ import java.util.List;
 public class ItemWebClient implements ItemClient {
     private final WebClient webClient;
 
-    @Override
-    public ApiResponse<List<ItemResponse>> getAllBySellerSequence(Long sellerSequence) {
+    public ApiResponse<List<ItemResponse>> getAllBySellerId(String sellerId) {
         return webClient.get()
-                .uri("/api/items/sellers/{sellerSequence}", sellerSequence)
+                .uri("/api/items/sellers/{sellerId}", sellerId)
                 .retrieve().bodyToMono(new ParameterizedTypeReference<ApiResponse<List<ItemResponse>>>() {
                 })
                 .block();

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 public record ItemResponse(
-        Long sequence,
+        Long MemberIduence,
         BigDecimal price,
         String title,
         String description,

@@ -17,9 +17,9 @@ public class OrderWebClient implements OrderClient {
     private final WebClient webClient;
 
     @Override
-    public ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(Long sequence) {
+    public ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(String id) {
         return webClient.get()
-                .uri("/api/sellers/{sellerSequence}/orders", sequence)
+                .uri("/api/sellers/{sellerId}/orders", id)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<List<FindOrderResponse>>>() {
                 })
@@ -27,15 +27,15 @@ public class OrderWebClient implements OrderClient {
     }
 
     @Override
-    public Flux<ServerSentEvent<String>> subscribeAlarm(Long memberSequence, String lastEventId) {
+    public Flux<ServerSentEvent<String>> subscribeAlarm(String memberId, String lastEventId) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/orders/alarm/subscription")
-                        .queryParam("memberSequence", memberSequence)
+                        .queryParam("memberId", memberId)
                         .build())
                 .header("contentType", "text/event-stream")
                 .header("Last-Event-Id", lastEventId)
                 .retrieve()
-                .bodyToFlux(new ParameterizedTypeReference<ServerSentEvent<String>>() {
+                .bodyToFlux(new ParameterizedTypeReference<>() {
                 });
     }
 }

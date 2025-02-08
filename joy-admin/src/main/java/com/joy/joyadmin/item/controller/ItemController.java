@@ -20,14 +20,14 @@ public class ItemController {
 
     @GetMapping
     public ApiResponse<List<ItemResponse>> getAllMyItems(@AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
-        return itemClient.getAllBySellerSequence(storeSellerDetails.getSeq());
+        return itemClient.getAllBySellerId(storeSellerDetails.getId());
     }
 
     @PostMapping
     public ApiResponse<RegisterItemResponse> register(@RequestBody RegisterItemRequest request, @AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
         RegisterItemRequest registerItemRequest = new RegisterItemRequest(request.title(),
                 request.description(),
-                storeSellerDetails.getSeq(),
+                storeSellerDetails.getId(),
                 request.price());
 
         return itemClient.register(registerItemRequest);

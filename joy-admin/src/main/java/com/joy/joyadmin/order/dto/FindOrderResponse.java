@@ -6,8 +6,8 @@ import java.time.Instant;
 import java.util.List;
 
 public record FindOrderResponse(
-        Long seq,
-        Long buyerSequence,
+        String id,
+        String buyerId,
         String status,
         List<FindOrderItemResponse> orderItems,
         Long couponSeq,

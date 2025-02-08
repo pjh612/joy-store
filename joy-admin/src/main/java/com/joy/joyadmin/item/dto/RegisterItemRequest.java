@@ -5,6 +5,6 @@ import java.math.BigDecimal;
 public record RegisterItemRequest(
         String title,
         String description,
-        Long sellerSeq,
+        String sellerId,
         BigDecimal price) {
 }

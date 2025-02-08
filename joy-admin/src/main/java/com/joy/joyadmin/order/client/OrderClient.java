@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 
 public interface OrderClient {
-    ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(Long sequence);
+    ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(String id);
 
-    Flux<ServerSentEvent<String>> subscribeAlarm(Long memberSequence, String lastEventId);
+    Flux<ServerSentEvent<String>> subscribeAlarm(String memberId, String lastEventId);
 }
