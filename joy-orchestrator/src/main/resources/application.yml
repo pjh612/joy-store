@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: joy-orchestrator
+server:
+  port: 8080
