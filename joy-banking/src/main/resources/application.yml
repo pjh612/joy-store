@@ -15,5 +15,12 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
+  kafka:
+    bootstrap-servers: kafka:29092
+    client-id: joy-banking
+    consumer:
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      group-id: joy-banking
 server:
   port: 8080
