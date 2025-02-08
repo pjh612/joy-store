@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class StoreMemberDetails implements UserDetails {
-    private Long seq;
+    private String id;
     private String username;
     private String password;
     private String name;

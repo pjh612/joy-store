@@ -107,8 +107,8 @@ const showAllItemsSuccess = (data) => {
     data.forEach((item) => {
         html += `
             <tr>
-                <td><input type="checkbox" class="item-checkbox" value="${item.sequence}"></td>
-                <td><span>${item.sequence}</span></td>
+                <td><input type="checkbox" class="item-checkbox" value="${item.id}"></td>
+                <td><span>${item.id}</span></td>
                 <td><span>${item.title}</span></td>
                 <td><span>${item.description}</span></td>
                 <td><span>${item.price.toLocaleString()}</span></td>

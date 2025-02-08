@@ -13,11 +13,11 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ItemResponse {
-    private Long sequence;
+    private String id;
     private BigDecimal price;
     private String title;
     private String description;
-    private Long sellerSeq;
+    private String sellerId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Instant createdAt;

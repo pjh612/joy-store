@@ -38,9 +38,9 @@ public class MemberWebClient implements MemberClient {
     }
 
     @Override
-    public ApiResponse<FindMemberResponse> findByMemberSequence(Long sequence) {
+    public ApiResponse<FindMemberResponse> findByMemberId(String memberId) {
         return webClient.get()
-                .uri("/api/members/{sequence}", sequence)
+                .uri("/api/members/{id}", memberId)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<FindMemberResponse>>() {
                 })

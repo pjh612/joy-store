@@ -19,13 +19,13 @@ public class OrderController {
     private final OrderClient orderClient;
 
     @GetMapping
-    public ApiResponse<List<FindOrderResponse>> getAllByMemberSequence(@AuthenticationPrincipal StoreMemberDetails storeMemberDetails) {
-        return orderClient.getAllByMemberSequence(storeMemberDetails.getSeq());
+    public ApiResponse<List<FindOrderResponse>> getAllByMemberId(@AuthenticationPrincipal StoreMemberDetails storeMemberDetails) {
+        return orderClient.getAllByMemberId(storeMemberDetails.getId());
     }
 
     @PostMapping
     public ApiResponse<PlaceOrderResponse> placeOrder(@RequestBody PlaceOrderRequest request, @AuthenticationPrincipal StoreMemberDetails storeMemberDetails) {
-        PlaceOrderRequest orderRequest = new PlaceOrderRequest(request.orderItems(), request.couponSequence(), storeMemberDetails.getSeq());
+        PlaceOrderRequest orderRequest = new PlaceOrderRequest(request.orderItems(), request.couponSequence(), storeMemberDetails.getId());
 
         return orderClient.placeOrder(orderRequest);
     }

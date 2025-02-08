@@ -28,10 +28,10 @@ public class OrderWebClient implements OrderClient {
     }
 
     @Override
-    public ApiResponse<List<FindOrderResponse>> getAllByMemberSequence(Long sequence) {
+    public ApiResponse<List<FindOrderResponse>> getAllByMemberId(String memberId) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/orders")
-                        .queryParam("sequence", sequence)
+                        .queryParam("memberId", memberId)
                         .build())
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<List<FindOrderResponse>>>() {

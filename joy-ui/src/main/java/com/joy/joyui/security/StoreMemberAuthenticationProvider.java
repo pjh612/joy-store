@@ -28,7 +28,7 @@ public class StoreMemberAuthenticationProvider implements AuthenticationProvider
         try {
             ApiResponse<MemberAuthResponse> apiResponse = memberAuthClient.authenticate(authRequest);
             MemberAuthResponse authResponse = apiResponse.getData();
-            StoreMemberDetails principal = new StoreMemberDetails(authResponse.memberSequence(), username, password, authResponse.name());
+            StoreMemberDetails principal = new StoreMemberDetails(authResponse.memberId(), username, password, authResponse.name());
 
             return new UsernamePasswordAuthenticationToken(principal, null, null);
         } catch (Exception e) {

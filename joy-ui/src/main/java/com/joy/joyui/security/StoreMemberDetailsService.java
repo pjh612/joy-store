@@ -22,7 +22,7 @@ public class StoreMemberDetailsService implements UserDetailsService {
             ApiResponse<FindMemberResponse> response = memberClient.findByUsername(username);
             FindMemberResponse member = response.getData();
 
-            return new StoreMemberDetails(member.getSeq(), member.getId(), member.getPassword(), member.getName());
+            return new StoreMemberDetails(member.getId(), member.getUsername(), member.getPassword(), member.getName());
         } catch (Exception e) {
             throw new UsernameNotFoundException("아이디/비밀번호를 확인해주세요.");
         }

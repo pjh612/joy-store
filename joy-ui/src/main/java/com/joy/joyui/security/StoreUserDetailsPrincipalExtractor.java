@@ -27,13 +27,13 @@ public class StoreUserDetailsPrincipalExtractor implements UserDetailsExtractor<
             if (CommonCookie.SESSION_COOKIE.getName().equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                Long memberSeq = Long.valueOf(aesCipher.decrypt(value));
+                String memberId = String.valueOf(aesCipher.decrypt(value));
 
                 try {
-                    ApiResponse<FindMemberResponse> response = memberClient.findByMemberSequence(memberSeq);
+                    ApiResponse<FindMemberResponse> response = memberClient.findByMemberId(memberId);
                     FindMemberResponse member = response.getData();
 
-                    return new StoreMemberDetails(member.getSeq(), member.getId(), member.getPassword(), member.getName());
+                    return new StoreMemberDetails(member.getId(), member.getUsername(), member.getPassword(), member.getName());
                 } catch (Exception e) {
                     return new StoreMemberDetails(null, null, null, null);
                 }
@@ -53,9 +53,9 @@ public class StoreUserDetailsPrincipalExtractor implements UserDetailsExtractor<
             if (CommonCookie.SESSION_COOKIE.getName().equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                Long memberSeq = Long.valueOf(aesCipher.decrypt(value));
+                String memberId = String.valueOf(aesCipher.decrypt(value));
                 try {
-                    ApiResponse<FindMemberResponse> response = memberClient.findByMemberSequence(memberSeq);
+                    ApiResponse<FindMemberResponse> response = memberClient.findByMemberId(memberId);
                     FindMemberResponse member = response.getData();
 
                     return member.getPassword();

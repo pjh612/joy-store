@@ -28,7 +28,7 @@ public class StoreMemberSignInSuccessHandler implements AuthenticationSuccessHan
         StoreMemberDetails member = (StoreMemberDetails) authentication.getPrincipal();
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        String encrypt = aesCipher.encrypt(String.valueOf(member.getSeq()));
+        String encrypt = aesCipher.encrypt(String.valueOf(member.getId()));
         Cookie sessionCookie = new Cookie(CommonCookie.SESSION_COOKIE.getName(), encrypt);
         sessionCookie.setDomain("localhost");
         sessionCookie.setPath("/");

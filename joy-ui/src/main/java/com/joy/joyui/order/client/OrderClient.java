@@ -10,5 +10,5 @@ import java.util.List;
 public interface OrderClient {
     ApiResponse<PlaceOrderResponse> placeOrder(PlaceOrderRequest request);
 
-    ApiResponse<List<FindOrderResponse>> getAllByMemberSequence(Long sequence);
+    ApiResponse<List<FindOrderResponse>> getAllByMemberId(String memberId);
 }

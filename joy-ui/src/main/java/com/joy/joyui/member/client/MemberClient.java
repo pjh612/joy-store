@@ -10,5 +10,5 @@ public interface MemberClient {
 
     ApiResponse<FindMemberResponse> findByUsername(String username);
 
-    ApiResponse<FindMemberResponse> findByMemberSequence(Long sequence);
+    ApiResponse<FindMemberResponse> findByMemberId(String memberId);
 }

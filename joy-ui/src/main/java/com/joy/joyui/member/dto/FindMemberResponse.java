@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FindMemberResponse {
-    private Long seq;
     private String id;
+    private String username;
     private String password;
     private String name;
     private Gender gender;
