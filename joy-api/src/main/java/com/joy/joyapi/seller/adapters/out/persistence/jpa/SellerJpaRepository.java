@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface SellerJpaRepository extends JpaRepository<SellerEntity, Long> {
+public interface SellerJpaRepository extends JpaRepository<SellerEntity, String> {
     Optional<SellerEntity> findByUsername(String username);
 }

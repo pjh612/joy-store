@@ -5,5 +5,5 @@ import com.joy.joyapi.coupon.domain.model.AbstractCoupon;
 import java.util.Optional;
 
 public interface CouponRepository {
-    Optional<AbstractCoupon> findBySequence(Long sequence);
+    Optional<AbstractCoupon> findById(String id);
 }

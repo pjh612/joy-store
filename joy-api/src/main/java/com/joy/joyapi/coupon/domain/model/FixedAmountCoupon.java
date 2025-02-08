@@ -18,8 +18,8 @@ public class FixedAmountCoupon extends AbstractCoupon {
         return originalPrice.subtract(amount);
     }
 
-    public FixedAmountCoupon(Long sequence, CouponStatus status, BigDecimal amount) {
-        super(sequence, status);
+    public FixedAmountCoupon(String id, CouponStatus status, BigDecimal amount) {
+        super(id, status);
         this.amount = amount;
     }
 }

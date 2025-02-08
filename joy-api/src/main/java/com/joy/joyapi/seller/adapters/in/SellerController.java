@@ -26,8 +26,8 @@ public class SellerController {
         return new ApiResponse<>(querySellerUsecase.queryByUsername(username));
     }
 
-    @GetMapping("/{sequence}")
-    public ApiResponse<QuerySellerResponse> findBySellerSequence(@PathVariable Long sequence) {
-        return new ApiResponse<>(querySellerUsecase.queryBySequence(sequence));
+    @GetMapping("/{id}")
+    public ApiResponse<QuerySellerResponse> findBySellerId(@PathVariable String id) {
+        return new ApiResponse<>(querySellerUsecase.queryBySellerId(id));
     }
 }

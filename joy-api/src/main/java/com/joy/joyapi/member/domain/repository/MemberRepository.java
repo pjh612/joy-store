@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface MemberRepository {
     Member save(Member member);
 
-    Optional<Member> findBySeq(Long seq);
+    Optional<Member> findById(String id);
 
     Optional<Member> findByUsername(String username);
 }

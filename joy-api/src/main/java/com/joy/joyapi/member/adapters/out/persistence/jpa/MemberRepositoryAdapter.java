@@ -22,12 +22,13 @@ public class MemberRepositoryAdapter implements MemberRepository {
     public Member save(Member member) {
         MemberEntity entity = memberJpaRepository.save(memberEntityConverter.toEntity(member));
 
+
+
         return memberEntityConverter.toDomain(entity);
     }
 
-    @Override
-    public Optional<Member> findBySeq(Long seq) {
-        return memberJpaRepository.findById(seq)
+    public Optional<Member> findById(String id) {
+        return memberJpaRepository.findById(id)
                 .map(memberEntityConverter::toDomain)
                 .or(Optional::empty);
     }

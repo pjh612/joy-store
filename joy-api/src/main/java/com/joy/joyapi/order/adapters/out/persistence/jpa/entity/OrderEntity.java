@@ -1,6 +1,7 @@
 package com.joy.joyapi.order.adapters.out.persistence.jpa.entity;
 
 import com.joy.joyapi.order.domain.models.OrderStatus;
+import com.joy.joycommon.hibernate.annotations.UuidV7Generator;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,10 +19,10 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seq;
-    private Long buyerSequence;
-    private Long couponSequence;
+    @UuidV7Generator
+    private String id;
+    private String buyerId;
+    private String couponId;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
@@ -33,7 +34,7 @@ public class OrderEntity {
     private String updater;
 
     public void addOrderItem(List<OrderItemEntity> orderItemList) {
-        if(orderItemList == null) {
+        if (orderItemList == null) {
             return;
         }
 

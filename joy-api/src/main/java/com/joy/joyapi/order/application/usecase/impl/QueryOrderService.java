@@ -26,17 +26,17 @@ public class QueryOrderService implements QueryOrderUseCase {
     }
 
     @Override
-    public List<FindOrderResponse> queryByMemberSequence(Long memberSequence) {
-        List<Order> orders = orderRepository.findAllByMemberSequence(memberSequence);
-        List<Long> itemSequences = orders.stream()
+    public List<FindOrderResponse> queryByMemberId(String memberId) {
+        List<Order> orders = orderRepository.findAllByMemberId(memberId);
+        List<String> itemSequences = orders.stream()
                 .flatMap(it -> it.getOrderItems().stream())
-                .map(OrderItem::getItemSeq)
+                .map(OrderItem::getItemId)
                 .toList();
 
-        Map<Long, ItemResponse> itemResponseMap = itemRepository.findAllBySequenceIn(itemSequences)
+        Map<String, ItemResponse> itemResponseMap = itemRepository.findAllBySequenceIn(itemSequences)
                 .stream()
                 .map(ItemResponse::of)
-                .collect(Collectors.toMap(ItemResponse::sequence, Function.identity()));
+                .collect(Collectors.toMap(ItemResponse::id, Function.identity()));
 
         return orders
                 .stream()
@@ -45,14 +45,14 @@ public class QueryOrderService implements QueryOrderUseCase {
     }
 
     @Override
-    public List<FindOrderResponse> queryBySellerSequence(Long sellerSequence) {
-        List<Item> items = itemRepository.findAllBySellerSequence(sellerSequence);
+    public List<FindOrderResponse> queryBySellerId(String sellerId) {
+        List<Item> items = itemRepository.findAllBySellerId(sellerId);
 
-        Map<Long, ItemResponse> itemResponseMap = items.stream()
+        Map<String, ItemResponse> itemResponseMap = items.stream()
                 .map(ItemResponse::of)
-                .collect(Collectors.toMap(ItemResponse::sequence, Function.identity()));
-        List<Long> itemSequences = items.stream()
-                .map(Item::getSeq)
+                .collect(Collectors.toMap(ItemResponse::id, Function.identity()));
+        List<String> itemSequences = items.stream()
+                .map(Item::getId)
                 .toList();
         return orderRepository.findAllByItemSequenceIn(itemSequences)
                 .stream()

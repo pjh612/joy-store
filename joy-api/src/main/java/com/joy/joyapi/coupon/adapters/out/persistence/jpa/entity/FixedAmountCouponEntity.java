@@ -18,8 +18,8 @@ import java.math.BigDecimal;
 public class FixedAmountCouponEntity extends BaseCouponEntity {
     private BigDecimal amount;
 
-    public FixedAmountCouponEntity(Long sequence, CouponStatus status, BigDecimal amount) {
-        super(sequence, status);
+    public FixedAmountCouponEntity(String id, CouponStatus status, BigDecimal amount) {
+        super(id, status);
         this.amount = amount;
     }
 }

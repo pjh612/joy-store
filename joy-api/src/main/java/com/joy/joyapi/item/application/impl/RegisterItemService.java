@@ -21,6 +21,6 @@ public class RegisterItemService implements RegisterItemUseCase {
     public RegisterItemResponse register(RegisterItemRequest request) {
         Item savedItem = itemRepository.save(request.toItem());
 
-        return new RegisterItemResponse(savedItem.getSeq());
+        return new RegisterItemResponse(savedItem.getId());
     }
 }

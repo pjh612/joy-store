@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface OrderService {
-    Order order(Long buyerSeq, List<Item> items, Map<Long, Integer> orderItemMap, AbstractCoupon coupon);
+    Order order(String buyerId, List<Item> items, Map<String, Integer> orderItemMap, AbstractCoupon coupon);
 }

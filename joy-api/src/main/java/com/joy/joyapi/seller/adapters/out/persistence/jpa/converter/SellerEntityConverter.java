@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SellerEntityConverter {
     public SellerEntity toEntity(Seller seller) {
-        return new SellerEntity(seller.getSeq(),
+        return new SellerEntity(seller.getId(),
                 seller.getUsername(),
                 seller.getPassword(),
                 seller.getName(),
@@ -17,7 +17,7 @@ public class SellerEntityConverter {
     }
 
     public Seller toDomain(SellerEntity sellerEntity) {
-        return new Seller(sellerEntity.getSeq(),
+        return new Seller(sellerEntity.getId(),
                 sellerEntity.getUsername(),
                 sellerEntity.getPassword(),
                 sellerEntity.getName(),

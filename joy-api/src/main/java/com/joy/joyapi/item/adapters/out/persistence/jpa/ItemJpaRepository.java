@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Collection;
 import java.util.List;
 
-public interface ItemJpaRepository extends JpaRepository<ItemEntity, Long> {
-    Collection<ItemEntity> findAllBySeqIn(List<Long> itemSequences);
+public interface ItemJpaRepository extends JpaRepository<ItemEntity, String> {
+    Collection<ItemEntity> findAllByIdIn(List<String> ids);
 
-    List<ItemEntity> findAllBySellerSeq(Long sellerSeq);
+    List<ItemEntity> findAllBySellerId(String sellerId);
 
 }

@@ -9,28 +9,28 @@ import java.time.Instant;
 @Getter
 @AllArgsConstructor
 public class Item {
-    private Long seq;
+    private String id;
     private BigDecimal price;
     private String title;
     private String description;
-    private Long sellerSeq;
+    private String sellerId;
 
     private Instant createdAt;
     private Instant updatedAt;
     private String creator;
     private String updater;
 
-    public static Item createNew(BigDecimal price, String title, String description, Long sellerSeq) {
+    public static Item createNew(BigDecimal price, String title, String description, String sellerId) {
         return new Item(
                 null,
                 price,
                 title,
                 description,
-                sellerSeq,
+                sellerId,
                 Instant.now(),
                 Instant.now(),
-                sellerSeq.toString(),
-                sellerSeq.toString()
+                sellerId,
+                sellerId
         );
     }
 }

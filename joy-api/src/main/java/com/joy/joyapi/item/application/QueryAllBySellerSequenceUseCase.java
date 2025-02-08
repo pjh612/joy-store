@@ -5,5 +5,5 @@ import com.joy.joyapi.item.application.dto.ItemResponse;
 import java.util.List;
 
 public interface QueryAllBySellerSequenceUseCase {
-    List<ItemResponse> query(Long sellerSequence);
+    List<ItemResponse> query(String sellerId);
 }

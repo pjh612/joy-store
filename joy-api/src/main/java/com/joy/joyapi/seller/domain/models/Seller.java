@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seller {
-    private Long seq;
+    private String id;
     private String username;
     private String password;
     private String name;

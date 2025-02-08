@@ -17,8 +17,8 @@ public class OrderExternalController {
     private final QueryOrderSummaryUseCase queryOrderSummaryUseCase;
 
     @GetMapping("/summary")
-    public ApiResponse<OrderSummaryResponse> getSummaryBySellerSequence(@AuthenticationPrincipal Jwt jwt) {
+    public ApiResponse<OrderSummaryResponse> getSummaryBySellerId(@AuthenticationPrincipal Jwt jwt) {
 
-        return ApiResponse.of(queryOrderSummaryUseCase.query((Long) jwt.getClaims().get("seq")));
+        return ApiResponse.of(queryOrderSummaryUseCase.query((String) jwt.getClaims().get("id")));
     }
 }

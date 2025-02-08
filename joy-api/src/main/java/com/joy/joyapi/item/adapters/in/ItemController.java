@@ -16,12 +16,12 @@ import java.util.List;
 public class ItemController {
     private final RegisterItemUseCase registerItemUsecase;
     private final QueryAllItemUseCase queryAllItemUsecase;
-    private final QueryAllBySellerSequenceUseCase queryAllBySellerSequenceUsecase;
+    private final QueryAllBySellerSequenceUseCase queryAllBySellerIdUseCase;
 
-    public ItemController(RegisterItemUseCase registerItemUsecase, QueryAllItemUseCase queryAllItemUsecase, QueryAllBySellerSequenceUseCase queryAllBySellerSequenceUsecase) {
+    public ItemController(RegisterItemUseCase registerItemUsecase, QueryAllItemUseCase queryAllItemUsecase, QueryAllBySellerSequenceUseCase queryAllBySellerIdUseCase) {
         this.registerItemUsecase = registerItemUsecase;
         this.queryAllItemUsecase = queryAllItemUsecase;
-        this.queryAllBySellerSequenceUsecase = queryAllBySellerSequenceUsecase;
+        this.queryAllBySellerIdUseCase = queryAllBySellerIdUseCase;
     }
 
     @PostMapping
@@ -34,8 +34,8 @@ public class ItemController {
         return ApiResponse.of(queryAllItemUsecase.query());
     }
 
-    @GetMapping("/sellers/{sellerSequence}")
-    public ApiResponse<List<ItemResponse>> getAllBySellerSequence(@PathVariable Long sellerSequence) {
-        return ApiResponse.of(queryAllBySellerSequenceUsecase.query(sellerSequence));
+    @GetMapping("/sellers/{sellerId}")
+    public ApiResponse<List<ItemResponse>> getAllBySellerSequence(@PathVariable String sellerId) {
+        return ApiResponse.of(queryAllBySellerIdUseCase.query(sellerId));
     }
 }

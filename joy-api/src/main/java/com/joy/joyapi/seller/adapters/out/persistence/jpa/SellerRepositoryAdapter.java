@@ -26,8 +26,8 @@ public class SellerRepositoryAdapter implements SellerRepository {
     }
 
     @Override
-    public Optional<Seller> findBySeq(Long seq) {
-        return sellerJpaRepository.findById(seq)
+    public Optional<Seller> findById(String id) {
+        return sellerJpaRepository.findById(id)
                 .map(sellerEntityConverter::toDomain)
                 .or(Optional::empty);
     }

@@ -1,6 +1,7 @@
 package com.joy.joyapi.coupon.adapters.out.persistence.jpa.entity;
 
 import com.joy.joyapi.coupon.domain.model.CouponStatus;
+import com.joy.joycommon.hibernate.annotations.UuidV7Generator;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,8 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaseCouponEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long sequence;
+    @UuidV7Generator
+    private String id;
 
     @Enumerated(EnumType.STRING)
     private CouponStatus status;

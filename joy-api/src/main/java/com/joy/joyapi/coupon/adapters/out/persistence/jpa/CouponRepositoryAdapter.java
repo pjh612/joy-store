@@ -18,8 +18,8 @@ public class CouponRepositoryAdapter implements CouponRepository {
     }
 
     @Override
-    public Optional<AbstractCoupon> findBySequence(Long sequence) {
-        return couponJpaRepository.findById(sequence)
+    public Optional<AbstractCoupon> findById(String id) {
+        return couponJpaRepository.findById(id)
                 .map(couponEntityConverter::toDomain)
                 .or(Optional::empty);
     }

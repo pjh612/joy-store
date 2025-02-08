@@ -12,8 +12,8 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
-    private Long seq;
-    private Long itemSeq;
+    private String id;
+    private String itemId;
     private BigDecimal unitPrice; // 주문 상품 개당 가격
     private Integer quantity; // 주문 상품 개수
     private BigDecimal discountAmount; // 할인 금액
@@ -23,15 +23,15 @@ public class OrderItem {
     private String creator;
     private String updater;
 
-    public static OrderItem createNew(Long itemSeq, Long buyerSeq, BigDecimal unitPrice, Integer quantity) {
+    public static OrderItem createNew(String itemId, String buyerId, BigDecimal unitPrice, Integer quantity) {
         OrderItem orderItem = new OrderItem();
-        orderItem.itemSeq = itemSeq;
+        orderItem.itemId = itemId;
         orderItem.unitPrice = unitPrice;
         orderItem.quantity = quantity;
         orderItem.createdAt = Instant.now();
         orderItem.updatedAt = Instant.now();
-        orderItem.creator = buyerSeq.toString();
-        orderItem.updater = buyerSeq.toString();
+        orderItem.creator = buyerId;
+        orderItem.updater = buyerId;
 
         return orderItem;
     }

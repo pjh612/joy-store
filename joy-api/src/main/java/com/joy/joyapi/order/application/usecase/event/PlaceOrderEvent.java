@@ -11,6 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlaceOrderEvent {
-    private List<Long> sellerSequenceList;
-    private Long orderSequence;
+    private List<String> sellerIds;
+    private String orderId;
 }

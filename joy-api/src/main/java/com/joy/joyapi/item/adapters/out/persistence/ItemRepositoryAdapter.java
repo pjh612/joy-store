@@ -20,8 +20,8 @@ public class ItemRepositoryAdapter implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAllBySequenceIn(List<Long> itemSequences) {
-        return itemJpaRepository.findAllBySeqIn(itemSequences)
+    public List<Item> findAllBySequenceIn(List<String> ids) {
+        return itemJpaRepository.findAllByIdIn(ids)
                 .stream()
                 .map(itemEntityConverter::toDomain)
                 .toList();
@@ -36,8 +36,8 @@ public class ItemRepositoryAdapter implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAllBySellerSequence(Long sellerSequence) {
-        return itemJpaRepository.findAllBySellerSeq(sellerSequence)
+    public List<Item> findAllBySellerId(String sellerId) {
+        return itemJpaRepository.findAllBySellerId(sellerId)
                 .stream()
                 .map(itemEntityConverter::toDomain)
                 .toList();

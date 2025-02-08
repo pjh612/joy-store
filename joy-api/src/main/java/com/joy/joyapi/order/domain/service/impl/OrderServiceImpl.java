@@ -13,19 +13,19 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     @Override
-    public Order order(Long buyerSeq, List<Item> orderItems, Map<Long, Integer> orderItemMap, AbstractCoupon coupon) {
-        Order newOrder = Order.createNew(buyerSeq);
+    public Order order(String buyerId, List<Item> orderItems, Map<String, Integer> orderItemMap, AbstractCoupon coupon) {
+        Order newOrder = Order.createNew(buyerId);
 
         for (Item orderItem : orderItems) {
-            newOrder.addOrderItem(orderItem.getSeq(), orderItem.getPrice(), orderItemMap.get(orderItem.getSeq()));
+            newOrder.addOrderItem(orderItem.getId(), orderItem.getPrice(), orderItemMap.get(orderItem.getId()));
         }
 
         if (coupon != null) {
-            Map<Long, BigDecimal> originalPrices = newOrder.getOriginalPrices();
-            Map<Long, BigDecimal> couponAppliedPrices = originalPrices.entrySet()
+            Map<String, BigDecimal> originalPrices = newOrder.getOriginalPrices();
+            Map<String, BigDecimal> couponAppliedPrices = originalPrices.entrySet()
                     .stream()
                     .collect(Collectors.toMap(Map.Entry::getKey, entry -> coupon.use(entry.getValue())));
-            newOrder.applyCoupon(coupon.getSequence(), couponAppliedPrices);
+            newOrder.applyCoupon(coupon.getId(), couponAppliedPrices);
         }
 
         return newOrder;

@@ -17,8 +17,8 @@ import java.util.List;
 public class SellerOrderController {
     private final QueryOrderUseCase queryOrderUsecase;
 
-    @GetMapping("/{sellerSequence}/orders")
-    public ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(@PathVariable Long sellerSequence) {
-        return ApiResponse.of(queryOrderUsecase.queryBySellerSequence(sellerSequence));
+    @GetMapping("/{sellerId}/orders")
+    public ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(@PathVariable String sellerId) {
+        return ApiResponse.of(queryOrderUsecase.queryBySellerId(sellerId));
     }
 }

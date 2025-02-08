@@ -38,27 +38,27 @@ public class PlaceOrderService implements PlaceOrderUseCase {
     @Override
     @Transactional
     public PlaceOrderResponse order(PlaceOrderRequest request) {
-        Map<Long, Integer> orderItemMap = request.orderItems()
+        Map<String, Integer> orderItemMap = request.orderItems()
                 .stream()
-                .collect(Collectors.toMap(PlaceOrderRequest.OrderItemRequestDto::itemSeq, PlaceOrderRequest.OrderItemRequestDto::quantity));
-        List<Long> itemSeqeunceList = orderItemMap.keySet()
+                .collect(Collectors.toMap(PlaceOrderRequest.OrderItemRequestDto::itemId, PlaceOrderRequest.OrderItemRequestDto::quantity));
+        List<String> itemSeqeunceList = orderItemMap.keySet()
                 .stream()
                 .toList();
         List<Item> items = itemRepository.findAllBySequenceIn(itemSeqeunceList);
 
         AbstractCoupon coupon = null;
-        if(request.couponSequence() != null) {
-            coupon = couponRepository.findBySequence(request.couponSequence())
+        if(request.couponId() != null) {
+            coupon = couponRepository.findById(request.couponId())
                     .orElseThrow(IllegalArgumentException::new);
         }
-        Order newOrder = orderService.order(request.buyerSeq(), items, orderItemMap, coupon);
+        Order newOrder = orderService.order(request.buyerId(), items, orderItemMap, coupon);
         Order savedOrder = orderRepository.save(newOrder);
 
-        List<Long> sellerSequenceList = items.stream()
-                .map(Item::getSellerSeq)
+        List<String> sellerSequenceList = items.stream()
+                .map(Item::getSellerId)
                 .toList();
-        publisher.publishEvent(new PlaceOrderEvent(sellerSequenceList, savedOrder.getSeq()));
+        publisher.publishEvent(new PlaceOrderEvent(sellerSequenceList, savedOrder.getId()));
 
-        return new PlaceOrderResponse(savedOrder.getSeq());
+        return new PlaceOrderResponse(savedOrder.getId());
     }
 }

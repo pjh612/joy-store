@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 public record RegisterItemRequest(
         String title,
         String description,
-        Long sellerSeq,
+        String sellerId,
         BigDecimal price
 ) {
     public Item toItem() {
-        return Item.createNew(price, title, description, sellerSeq);
+        return Item.createNew(price, title, description, sellerId);
     }
 }

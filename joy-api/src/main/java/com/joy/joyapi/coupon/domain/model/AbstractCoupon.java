@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class AbstractCoupon {
-    private Long sequence;
+    private String id;
     private CouponStatus status;
 
     public abstract BigDecimal getAppliedPrice(BigDecimal originalPrice);

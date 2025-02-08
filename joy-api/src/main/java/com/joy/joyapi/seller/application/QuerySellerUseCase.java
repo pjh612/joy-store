@@ -5,5 +5,5 @@ import com.joy.joyapi.seller.application.dto.QuerySellerResponse;
 public interface QuerySellerUseCase {
     QuerySellerResponse queryByUsername(String username);
 
-    QuerySellerResponse queryBySequence(Long sequence);
+    QuerySellerResponse queryBySellerId(String id);
 }

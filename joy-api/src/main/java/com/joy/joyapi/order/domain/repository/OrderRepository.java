@@ -5,11 +5,11 @@ import com.joy.joyapi.order.domain.models.Order;
 import java.util.List;
 
 public interface OrderRepository {
-    List<Order> findAllByMemberSequence(Long memberSequence);
+    List<Order> findAllByMemberId(String memberId);
 
     Order save(Order order);
 
-    List<Order> findAllByItemSequenceIn(List<Long> itemSequences);
+    List<Order> findAllByItemSequenceIn(List<String> itemSequences);
 
-    List<Order> findAllByItemSequence(Long itemSequence);
+    List<Order> findAllByItemSequence(String itemSequence);
 }

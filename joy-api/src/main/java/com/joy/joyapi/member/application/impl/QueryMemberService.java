@@ -20,14 +20,13 @@ public class QueryMemberService implements QueryMemberUseCase {
         Member member = memberRepository.findByUsername(username)
                 .orElseThrow(EntityNotFoundException::new);
 
-        return new QueryMemberResponse(member.getSeq(), member.getId(), member.getPassword(), member.getName(), member.getGender());
+        return new QueryMemberResponse(member.getId(), member.getUsername(), member.getPassword(), member.getName(), member.getGender());
     }
 
-    @Override
-    public QueryMemberResponse queryBySequence(Long sequence) {
-        Member member = memberRepository.findBySeq(sequence)
+    public QueryMemberResponse queryById(String id) {
+        Member member = memberRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
-        return new QueryMemberResponse(member.getSeq(), member.getId(), member.getPassword(), member.getName(), member.getGender());
+        return new QueryMemberResponse(member.getId(), member.getUsername(), member.getPassword(), member.getName(), member.getGender());
     }
 }

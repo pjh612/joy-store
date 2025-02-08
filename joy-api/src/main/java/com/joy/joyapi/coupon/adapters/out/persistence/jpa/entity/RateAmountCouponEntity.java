@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class RateAmountCouponEntity extends BaseCouponEntity {
     private Double percent;
 
-    public RateAmountCouponEntity(Long sequence, CouponStatus status, Double percent) {
-        super(sequence, status);
+    public RateAmountCouponEntity(String id, CouponStatus status, Double percent) {
+        super(id, status);
         this.percent = percent;
     }
 }

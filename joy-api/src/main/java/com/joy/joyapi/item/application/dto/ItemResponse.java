@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 public record ItemResponse(
-        Long sequence,
+        String id,
         BigDecimal price,
         String title,
         String description,
-        Long sellerSeq,
+        String sellerId,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul") Instant createdAt,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul") Instant updatedAt,
         String creator,
@@ -19,11 +19,11 @@ public record ItemResponse(
 ) {
     public static ItemResponse of(Item item) {
         return new ItemResponse(
-                item.getSeq(),
+                item.getId(),
                 item.getPrice(),
                 item.getTitle(),
                 item.getDescription(),
-                item.getSellerSeq(),
+                item.getSellerId(),
                 item.getCreatedAt(),
                 item.getUpdatedAt(),
                 item.getCreator(),

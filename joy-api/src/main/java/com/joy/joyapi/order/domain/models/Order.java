@@ -16,26 +16,26 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
-    private Long seq;
-    private Long buyerSequence;
+    private String id;
+    private String buyerId;
     private OrderStatus status;
     private List<OrderItem> orderItems;
-    private Long couponSeq;
+    private String couponId;
     private Instant createdAt;
     private Instant updatedAt;
     private String creator;
     private String updater;
 
-    public static Order createNew(Long buyerSeq) {
+    public static Order createNew(String buyerId) {
         Order order = new Order();
 
-        order.buyerSequence = buyerSeq;
+        order.buyerId = buyerId;
         order.status = OrderStatus.DELIVERY_PREPARING;
         order.orderItems = new ArrayList<>();
         order.createdAt = Instant.now();
         order.updatedAt = Instant.now();
-        order.creator = buyerSeq.toString();
-        order.updater = buyerSeq.toString();
+        order.creator = buyerId;
+        order.updater = buyerId;
         return order;
     }
 
@@ -52,21 +52,21 @@ public class Order {
 
     }
 
-    public void addOrderItem(Long itemSequence, BigDecimal unitPrice, Integer quantity) {
+    public void addOrderItem(String itemId, BigDecimal unitPrice, Integer quantity) {
         BigDecimal originalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity));
-        OrderItem orderItem = OrderItem.createNew(itemSequence, this.buyerSequence, originalPrice, quantity);
+        OrderItem orderItem = OrderItem.createNew(itemId, this.buyerId, originalPrice, quantity);
         this.getOrderItems().add(orderItem);
     }
 
-    public void applyCoupon(Long couponSeq, Map<Long, BigDecimal> discountedPrices) {
-        this.couponSeq = couponSeq;
+    public void applyCoupon(String couponId, Map<String, BigDecimal> discountedPrices) {
+        this.couponId = couponId;
         for (OrderItem orderItem : orderItems) {
-            BigDecimal discountedPrice = discountedPrices.get(orderItem.getItemSeq());
+            BigDecimal discountedPrice = discountedPrices.get(orderItem.getItemId());
             orderItem.applyDiscount(discountedPrice);
         }
     }
 
-    public Map<Long, BigDecimal> getOriginalPrices() {
-        return orderItems.stream().collect(Collectors.toMap(OrderItem::getItemSeq, OrderItem::getTotalOriginalPrice));
+    public Map<String, BigDecimal> getOriginalPrices() {
+        return orderItems.stream().collect(Collectors.toMap(OrderItem::getItemId, OrderItem::getTotalOriginalPrice));
     }
 }

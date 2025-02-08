@@ -25,7 +25,7 @@ public class SellerAuthService implements SellerAuthUseCase {
                 throw new AuthenticationException("아이디 비밀번호 확인 필요");
             }
 
-            return new SellerAuthResponse(seller.seq());
+            return new SellerAuthResponse(seller.id());
         } catch (EntityNotFoundException e) {
             throw new AuthenticationException("아이디 비밀번호 확인 필요");
         }

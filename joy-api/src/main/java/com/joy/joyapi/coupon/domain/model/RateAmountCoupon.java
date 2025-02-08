@@ -17,8 +17,8 @@ public class RateAmountCoupon extends AbstractCoupon {
         return originalPrice.multiply(BigDecimal.valueOf(percent)).divide(BigDecimal.valueOf(100));
     }
 
-    public RateAmountCoupon(Long sequence, CouponStatus status, Double percent) {
-        super(sequence, status);
+    public RateAmountCoupon(String id, CouponStatus status, Double percent) {
+        super(id, status);
         this.percent = percent;
     }
 }

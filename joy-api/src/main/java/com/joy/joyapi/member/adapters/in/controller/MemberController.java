@@ -29,9 +29,9 @@ public class MemberController {
         return new ApiResponse<>(queryMemberUsecase.queryByUsername(username));
     }
 
-    @GetMapping("/{sequence}")
-    public ApiResponse<QueryMemberResponse> findByMemberSequence(@PathVariable Long sequence) {
-        return new ApiResponse<>(queryMemberUsecase.queryBySequence(sequence));
+    @GetMapping("/{id}")
+    public ApiResponse<QueryMemberResponse> findByMemberId(@PathVariable String id) {
+        return new ApiResponse<>(queryMemberUsecase.queryById(id));
     }
 
 }

@@ -4,11 +4,11 @@ import java.util.List;
 
 public record PlaceOrderRequest(
         List<OrderItemRequestDto> orderItems,
-        Long couponSequence,
-        Long buyerSeq) {
+        String couponId,
+        String buyerId) {
 
     public record OrderItemRequestDto(
-            Long itemSeq,
+            String itemId,
             Integer quantity
     ) {
     }

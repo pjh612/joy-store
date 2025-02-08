@@ -1,6 +1,9 @@
 package com.joy.joyapi.item.adapters.out.persistence.jpa.entity;
 
-import jakarta.persistence.*;
+import com.joy.joycommon.hibernate.annotations.UuidV7Generator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,12 +19,12 @@ import java.time.Instant;
 @AllArgsConstructor
 public class ItemEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seq;
+    @UuidV7Generator
+    private String id;
     private BigDecimal price;
     private String title;
     private String description;
-    private Long sellerSeq;
+    private String sellerId;
     private Instant createdAt;
     private Instant updatedAt;
     private String creator;

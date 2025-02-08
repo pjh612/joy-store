@@ -30,7 +30,7 @@ public class MemberAuthService implements MemberAuthUseCase {
                 throw new BadCredentialsException("아이디 비밀번호 확인 필요");
             }
 
-            return new MemberAuthResponse(member.seq(), member.name());
+            return new MemberAuthResponse(member.id(), member.name());
         } catch (EntityNotFoundException e) {
             throw new AuthenticationException("아이디 비밀번호 확인 필요");
         }

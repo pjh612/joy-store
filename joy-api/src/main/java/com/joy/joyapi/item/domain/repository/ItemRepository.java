@@ -5,11 +5,11 @@ import com.joy.joyapi.item.domain.models.Item;
 import java.util.List;
 
 public interface ItemRepository {
-    List<Item> findAllBySequenceIn(List<Long> itemSequences);
+    List<Item> findAllBySequenceIn(List<String> ids);
 
     List<Item> findAll();
 
-    List<Item> findAllBySellerSequence(Long sellerSequence);
+    List<Item> findAllBySellerId(String sellerId);
 
     Item save(Item item);
 }

@@ -16,8 +16,8 @@ public class QueryAllBySellerSequenceService implements QueryAllBySellerSequence
     }
 
     @Override
-    public List<ItemResponse> query(Long sellerSequence) {
-        return itemRepository.findAllBySellerSequence(sellerSequence)
+    public List<ItemResponse> query(String sellerId) {
+        return itemRepository.findAllBySellerId(sellerId)
                 .stream()
                 .map(ItemResponse::of)
                 .toList();

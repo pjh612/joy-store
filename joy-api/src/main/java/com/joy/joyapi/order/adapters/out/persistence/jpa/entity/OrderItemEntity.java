@@ -1,5 +1,6 @@
 package com.joy.joyapi.order.adapters.out.persistence.jpa.entity;
 
+import com.joy.joycommon.hibernate.annotations.UuidV7Generator;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,12 +15,12 @@ import java.time.Instant;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItemEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seq;
-    private Long itemSeq;
+    @UuidV7Generator
+    private String id;
+    private String itemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_seq")
+    @JoinColumn(name = "order_id")
     private OrderEntity order;
     private BigDecimal unitPrice; // 주문 상품 개당 가격
     private Integer quantity; // 주문 상품 개수

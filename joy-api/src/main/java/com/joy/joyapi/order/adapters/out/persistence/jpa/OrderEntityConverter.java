@@ -12,13 +12,13 @@ import java.util.List;
 @Component
 public class OrderEntityConverter {
     public Order toOrderDomain(OrderEntity orderEntity, List<OrderItemEntity> orderItemEntityList) {
-        return new Order(orderEntity.getSeq(),
-                orderEntity.getBuyerSequence(),
+        return new Order(orderEntity.getId(),
+                orderEntity.getBuyerId(),
                 orderEntity.getStatus(),
                 orderItemEntityList.stream()
-                        .map(it -> new OrderItem(it.getSeq(), it.getItemSeq(), it.getUnitPrice(), it.getQuantity(), it.getDiscountAmount(), it.getCreatedAt(), it.getUpdatedAt(), it.getCreator(), it.getUpdater()))
+                        .map(it -> new OrderItem(it.getId(), it.getItemId(), it.getUnitPrice(), it.getQuantity(), it.getDiscountAmount(), it.getCreatedAt(), it.getUpdatedAt(), it.getCreator(), it.getUpdater()))
                         .toList(),
-                orderEntity.getCouponSequence(),
+                orderEntity.getCouponId(),
                 orderEntity.getCreatedAt(),
                 orderEntity.getUpdatedAt(),
                 orderEntity.getCreator(),
@@ -27,9 +27,9 @@ public class OrderEntityConverter {
 
     public OrderEntity toOrderEntity(Order order) {
         OrderEntity orderEntity = new OrderEntity(
-                order.getSeq(),
-                order.getBuyerSequence(),
-                order.getCouponSeq(),
+                order.getId(),
+                order.getBuyerId(),
+                order.getCouponId(),
                 order.getStatus(),
                 new ArrayList<>(),
                 order.getCreatedAt(),
@@ -50,8 +50,8 @@ public class OrderEntityConverter {
     }
 
     public OrderItemEntity toOrderEntity(OrderEntity order, OrderItem orderItem) {
-        return new OrderItemEntity(orderItem.getSeq(),
-                orderItem.getItemSeq(),
+        return new OrderItemEntity(orderItem.getId(),
+                orderItem.getItemId(),
                 order,
                 orderItem.getUnitPrice(),
                 orderItem.getQuantity(),

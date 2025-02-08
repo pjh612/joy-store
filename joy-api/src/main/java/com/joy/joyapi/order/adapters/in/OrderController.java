@@ -23,8 +23,8 @@ public class OrderController {
     private final SubscribePlaceOrderAlarmUseCase subscribePlaceOrderAlarmUseCase;
 
     @GetMapping
-    public ApiResponse<List<FindOrderResponse>> getAllByMemberSequence(@RequestParam Long sequence) {
-        return ApiResponse.of(queryOrderUsecase.queryByMemberSequence(sequence));
+    public ApiResponse<List<FindOrderResponse>> getAllByMemberId(@RequestParam String memberId) {
+        return ApiResponse.of(queryOrderUsecase.queryByMemberId(memberId));
     }
 
     @PostMapping
@@ -33,7 +33,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/alarm/subscription", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter subscribeAlarm(@RequestParam Long memberSequence, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
-        return subscribePlaceOrderAlarmUseCase.subscribe(memberSequence.toString(), lastEventId);
+    public SseEmitter subscribeAlarm(@RequestParam Long memberId, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+        return subscribePlaceOrderAlarmUseCase.subscribe(memberId.toString(), lastEventId);
     }
 }

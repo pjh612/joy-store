@@ -7,12 +7,12 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface OrderItemJpaRepository extends JpaRepository<OrderItemEntity, Long> {
-    List<OrderItemEntity> findAllByOrderSeq(Long seq);
+public interface OrderItemJpaRepository extends JpaRepository<OrderItemEntity, String> {
+    List<OrderItemEntity> findAllByOrderId(String id);
 
-    @Query("SELECT oi FROM OrderItemEntity oi join fetch oi.order WHERE oi.itemSeq IN :itemSeq")
-    List<OrderItemEntity> findAllOrderItemByItemSeqIn(@Param("itemSeq") List<Long> itemSeq);
+    @Query("SELECT oi FROM OrderItemEntity oi join fetch oi.order WHERE oi.itemId IN :itemIds")
+    List<OrderItemEntity> findAllOrderItemByItemIdIn(@Param("itemIds") List<String> itemIds);
 
-    @Query("SELECT oi FROM OrderItemEntity oi JOIN FETCH oi.order WHERE oi.itemSeq = :itemSequence")
-    List<OrderItemEntity> findAllByItemSeq(@Param("itemSequence") Long itemSequence);
+    @Query("SELECT oi FROM OrderItemEntity oi JOIN FETCH oi.order WHERE oi.itemId = :itemId")
+    List<OrderItemEntity> findAllByItemSeq(@Param("itemId") String itemId);
 }

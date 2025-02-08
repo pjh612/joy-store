@@ -20,14 +20,14 @@ public class QuerySellerService implements QuerySellerUseCase {
         Seller seller = sellerRepository.findByUsername(username)
                 .orElseThrow(EntityNotFoundException::new);
 
-        return new QuerySellerResponse(seller.getSeq(), seller.getUsername(), seller.getPassword(), seller.getName(), seller.getGender());
+        return new QuerySellerResponse(seller.getId(), seller.getUsername(), seller.getPassword(), seller.getName(), seller.getGender());
     }
 
     @Override
-    public QuerySellerResponse queryBySequence(Long sequence) {
-        Seller seller = sellerRepository.findBySeq(sequence)
+    public QuerySellerResponse queryBySellerId(String id) {
+        Seller seller = sellerRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
-        return new QuerySellerResponse(seller.getSeq(), seller.getUsername(), seller.getPassword(), seller.getName(), seller.getGender());
+        return new QuerySellerResponse(seller.getId(), seller.getUsername(), seller.getPassword(), seller.getName(), seller.getGender());
     }
 }

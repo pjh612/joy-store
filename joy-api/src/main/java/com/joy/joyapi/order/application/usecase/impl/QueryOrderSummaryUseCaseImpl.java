@@ -25,10 +25,10 @@ public class QueryOrderSummaryUseCaseImpl implements QueryOrderSummaryUseCase {
     }
 
     @Override
-    public OrderSummaryResponse query(Long sellerSequence) {
-        List<Item> items = itemRepository.findAllBySellerSequence(sellerSequence);
-        Map<Long, List<Order>> orderMap = items.stream()
-                .map(Item::getSellerSeq)
+    public OrderSummaryResponse query(String sellerId) {
+        List<Item> items = itemRepository.findAllBySellerId(sellerId);
+        Map<String, List<Order>> orderMap = items.stream()
+                .map(Item::getSellerId)
                 .collect(Collectors.toMap(it -> it, orderRepository::findAllByItemSequence));
         long orderCount = orderMap.values()
                 .stream()

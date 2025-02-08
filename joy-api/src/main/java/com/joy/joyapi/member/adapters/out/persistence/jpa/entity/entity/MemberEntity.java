@@ -1,20 +1,21 @@
 package com.joy.joyapi.member.adapters.out.persistence.jpa.entity.entity;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.joy.joycommon.hibernate.annotations.UuidV7Generator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.*;
 
+@ToString
 @Entity
 @Getter
-@Table(name="member")
+@Table(name = "member")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seq;
+    @UuidV7Generator
+    private String id;
     private String username;
     private String password;
     private String name;

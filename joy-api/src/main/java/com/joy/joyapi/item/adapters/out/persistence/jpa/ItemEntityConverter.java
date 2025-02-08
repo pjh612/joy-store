@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ItemEntityConverter {
     public Item toDomain(ItemEntity item) {
-        return new Item(item.getSeq(), item.getPrice(), item.getTitle(), item.getDescription(), item.getSellerSeq(), item.getCreatedAt(), item.getUpdatedAt(), item.getCreator(), item.getUpdater());
+        return new Item(item.getId(), item.getPrice(), item.getTitle(), item.getDescription(), item.getSellerId(), item.getCreatedAt(), item.getUpdatedAt(), item.getCreator(), item.getUpdater());
     }
 
     public ItemEntity toEntity(Item item) {
-        return new ItemEntity(item.getSeq(), item.getPrice(), item.getTitle(), item.getDescription(), item.getSellerSeq(),item.getCreatedAt(),item.getUpdatedAt(), item.getCreator(), item.getUpdater());
+        return new ItemEntity(item.getId(), item.getPrice(), item.getTitle(), item.getDescription(), item.getSellerId(),item.getCreatedAt(),item.getUpdatedAt(), item.getCreator(), item.getUpdater());
     }
 }

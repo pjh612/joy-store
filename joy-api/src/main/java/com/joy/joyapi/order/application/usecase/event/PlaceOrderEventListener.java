@@ -17,12 +17,12 @@ public class PlaceOrderEventListener {
 
     @EventListener
     public void event(PlaceOrderEvent event) {
-        List<String> noticeTargetIdList = event.getSellerSequenceList()
+        List<String> noticeTargetIdList = event.getSellerIds()
                 .stream()
                 .map(Object::toString)
                 .toList();
-        Long orderSequence = event.getOrderSequence();
-        String message = "주문이 들어왔습니다. (주문번호 : " + orderSequence + ")";
+        String orderId = event.getOrderId();
+        String message = "주문이 들어왔습니다. (주문번호 : " + orderId + ")";
 
         for (String noticeTargetId : noticeTargetIdList) {
             alarmManager.notice(AlarmChannel.ADMIN_ORDER, noticeTargetId, message);

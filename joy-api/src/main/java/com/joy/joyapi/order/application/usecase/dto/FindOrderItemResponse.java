@@ -6,7 +6,7 @@ import com.joy.joyapi.order.domain.models.OrderItem;
 import java.math.BigDecimal;
 
 public record FindOrderItemResponse(
-        Long seq,
+        String id,
         ItemResponse item,
         BigDecimal unitPrice,
         Integer quantity,
@@ -14,7 +14,7 @@ public record FindOrderItemResponse(
 ) {
 
     public static FindOrderItemResponse of(OrderItem orderItem, ItemResponse itemResponse) {
-        return new FindOrderItemResponse(orderItem.getSeq(),
+        return new FindOrderItemResponse(orderItem.getId(),
                 itemResponse,
                 orderItem.getUnitPrice(),
                 orderItem.getQuantity(),

@@ -10,24 +10,24 @@ import java.util.List;
 import java.util.Map;
 
 public record FindOrderResponse(
-        Long seq,
-        Long buyerSequence,
+        String id,
+        String buyerId,
         OrderStatus status,
         List<FindOrderItemResponse> orderItems,
-        Long couponSeq,
+        String couponId,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         Instant createdAt
 ) {
 
-    public static FindOrderResponse of(Order order, Map<Long, ItemResponse> itemResponseMap) {
-        return new FindOrderResponse(order.getSeq(),
-                order.getBuyerSequence(),
+    public static FindOrderResponse of(Order order, Map<String, ItemResponse> itemResponseMap) {
+        return new FindOrderResponse(order.getId(),
+                order.getBuyerId(),
                 order.getStatus(),
                 order.getOrderItems()
                         .stream()
-                        .map(it -> FindOrderItemResponse.of(it, itemResponseMap.get(it.getItemSeq())))
+                        .map(it -> FindOrderItemResponse.of(it, itemResponseMap.get(it.getItemId())))
                         .toList(),
-                order.getCouponSeq(),
+                order.getCouponId(),
                 order.getCreatedAt());
     }
 }

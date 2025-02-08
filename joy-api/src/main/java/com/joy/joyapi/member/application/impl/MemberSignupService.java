@@ -25,6 +25,6 @@ public class MemberSignupService implements MemberSignupUseCase {
         Member entity = request.toEntity();
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 
-        return new MemberSignupResponse(memberRepository.save(entity).getId());
+        return new MemberSignupResponse(memberRepository.save(entity).getUsername());
     }
 }

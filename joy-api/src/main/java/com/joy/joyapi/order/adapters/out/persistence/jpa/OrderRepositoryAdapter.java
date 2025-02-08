@@ -21,11 +21,11 @@ public class OrderRepositoryAdapter implements OrderRepository {
     }
 
     @Override
-    public List<Order> findAllByMemberSequence(Long memberSequence) {
-        List<OrderEntity> orderEntities = orderJpaRepository.findAllByBuyerSequence(memberSequence);
+    public List<Order> findAllByMemberId(String memberId) {
+        List<OrderEntity> orderEntities = orderJpaRepository.findAllByBuyerId(memberId);
 
         return orderEntities.stream()
-                .map(it -> orderEntityConverter.toOrderDomain(it, orderItemJpaRepository.findAllByOrderSeq(it.getSeq())))
+                .map(it -> orderEntityConverter.toOrderDomain(it, orderItemJpaRepository.findAllByOrderId(it.getId())))
                 .toList();
     }
 
@@ -38,8 +38,8 @@ public class OrderRepositoryAdapter implements OrderRepository {
     }
 
     @Override
-    public List<Order> findAllByItemSequenceIn(List<Long> itemSequences) {
-        List<OrderEntity> orderEntities = orderItemJpaRepository.findAllOrderItemByItemSeqIn(itemSequences)
+    public List<Order> findAllByItemSequenceIn(List<String> itemSequences) {
+        List<OrderEntity> orderEntities = orderItemJpaRepository.findAllOrderItemByItemIdIn(itemSequences)
                 .stream()
                 .map(OrderItemEntity::getOrder)
                 .toList();
@@ -50,7 +50,7 @@ public class OrderRepositoryAdapter implements OrderRepository {
     }
 
     @Override
-    public List<Order> findAllByItemSequence(Long itemSequence) {
+    public List<Order> findAllByItemSequence(String itemSequence) {
         return orderItemJpaRepository.findAllByItemSeq(itemSequence)
                 .stream()
                 .map(it -> orderEntityConverter.toOrderDomain(it.getOrder(), it.getOrder().getOrderItemList()))

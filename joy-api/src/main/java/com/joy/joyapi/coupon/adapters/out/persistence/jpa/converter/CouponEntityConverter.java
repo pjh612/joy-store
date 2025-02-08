@@ -14,13 +14,13 @@ public class CouponEntityConverter {
     public AbstractCoupon toDomain(BaseCouponEntity entity) {
         if (entity instanceof FixedAmountCouponEntity fixedEntity) {
             return new FixedAmountCoupon(
-                    fixedEntity.getSequence(),
+                    fixedEntity.getId(),
                     fixedEntity.getStatus(),
                     fixedEntity.getAmount()
             );
         } else if (entity instanceof RateAmountCouponEntity rateEntity) {
             return new RateAmountCoupon(
-                    rateEntity.getSequence(),
+                    rateEntity.getId(),
                     rateEntity.getStatus(),
                     rateEntity.getPercent()
             );
@@ -31,13 +31,13 @@ public class CouponEntityConverter {
     public BaseCouponEntity toEntity(AbstractCoupon domain) {
         if (domain instanceof FixedAmountCoupon fixedCoupon) {
             return new FixedAmountCouponEntity(
-                    fixedCoupon.getSequence(),
+                    fixedCoupon.getId(),
                     fixedCoupon.getStatus(),
                     fixedCoupon.getAmount()
             );
         } else if (domain instanceof RateAmountCoupon rateCoupon) {
             return new RateAmountCouponEntity(
-                    rateCoupon.getSequence(),
+                    rateCoupon.getId(),
                     rateCoupon.getStatus(),
                     rateCoupon.getPercent()
             );

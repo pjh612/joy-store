@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface SellerRepository {
     Seller save(Seller member);
 
-    Optional<Seller> findBySeq(Long seq);
+    Optional<Seller> findById(String id);
 
     Optional<Seller> findByUsername(String username);
 }

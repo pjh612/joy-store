@@ -5,7 +5,7 @@ import com.joy.joyapi.order.application.usecase.dto.FindOrderResponse;
 import java.util.List;
 
 public interface QueryOrderUseCase {
-    List<FindOrderResponse> queryByMemberSequence(Long memberSequence);
+    List<FindOrderResponse> queryByMemberId(String memberId);
 
-    List<FindOrderResponse> queryBySellerSequence(Long sellerSequence);
+    List<FindOrderResponse> queryBySellerId(String sellerId);
 }
