@@ -27,3 +27,13 @@ spring:
       missing-topics-fatal: true
 server:
   port: 8080
+kafka:
+  topic:
+    load-money-request:
+      inbox:
+        events:
+          name: load-money-request.inbox.events
+    load-money:
+      inbox:
+        events:
+          name: load-money.inbox.events
