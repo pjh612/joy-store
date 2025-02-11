@@ -2,13 +2,13 @@ spring:
   application:
     name: joy-api
   datasource:
-    url: jdbc:mysql://localhost:3308/joy
+    url: jdbc:mysql://mysql2:3306/joy
     password: password
     username: root
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     database: mysql
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -17,13 +17,16 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://auth-server:8083
-
 server:
-    port: 8081
+  port: 8080
+kafka:
+  clusters:
+    bootstrapservers: kafka:29092
+
