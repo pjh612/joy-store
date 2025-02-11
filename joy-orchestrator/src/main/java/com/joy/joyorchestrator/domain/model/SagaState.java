@@ -12,7 +12,6 @@ import java.util.EnumSet;
 import java.util.UUID;
 
 import static com.joy.joyorchestrator.domain.model.SagaStepStatus.*;
-import static com.joy.joyorchestrator.domain.model.SagaStepStatus.COMPENSATED;
 
 @Getter
 @AllArgsConstructor
@@ -34,20 +33,7 @@ public class SagaState {
         this.stepStatus = JsonNodeFactory.instance.objectNode();
     }
 
-
-    public UUID id() {
-        return id;
-    }
-
-    public JsonNode payload() {
-        return payload;
-    }
-
-    public String currentStep() {
-        return currentStep;
-    }
-
-    public void currentStep(String currentStep) {
+    public void updateCurrentStep(String currentStep) {
         this.currentStep = currentStep;
     }
 
@@ -84,9 +70,5 @@ public class SagaState {
                 .forEachRemaining(entry -> allStatus.add(SagaStepStatus.valueOf(entry.getValue().asText())));
 
         return allStatus;
-    }
-
-    public SagaStatus sagaStatus() {
-        return sagaStatus;
     }
 }
