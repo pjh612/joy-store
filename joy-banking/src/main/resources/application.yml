@@ -24,3 +24,13 @@ spring:
       group-id: joy-banking
 server:
   port: 8080
+kafka:
+  topic:
+    validate-bank-account:
+      inbox:
+        events:
+          name: validate-bank-account.inbox.events
+    firm-banking:
+      inbox:
+        events:
+          name: request-firm-banking.inbox.events
