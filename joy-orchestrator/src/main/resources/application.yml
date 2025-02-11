@@ -27,3 +27,21 @@ spring:
       missing-topics-fatal: true
 server:
   port: 8080
+kafka:
+  topic:
+    saga:
+      load-money-request:
+        inbox:
+          events: LoadMoneyRequestEvent.inbox.events
+      load-money:
+        inbox:
+          events: LoadMoneyRequestCreatedEvent.inbox.events
+      check-bank-account:
+        inbox:
+          events: CheckedRegisteredBankAccountEvent.inbox.events
+      firm-banking:
+        inbox:
+          events: RequestFirmBankingFinishedEvent.inbox.events
+      load-money-finish:
+        inbox:
+          events: LoadMoneyFinishedEvent.inbox.events
