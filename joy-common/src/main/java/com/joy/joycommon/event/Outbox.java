@@ -35,13 +35,13 @@ class Outbox implements Serializable {
     @Column(columnDefinition = "json")
     private Object payload;
 
-    Outbox(OutboxEvent<?, ?> event) {
+    Outbox(OutboxEvent<?, ?> event, String payload) {
         requireNonNull(event, "event cannot be null");
         this.id = UUID.randomUUID();
         this.timestamp = requireNonNull(event.timestamp(), "issuedOn cannot be null");
         this.aggregateId = requireNonNull(event.aggregateId(), "aggregateId cannot be null").toString();
         this.aggregateType = requireNonNull(event.aggregateType(), "aggregateType cannot be null");
         this.type = requireNonNull(event.type(), "type cannot be null");
-        this.payload = requireNonNull(event.payload(), "payload cannot be null");
+        this.payload = requireNonNull(payload, "payload cannot be null");
     }
 }

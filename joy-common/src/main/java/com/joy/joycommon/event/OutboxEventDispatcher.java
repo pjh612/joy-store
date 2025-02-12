@@ -1,5 +1,8 @@
 package com.joy.joycommon.event;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -14,15 +17,13 @@ class OutboxEventDispatcher {
     private static final Logger logger = LoggerFactory.getLogger(OutboxEventDispatcher.class);
 
     private final EntityManager entityManager;
+    private final ObjectMapper objectMapper;
     private final boolean removeAfterInsert;
 
-    OutboxEventDispatcher(EntityManager entityManager) {
-        this(entityManager, true);
-    }
-
-    OutboxEventDispatcher(EntityManager entityManager, boolean removeAfterInsert) {
+    OutboxEventDispatcher(EntityManager entityManager, boolean removeAfterInsert, ObjectMapper objectMapper) {
         this.entityManager = entityManager;
         this.removeAfterInsert = removeAfterInsert;
+        this.objectMapper = objectMapper;
     }
 
     @EventListener
@@ -32,7 +33,10 @@ class OutboxEventDispatcher {
             logger.info("An exported event was found for type {}", event.type());
 
             // Unwrap to Hibernate session and save
-            var outbox = new Outbox(event);
+            ObjectNode jsonNodes = objectMapper.convertValue(event.payload(), ObjectNode.class);
+            String payload = objectMapper.writeValueAsString(jsonNodes);
+
+            var outbox = new Outbox(event, payload);
             session.persist(outbox);
 
             logger.info("persist after");
@@ -41,6 +45,8 @@ class OutboxEventDispatcher {
             if (removeAfterInsert) {
                 session.remove(outbox);
             }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 }
