@@ -26,7 +26,7 @@ public class SagaFactory {
     public Saga createInstance(UUID sagaId, String sagaType, JsonNode payload) {
         SagaState state = findOrCreateSagaState(sagaId, sagaType, payload);
 
-        return new Saga(eventPublisher, objectMapper, eventLogRepository, sagaStateRepository, state, sagaStepFlowRegistry.get(sagaType));
+        return new Saga(eventPublisher, objectMapper, eventLogRepository, sagaStateRepository, state, sagaStepFlowRegistry.get(state.getType()));
     }
 
     private SagaState findOrCreateSagaState(UUID sagaId, String sagaType, JsonNode payload) {
