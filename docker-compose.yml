@@ -146,6 +146,16 @@ services:
     depends_on:
       - mysql
       - kafka
+  ad:
+    image: joy-store-joy-ad:0.0.1-SNAPSHOT
+    networks:
+      - joy_network
+    ports:
+      - "8092:8092"
+    depends_on:
+      - mysql
+      - kafka
+
   connect:
     container_name: connect
     image: quay.io/debezium/connect

@@ -1,5 +1,28 @@
 spring:
     application:
         name: joy-ad
+    security:
+        oauth2:
+            client:
+                registration:
+                    joy-ad-oidc:
+                        provider: spring
+                        client-id: joy-ad
+                        client-secret: secret
+                        authorization-grant-type: authorization_code
+                        redirect-uri: "http://ad:8092/login/oauth2/code/{registrationId}"
+                        scope: openid
+                        client-name: joy-ad-oidc
+                    joy-ad-authorization-code:
+                        provider: spring
+                        client-id: joy-ad
+                        client-secret: secret
+                        authorization-grant-type: authorization_code
+                        redirect-uri: "http://ad:8092/authorized"
+                        scope: orders.read
+                        client-name: joy-ad-authorization-code
+                provider:
+                    spring:
+                        issuer-uri: http://auth:8080
 server:
-    port: 8084
+    port: 8092
