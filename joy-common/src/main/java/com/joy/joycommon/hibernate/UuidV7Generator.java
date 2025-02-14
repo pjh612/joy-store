@@ -8,6 +8,7 @@ import org.hibernate.generator.BeforeExecutionGenerator;
 import org.hibernate.generator.EventType;
 
 import java.util.EnumSet;
+import java.util.UUID;
 
 import static org.hibernate.generator.EventTypeSets.INSERT_ONLY;
 
@@ -26,11 +27,19 @@ public class UuidV7Generator implements BeforeExecutionGenerator {
 
     @Override
     public Object generate(SharedSessionContractImplementor session, Object entity, Object currentValue, EventType eventType) {
+        Object entityIdType = getEntityIdType(entity);
         Object entityIdValue = getEntityIdValue(entity);
-        log.info("entityIdValue:{}", entityIdValue);
+
 
         if (entityIdValue == null) {
-            return Generators.timeBasedEpochGenerator().generate().toString();
+            UUID uuid = Generators.timeBasedEpochGenerator().generate();
+            if (entityIdType.equals(String.class) ) {
+                return uuid.toString();
+            } else if (entityIdType.equals(UUID.class)) {
+                return uuid;
+            }
+
+            throw new IllegalArgumentException("Unsupported entity ID type: " + entityIdType);
         } else {
             return entityIdValue;
         }
@@ -48,5 +57,15 @@ public class UuidV7Generator implements BeforeExecutionGenerator {
             log.error("Failed to access ID field in entity: {}", entity.getClass().getName(), e);
         }
         return null;
+    }
+
+    private Object getEntityIdType(Object entity) {
+        for (var field : entity.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(Id.class)) {
+                field.setAccessible(true);
+                return field.getType();
+            }
+        }
+        throw new IllegalArgumentException("Id annotation not found in entity");
     }
 }
