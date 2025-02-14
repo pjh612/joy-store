@@ -4,13 +4,14 @@ package com.joy.joymoney.domain.model;
 import com.joy.joymoney.domain.WalletBalanceException;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class Money {
-    private String id;
-    private String memberId;
+    private UUID id;
+    private UUID memberId;
     private BigDecimal balance;
 
-    public static Money createNew(String memberId) {
+    public static Money createNew(UUID memberId) {
         return new Money(null, memberId, BigDecimal.ZERO);
     }
 
@@ -32,15 +33,15 @@ public class Money {
         return balance;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public String getMemberId() {
+    public UUID getMemberId() {
         return memberId;
     }
 
-    public Money(String id, String memberId, BigDecimal balance) {
+    public Money(UUID id, UUID memberId, BigDecimal balance) {
         this.id = id;
         this.memberId = memberId;
         this.balance = balance;

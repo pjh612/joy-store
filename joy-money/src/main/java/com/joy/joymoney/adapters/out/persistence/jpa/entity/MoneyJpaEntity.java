@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @Entity
@@ -19,7 +20,7 @@ import java.math.BigDecimal;
 public class MoneyJpaEntity {
     @Id
     @UuidV7Generator
-    private String id;
-    private String memberId;
+    private UUID id;
+    private UUID memberId;
     private BigDecimal balance;
 }

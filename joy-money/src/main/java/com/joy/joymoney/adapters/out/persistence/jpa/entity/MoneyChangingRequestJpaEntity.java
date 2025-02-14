@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Entity
@@ -20,12 +21,10 @@ import java.time.Instant;
 public class MoneyChangingRequestJpaEntity {
     @Id
     @UuidV7Generator
-    private String id;
-    private String targetMemberId;
-
+    private UUID id;
+    private UUID targetMemberId;
     private String changingType;
     private BigDecimal amount;
     private String status;
-    private String uuid;
     private Instant createdAt;
 }

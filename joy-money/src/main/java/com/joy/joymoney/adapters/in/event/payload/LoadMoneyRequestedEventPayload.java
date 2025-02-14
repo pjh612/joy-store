@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LoadMoneyRequestedEventPayload {
-    private String loadMoneyRequestId;
-    private String memberId;
+    private UUID loadMoneyRequestId;
+    private UUID memberId;
     private BigDecimal amount;
     private String type;
 }

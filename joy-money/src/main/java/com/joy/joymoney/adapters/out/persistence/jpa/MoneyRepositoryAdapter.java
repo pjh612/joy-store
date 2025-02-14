@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class MoneyRepositoryAdapter implements MoneyRepository {
     }
 
     @Override
-    public Optional<Money> findByMemberId(String memberId) {
+    public Optional<Money> findByMemberId(UUID memberId) {
         return repository.findByMemberId(memberId)
                 .map(MoneyConverter::toDomain);
     }

@@ -13,14 +13,14 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LoadMoneyRequestCreatedEvent implements OutboxEvent<String, LoadMoneyRequestCreatedEvent> {
     private UUID sagaId;
-    private String loadMoneyRequestId;
-    private String moneyId;
-    private String memberId;
+    private UUID loadMoneyRequestId;
+    private UUID moneyId;
+    private UUID memberId;
     private BigDecimal amount;
     private String type;
     private Instant timestamp;
 
-    public LoadMoneyRequestCreatedEvent(UUID sagaId, String loadMoneyRequestId, String moneyId, String memberId, BigDecimal amount, String type) {
+    public LoadMoneyRequestCreatedEvent(UUID sagaId, UUID loadMoneyRequestId, UUID moneyId, UUID memberId, BigDecimal amount, String type) {
         this.sagaId = sagaId;
         this.loadMoneyRequestId = loadMoneyRequestId;
         this.moneyId = moneyId;

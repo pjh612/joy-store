@@ -16,7 +16,6 @@ public class MoneyChangingRequestConverter {
                 moneyChangingRequest.getChangingType().name(),
                 moneyChangingRequest.getAmount(),
                 moneyChangingRequest.getStatus().name(),
-                Optional.ofNullable(moneyChangingRequest.getUuid()).map(UUID::toString).orElse(null),
                 moneyChangingRequest.getCreatedAt()
         );
     }
@@ -28,7 +27,6 @@ public class MoneyChangingRequestConverter {
                 ChangingType.valueOf(entity.getChangingType()),
                 entity.getAmount(),
                 ChangingStatus.valueOf(entity.getStatus()),
-                Optional.ofNullable(entity.getUuid()).map(UUID::fromString).orElse(null),
                 entity.getCreatedAt()
         );
     }

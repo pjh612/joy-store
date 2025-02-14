@@ -13,10 +13,10 @@ import java.util.UUID;
 public class LoadMoneyFinishedEvent implements OutboxEvent<String, LoadMoneyFinishedEvent> {
     private UUID sagaId;
     private String type;
-    private String loadMoneyRequestId;
+    private UUID loadMoneyRequestId;
     private Instant timestamp;
 
-    public LoadMoneyFinishedEvent(UUID sagaID, String type, String loadMoneyRequestId) {
+    public LoadMoneyFinishedEvent(UUID sagaID, String type, UUID loadMoneyRequestId) {
         this.sagaId = sagaID;
         this.type = type;
         this.loadMoneyRequestId = loadMoneyRequestId;

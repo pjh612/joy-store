@@ -10,19 +10,17 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 public class MoneyChangingRequest {
-    private String id;
-    private String targetMemberId;
+    private UUID id;
+    private UUID targetMemberId;
 
     private ChangingType changingType;
     private BigDecimal amount;
 
 
-
     private ChangingStatus status;
-    private UUID uuid;
     private Instant createdAt;
 
-    public static MoneyChangingRequest createNew(String targetMemberId,
+    public static MoneyChangingRequest createNew(UUID targetMemberId,
                                                  ChangingType changingType, BigDecimal amount) {
         return new MoneyChangingRequest(
                 null,
@@ -30,12 +28,11 @@ public class MoneyChangingRequest {
                 changingType,
                 amount,
                 ChangingStatus.REQUESTED,
-                null,
                 Instant.now()
         );
     }
 
-    public static MoneyChangingRequest createNew(String id, String targetMemberId,
+    public static MoneyChangingRequest createNew(UUID id, UUID targetMemberId,
                                                  ChangingType changingType, BigDecimal amount) {
         return new MoneyChangingRequest(
                 id,
@@ -43,7 +40,6 @@ public class MoneyChangingRequest {
                 changingType,
                 amount,
                 ChangingStatus.REQUESTED,
-                null,
                 Instant.now()
         );
     }
@@ -52,10 +48,6 @@ public class MoneyChangingRequest {
         this.status = status;
 
         return this;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
     }
 
     public void success() {

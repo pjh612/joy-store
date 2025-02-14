@@ -56,7 +56,7 @@ public class LoadMoneyFinishedEventHandler {
         publishLoadMoneyFinishedEvent(sagaId, "FAILED", null);
     }
 
-    public void publishLoadMoneyFinishedEvent(UUID sagaId, String status, String requestId) {
+    public void publishLoadMoneyFinishedEvent(UUID sagaId, String status, UUID requestId) {
         eventPublisher.publishEvent(new LoadMoneyFinishedEvent(sagaId, status, requestId));
     }
 }

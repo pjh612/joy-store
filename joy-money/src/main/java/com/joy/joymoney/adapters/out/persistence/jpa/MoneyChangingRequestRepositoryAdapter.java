@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -15,7 +16,7 @@ public class MoneyChangingRequestRepositoryAdapter implements MoneyChangingReque
     private final MoneyChangingRequestJpaRepository repository;
 
     @Override
-    public Optional<MoneyChangingRequest> findById(String id) {
+    public Optional<MoneyChangingRequest> findById(UUID id) {
         return repository.findById(id)
                 .map(MoneyChangingRequestConverter::toDomain);
     }

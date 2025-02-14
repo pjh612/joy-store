@@ -7,13 +7,15 @@ import com.joy.joymoney.domain.repository.MoneyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CreateMoneyService implements CreateMoneyUseCase {
     private final MoneyRepository moneyRepository;
 
     @Override
-    public String create(CreateMoneyRequest request) {
+    public UUID create(CreateMoneyRequest request) {
         Money money = Money.createNew(request.memberId());
         moneyRepository.save(money);
 
