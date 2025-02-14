@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LoadMoneyRequestEvent implements OutboxEvent<String, String> {
+public class LoadMoneyRequestEvent implements OutboxEvent<String, LoadMoneyRequestEvent> {
     private static final ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule());
     private UUID loadMoneyRequestId;
@@ -57,7 +57,7 @@ public class LoadMoneyRequestEvent implements OutboxEvent<String, String> {
     }
 
     @Override
-    public String payload() {
-        return this.payload;
+    public LoadMoneyRequestEvent payload() {
+        return this;
     }
 }
