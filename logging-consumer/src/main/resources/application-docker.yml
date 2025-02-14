@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: logging-consumer
+  devtools:
+    remote:
+      secret: mysecret
+server:
+  port: 8080
+kafka:
+  clusters:
+    bootstrapservers: kafka:29092
+
+logging:
+  topic: "joy.logging.out.stdout"

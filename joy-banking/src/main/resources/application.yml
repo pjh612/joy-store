@@ -34,3 +34,7 @@ kafka:
       inbox:
         events:
           name: request-firm-banking.inbox.events
+
+
+logging:
+  topic: "joy.logging.out.stdout"

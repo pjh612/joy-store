@@ -45,3 +45,5 @@ kafka:
       load-money-finish:
         inbox:
           events: LoadMoneyFinishedEvent.inbox.events
+logging:
+  topic: "joy.logging.out.stdout"
