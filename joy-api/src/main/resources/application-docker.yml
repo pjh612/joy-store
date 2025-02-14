@@ -2,7 +2,7 @@ spring:
   application:
     name: joy-api
   datasource:
-    url: jdbc:mysql://localhost:3308/joy
+    url: jdbc:mysql://mysql2:3306/joy
     password: password
     username: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -17,20 +17,20 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://auth:8081
+          issuer-uri: http://auth:8080
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:29092
 server:
   port: 8080
 kafka:
   clusters:
-    bootstrapservers: localhost:9092
+    bootstrapservers: kafka:29092
 
 logging:
   topic: "joy.logging.out.stdout"
