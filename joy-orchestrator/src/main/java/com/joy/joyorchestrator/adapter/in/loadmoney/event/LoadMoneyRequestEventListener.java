@@ -3,6 +3,7 @@ package com.joy.joyorchestrator.adapter.in.event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joy.joyorchestrator.adapter.in.event.payload.LoadMoneyRequestEventPayload;
 import com.joy.joyorchestrator.application.SagaManager;
+import com.joy.joyorchestrator.domain.model.PayloadType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -25,7 +26,7 @@ public class LoadMoneyRequestEventListener {
     void listen(@Header(KafkaHeaders.RECEIVED_KEY) UUID sagaId,
                 @Header("id") String eventId,
                 @Payload LoadMoneyRequestEventPayload payloadObject) {
-        if (!"FAILED".equals(payloadObject.getStatus())) {
+        if (payloadObject.getType() != PayloadType.FAILED) {
             sagaManager.begin(sagaId, "LOAD_MONEY_SAGA", payloadObject);
         }
     }

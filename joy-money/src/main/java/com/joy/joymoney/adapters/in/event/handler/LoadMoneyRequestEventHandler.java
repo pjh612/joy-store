@@ -31,17 +31,22 @@ public class LoadMoneyRequestEventHandler {
             publishInvalidEvent(sagaId);
             moneyChangingRequestRepository.save(moneyChangingRequest);
         } else {
-            moneyRepository.findByMemberId(payload.getMemberId())
-                    .ifPresentOrElse(
-                            it -> publishValidEvent(sagaId, payload, it),
-                            () -> publishInvalidEvent(sagaId)
-                    );
-
             MoneyChangingRequest moneyChangingRequest = MoneyChangingRequest.createNew(
                     payload.getLoadMoneyRequestId(),
                     payload.getMemberId(),
-                    ChangingType.INCREASE, payload.getAmount()
+                    ChangingType.INCREASE,
+                    payload.getAmount()
             );
+
+            moneyRepository.findByMemberId(payload.getMemberId())
+                    .ifPresentOrElse(
+                            it -> publishValidEvent(sagaId, payload, it),
+                            () -> {
+                                publishInvalidEvent(sagaId);
+                                moneyChangingRequest.fail();
+                            }
+
+                    );
             moneyChangingRequestRepository.save(moneyChangingRequest);
         }
     }
