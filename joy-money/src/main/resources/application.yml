@@ -25,6 +25,11 @@ spring:
     listener:
       concurrency: 1
       missing-topics-fatal: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://auth:8081
 server:
   port: 8080
 kafka:
