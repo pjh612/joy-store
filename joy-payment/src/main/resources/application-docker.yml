@@ -2,7 +2,7 @@ spring:
   application:
     name: joy-payment
   datasource:
-    url: jdbc:mysql://localhost:3308/joy
+    url: jdbc:mysql://mysql2:3306/joy
     password: password
     username: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -14,14 +14,14 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   kafka:
     client-id: joy-payment
     consumer:
       auto-offset-reset: earliest
       enable-auto-commit: true
       group-id: joy-payment
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:29092
     listener:
       concurrency: 1
       missing-topics-fatal: true
@@ -47,14 +47,14 @@ spring:
             client-name: joy-payment-authorization-code
         provider:
           spring:
-            issuer-uri: http://auth:8081
+            issuer-uri: http://auth:8080
 server:
   port: 8093
 
 client:
   banking:
-    url: http://banking:8086
+    url: http://banking:8080
   member:
     url: http://joy-api:8080
   money:
-    url: http://localhost:8085
+    url: http://money:8080

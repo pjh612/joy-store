@@ -172,6 +172,17 @@ services:
       - kafka
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
+  payment:
+    image: joy-store-joy-payment:0.0.1-SNAPSHOT
+    networks:
+      - joy_network
+    ports:
+      - "8093:8093"
+    depends_on:
+      - mysql
+      - kafka
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
   connect:
     container_name: connect
     image: quay.io/debezium/connect
