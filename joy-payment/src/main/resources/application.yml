@@ -27,3 +27,10 @@ spring:
             missing-topics-fatal: true
 server:
     port: 8080
+client:
+  banking:
+    url: http://banking:8080
+  member:
+    url: http://joy-api:8080
+  money:
+    url: http://localhost:8085
