@@ -72,7 +72,7 @@ public class Saga {
     private void goBack() {
         SagaStep step = sagaStepFlow.getStep(state.getCurrentStep());
         var prev = step.prev();
-        if (prev == null) {
+        if (prev.topic() == null) {
             state.updateCurrentStep(null);
 
             return;
