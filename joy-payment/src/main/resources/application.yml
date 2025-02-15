@@ -58,3 +58,17 @@ client:
     url: http://joy-api:8080
   money:
     url: http://localhost:8085
+
+kafka:
+  topic:
+    payment-request:
+      inbox:
+        events:
+          name: payment-request.inbox.events
+    confirm-payment:
+      inbox:
+        events:
+          name: confirm-payment.inbox.events
+
+logging:
+  topic: "joy.logging.out.stdout"
