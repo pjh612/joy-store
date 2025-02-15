@@ -42,5 +42,9 @@ kafka:
       inbox:
         events:
           name: load-money.inbox.events
+    decrease-money:
+      inbox:
+        events:
+          name: decrease-money.inbox.events
 logging:
   topic: "joy.logging.out.stdout"

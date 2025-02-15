@@ -45,5 +45,17 @@ kafka:
       load-money-finish:
         inbox:
           events: LoadMoneyFinishedEvent.inbox.events
+      payment-request:
+        inbox:
+          events: PaymentRequestEvent.inbox.events
+      payment-request-created:
+        inbox:
+          events: PaymentRequestCreatedEvent.inbox.events
+      decreased-money:
+        inbox:
+          events: DecreasedMoneyEvent.inbox.events
+      payment-confirmed:
+        inbox:
+          events: PaymentConfirmedEvent.inbox.events
 logging:
   topic: "joy.logging.out.stdout"

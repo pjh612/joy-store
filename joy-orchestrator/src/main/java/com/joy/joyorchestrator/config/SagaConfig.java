@@ -19,6 +19,12 @@ public class SagaConfig {
                 .addStep("load-money")
                 .build());
 
+        registry.register("PAYMENT_SAGA", SagaStepFlow.builder()
+                .addStep("payment-request")
+                .addStep("decrease-money")
+                .addStep("confirm-payment")
+                .build());
+
         return registry;
     }
 }
