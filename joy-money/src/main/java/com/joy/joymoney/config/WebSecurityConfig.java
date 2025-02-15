@@ -13,10 +13,9 @@ import static org.springframework.security.oauth2.core.authorization.OAuth2Autho
 public class WebSecurityConfig {
     @Bean
     SecurityFilterChain oauth2SecurityFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher("/api/external/**")
-                .authorizeHttpRequests(authorize -> authorize
+        http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/api/external/money/**").access(hasScope("member.money.read"))
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
