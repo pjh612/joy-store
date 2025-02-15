@@ -2,21 +2,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Please Log In</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
-<h1>Please Log In</h1>
-<div th:if="${param.error}">
-    Invalid username and password.</div>
-<div th:if="${param.logout}">
-    You have been logged out.</div>
-<form th:action="${loginProcessingUrl}" method="post">
-    <div>
-        <input type="text" name="username" placeholder="Username"/>
+<header>
+    <div class="logo-container">
+        <img src="/img/logo.png" alt="Logo" class="logo">
     </div>
-    <div>
-        <input type="password" name="password" placeholder="Password"/>
+    <div class="header-text">
+        <h1>조이 스토어</h1>
+        <p>로그인을 해주세요</p>
     </div>
-    <input type="submit" value="Log in" />
-</form>
+</header>
+<div class="container">
+    <h1 class="form-title">Log In</h1>
+    <div th:if="${param.error}" class="error-message">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}" class="info-message">
+        You have been logged out.
+    </div>
+    <form th:action="${loginProcessingUrl}" method="post" class="login-form">
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Username" class="form-input"/>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password" class="form-input"/>
+        </div>
+        <input type="submit" value="Log in" class="btn"/>
+    </form>
+</div>
 </body>
 </html>
