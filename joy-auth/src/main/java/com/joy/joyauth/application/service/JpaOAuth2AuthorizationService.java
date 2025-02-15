@@ -3,10 +3,7 @@ package com.joy.joyauth.application.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joy.joyauth.application.provider.MemberPrincipal;
-import com.joy.joyauth.application.provider.MemberPrincipalMixin;
-import com.joy.joyauth.application.provider.SellerPrincipal;
-import com.joy.joyauth.application.provider.SellerPrincipalMixin;
+import com.joy.joyauth.application.provider.*;
 import com.joy.joyauth.adapter.out.persistence.entity.Authorization;
 import com.joy.joyauth.adapter.out.persistence.jpa.AuthorizationRepository;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -30,6 +27,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 @Component
@@ -50,6 +48,7 @@ public class JpaOAuth2AuthorizationService implements OAuth2AuthorizationService
         this.objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
         this.objectMapper.addMixIn(SellerPrincipal.class, SellerPrincipalMixin.class);
         this.objectMapper.addMixIn(MemberPrincipal.class, MemberPrincipalMixin.class);
+        this.objectMapper.addMixIn(UUID.class, UuidMixin.class);
     }
 
     @Override

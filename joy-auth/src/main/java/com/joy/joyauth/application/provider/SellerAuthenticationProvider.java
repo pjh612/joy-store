@@ -26,7 +26,7 @@ public class SellerAuthenticationProvider implements AuthenticationProvider {
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_SELLER"));
         SellerPrincipal principal = new SellerPrincipal(
-                auth.sellerId().toString(),
+                auth.sellerId(),
                 username,
                 authorities
         );
