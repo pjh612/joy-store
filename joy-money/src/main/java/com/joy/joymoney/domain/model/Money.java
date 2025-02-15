@@ -21,7 +21,7 @@ public class Money {
     }
 
     public BigDecimal decrease(BigDecimal amount) {
-        if(this.balance.compareTo(amount) < 0) {
+        if (this.balance.compareTo(amount) < 0) {
             throw new WalletBalanceException("잔액이 부족합니다.");
         }
         this.balance = this.balance.subtract(amount);
