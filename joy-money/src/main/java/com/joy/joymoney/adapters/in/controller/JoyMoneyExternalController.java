@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/external")
@@ -17,6 +19,6 @@ public class JoyMoneyExternalController {
 
     @GetMapping("/money")
     public MoneyInfoResponse getMoneyInfo(@AuthenticationPrincipal Jwt jwt) {
-        return queryMoneyByMemberIdUseCase.query(jwt.getClaim("id"));
+        return queryMoneyByMemberIdUseCase.query(UUID.fromString(jwt.getClaim("id")));
     }
 }
