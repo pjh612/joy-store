@@ -44,7 +44,7 @@ public class PlaceOrderService implements PlaceOrderUseCase {
         List<String> itemSeqeunceList = orderItemMap.keySet()
                 .stream()
                 .toList();
-        List<Item> items = itemRepository.findAllBySequenceIn(itemSeqeunceList);
+        List<Item> items = itemRepository.findAllByIdIn(itemSeqeunceList);
 
         AbstractCoupon coupon = null;
         if(request.couponId() != null) {

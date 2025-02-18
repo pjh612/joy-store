@@ -5,7 +5,7 @@ import com.joy.joyapi.item.domain.models.Item;
 import java.util.List;
 
 public interface ItemRepository {
-    List<Item> findAllBySequenceIn(List<String> ids);
+    List<Item> findAllByIdIn(List<String> ids);
 
     List<Item> findAll();
 

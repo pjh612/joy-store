@@ -33,7 +33,7 @@ public class QueryOrderService implements QueryOrderUseCase {
                 .map(OrderItem::getItemId)
                 .toList();
 
-        Map<String, ItemResponse> itemResponseMap = itemRepository.findAllBySequenceIn(itemSequences)
+        Map<String, ItemResponse> itemResponseMap = itemRepository.findAllByIdIn(itemSequences)
                 .stream()
                 .map(ItemResponse::of)
                 .collect(Collectors.toMap(ItemResponse::id, Function.identity()));

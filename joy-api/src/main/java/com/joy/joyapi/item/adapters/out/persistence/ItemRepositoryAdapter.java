@@ -20,7 +20,7 @@ public class ItemRepositoryAdapter implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAllBySequenceIn(List<String> ids) {
+    public List<Item> findAllByIdIn(List<String> ids) {
         return itemJpaRepository.findAllByIdIn(ids)
                 .stream()
                 .map(itemEntityConverter::toDomain)
