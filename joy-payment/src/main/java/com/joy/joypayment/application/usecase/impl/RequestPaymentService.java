@@ -9,6 +9,7 @@ import com.joy.joypayment.application.client.dto.MoneyResponse;
 import com.joy.joypayment.application.client.dto.RegisteredBankAccountResponse;
 import com.joy.joypayment.application.dto.CreatePaymentRequest;
 import com.joy.joypayment.application.dto.PaymentResponse;
+import com.joy.joypayment.application.dto.PreparePaymentRequest;
 import com.joy.joypayment.application.event.PaymentRequestEvent;
 import com.joy.joypayment.application.usecase.RequestPaymentUseCase;
 import com.joy.joypayment.domain.model.PaymentRequest;
@@ -34,25 +35,21 @@ public class RequestPaymentService implements RequestPaymentUseCase {
     @Override
     @Transactional
     public void startPaymentSaga(CreatePaymentRequest request) {
-        log.info("validate member");
         MemberResponse member = memberClient.getMemberById(request.requestMemberId());
         if (member == null) {
             throw new IllegalArgumentException("잘못된 유저 정보");
         }
 
-        log.info("validate bank account");
         RegisteredBankAccountResponse registeredBankAccount = bankingClient.getRegisteredBankAccount(request.requestMemberId());
         if (registeredBankAccount == null) {
             throw new IllegalArgumentException("유효하지 않은 계좌");
         }
 
-        log.info("validate money");
         MoneyResponse moneyResponse = moneyClient.getMemberById();
         if (moneyResponse == null) {
             throw new IllegalArgumentException("머니 정보가 없습니다.");
         }
 
-        log.info("validate requestPrice");
         if (moneyResponse.balance().compareTo(request.requestPrice()) < 0) {
             throw new IllegalArgumentException("충전이 필요합니다.");
         }
@@ -82,5 +79,14 @@ public class RequestPaymentService implements RequestPaymentUseCase {
         paymentRequest.fail();
 
         paymentRequestRepository.save(paymentRequest);
+    }
+
+    @Override
+    @Transactional
+    public UUID preparePayment(PreparePaymentRequest request) {
+        PaymentRequest paymentRequest = PaymentRequest.createNew(request.requestMemberId(), request.requestPrice(), request.clientId());
+        PaymentRequest save = paymentRequestRepository.save(paymentRequest);
+
+        return save.getRequestId();
     }
 }

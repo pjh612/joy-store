@@ -52,7 +52,10 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers("/api/payment-request-prepare").permitAll()
+                                .anyRequest().authenticated())
                 .oauth2Login(oauth2Login -> oauth2Login.loginPage("/oauth2/authorization/joy-payment-oidc"))
                 .oauth2Client(Customizer.withDefaults());
         return http.build();
