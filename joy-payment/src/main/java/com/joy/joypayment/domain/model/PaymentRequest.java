@@ -16,12 +16,16 @@ public class PaymentRequest {
     private UUID requestId;
     private UUID requestMemberId;
     private BigDecimal requestPrice;
-    private UUID sellerId;
+    private UUID clientId;
     private int paymentStatus;
     private Instant approvedAt;
 
-    public static PaymentRequest createNew(UUID requestId, UUID requestMemberId, BigDecimal requestPrice, UUID sellerId) {
-        return new PaymentRequest(requestId, requestMemberId, requestPrice, sellerId, 0, null);
+    public static PaymentRequest createNew(UUID requestMemberId, BigDecimal requestPrice, UUID clientId) {
+        return new PaymentRequest(null, requestMemberId, requestPrice, clientId, 0, null);
+    }
+
+    public static PaymentRequest createNew(UUID requestId, UUID requestMemberId, BigDecimal requestPrice, UUID clientId) {
+        return new PaymentRequest(requestId, requestMemberId, requestPrice, clientId, 0, null);
     }
 
     public void success() {

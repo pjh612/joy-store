@@ -20,7 +20,7 @@ public class PaymentRequestConverter {
                 domain.getRequestId(),
                 domain.getRequestMemberId(),
                 domain.getRequestPrice(),
-                domain.getSellerId(),
+                domain.getClientId(),
                 domain.getPaymentStatus(),
                 domain.getApprovedAt()
         );
