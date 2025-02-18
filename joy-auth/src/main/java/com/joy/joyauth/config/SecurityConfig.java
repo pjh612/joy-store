@@ -8,6 +8,7 @@ import com.joy.joyauth.application.provider.SellerPrincipal;
 import com.joy.joyauth.application.service.MemberService;
 import com.joy.joyauth.application.service.SellerService;
 import com.joy.joyauth.util.ParameterRequestMatcher;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -28,12 +29,13 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.util.LinkedHashMap;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -46,8 +48,10 @@ public class SecurityConfig {
                 .oidc(oidc -> oidc.clientRegistrationEndpoint(Customizer.withDefaults()));
 
         LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> entryPoint = new LinkedHashMap<>();
-        entryPoint.put(new ParameterRequestMatcher("client_id", "joy-ad"), new LoginUrlAuthenticationEntryPoint("/seller/login"));
-        entryPoint.put(new ParameterRequestMatcher("client_id", "joy-payment"), new LoginUrlAuthenticationEntryPoint("/member/login"));
+        entryPoint.put(new ParameterRequestMatcher("client_id", "joy-ad"), new RedirectLoginUrlAuthenticationEntryPoint("/seller/login"));
+        entryPoint.put(new ParameterRequestMatcher("client_id", "joy-payment"), new RedirectLoginUrlAuthenticationEntryPoint("/member/login"));
+
+
 
         return http
                 .exceptionHandling(exceptions -> exceptions.defaultAuthenticationEntryPointFor(
@@ -70,7 +74,9 @@ public class SecurityConfig {
                         .loginProcessingUrl("/seller/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
+                        .successHandler(successHandler())
                 )
+
                 .authenticationProvider(sellerAuthenticationProvider);
         return http.build();
     }
@@ -88,9 +94,17 @@ public class SecurityConfig {
                         .loginProcessingUrl("/member/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
+                        .successHandler(successHandler())
                 )
                 .authenticationProvider(memberAuthenticationProvider);
         return http.build();
+    }
+
+    private SavedRequestAwareAuthenticationSuccessHandler successHandler() {
+        SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+        savedRequestAwareAuthenticationSuccessHandler.setTargetUrlParameter("redirect_uri");
+
+        return savedRequestAwareAuthenticationSuccessHandler;
     }
 
     @Bean
