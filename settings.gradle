@@ -6,7 +6,4 @@ include "joy-ad"
 include "joy-auth"
 include "joy-admin"
 include "joy-common"
-include "joy-money"
-include "joy-banking"
-include "joy-orchestrator"
-include "joy-payment"
+
