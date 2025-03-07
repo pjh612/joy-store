@@ -1,5 +1,6 @@
 package com.joy.joyapi.order.adapters.in;
 
+import com.joy.joyapi.order.application.usecase.criteria.QueryOrderCriteria;
 import com.joy.joyapi.order.application.usecase.dto.CreateProvisionalOrderResponse;
 import com.joy.joyapi.order.application.usecase.PlaceOrderUseCase;
 import com.joy.joyapi.order.application.usecase.QueryOrderUseCase;
@@ -26,8 +27,8 @@ public class OrderController {
     private final SubscribePlaceOrderAlarmUseCase subscribePlaceOrderAlarmUseCase;
 
     @GetMapping
-    public ApiResponse<List<FindOrderResponse>> getAllByMemberId(@RequestParam UUID memberId) {
-        return ApiResponse.of(queryOrderUsecase.queryByMemberId(memberId));
+    public ApiResponse<List<FindOrderResponse>> getByCriteria(QueryOrderCriteria criteria) {
+        return ApiResponse.of(queryOrderUsecase.queryByCriteria(criteria));
     }
 
     @PostMapping

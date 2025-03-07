@@ -4,6 +4,7 @@ import com.joy.joyapi.item.application.dto.ItemResponse;
 import com.joy.joyapi.item.domain.models.Item;
 import com.joy.joyapi.item.domain.repository.ItemRepository;
 import com.joy.joyapi.order.application.usecase.QueryOrderUseCase;
+import com.joy.joyapi.order.application.usecase.criteria.QueryOrderCriteria;
 import com.joy.joyapi.order.application.usecase.dto.FindOrderResponse;
 import com.joy.joyapi.order.domain.models.Order;
 import com.joy.joyapi.order.domain.models.OrderItem;
@@ -28,8 +29,8 @@ public class QueryOrderService implements QueryOrderUseCase {
     }
 
     @Override
-    public List<FindOrderResponse> queryByMemberId(UUID memberId) {
-        List<Order> orders = orderRepository.findAllByMemberId(memberId);
+    public List<FindOrderResponse> queryByCriteria(QueryOrderCriteria criteria) {
+        List<Order> orders = orderRepository.findByCriteria(criteria);
         List<UUID> itemSequences = orders.stream()
                 .flatMap(it -> it.getOrderItems().stream())
                 .map(OrderItem::getItemId)

@@ -17,8 +17,8 @@ public class OrderController {
     private final OrderClient orderClient;
 
     @GetMapping
-    public ApiResponse<List<FindOrderResponse>> getAllByMemberId(@AuthenticationPrincipal StoreMemberDetails storeMemberDetails) {
-        return orderClient.getAllByMemberId(storeMemberDetails.getId());
+    public ApiResponse<List<FindOrderResponse>> getByCriteria(@AuthenticationPrincipal StoreMemberDetails storeMemberDetails) {
+        return orderClient.getByCriteria(storeMemberDetails.getId(), List.of("PAYMENT_WAITING"));
     }
 
     @PostMapping

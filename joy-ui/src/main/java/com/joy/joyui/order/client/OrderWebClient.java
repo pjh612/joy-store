@@ -7,6 +7,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,10 +28,11 @@ public class OrderWebClient implements OrderClient {
     }
 
     @Override
-    public ApiResponse<List<FindOrderResponse>> getAllByMemberId(UUID memberId) {
+    public ApiResponse<List<FindOrderResponse>> getByCriteria(UUID buyerId, Collection<String> excludeStatus) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/orders")
-                        .queryParam("memberId", memberId)
+                        .queryParam("buyerId", buyerId)
+                        .queryParam("excludeStatus", excludeStatus)
                         .build())
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<List<FindOrderResponse>>>() {
