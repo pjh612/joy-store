@@ -137,19 +137,21 @@ const showAllItemsSuccess = (data) => {
             </div>`;
 
     $("#itemContainer").append(html);
-    $("#submitOrderButton").on("click", (e)=> {prepareOrder(e)});
+    $("#submitOrderButton").on("click", (e) => {
+        prepareOrder(e)
+    });
 }
 
 const getOrderItemName = () => {
     const $item = $(".item-checkbox:checked");
-    if(!$item) {
+    if (!$item) {
         return null;
     }
 
     const size = $item.length;
     const title = $item.closest("tr").find(".item-title").text();
-    if(size >= 2) {
-        return title + "외 " + size +"건";
+    if (size >= 2) {
+        return title + "외 " + size + "건";
     }
     return title;
 }
@@ -172,6 +174,11 @@ const createOrderItemParameter = () => {
 
 const prepareOrder = (e) => {
     const orderItems = createOrderItemParameter();
+    if (orderItems == null || orderItems.length === 0) {
+        alert("주문할 상품을 선택해주세요.");
+        return;
+    }
+
     $.ajax({
         type: "post",
         url: "/api/orders/prepare",
@@ -185,7 +192,7 @@ const prepareOrder = (e) => {
             const amount = response.amount;
             const orderId = response.id;
             const productName = getOrderItemName();
-            pay(orderId, amount,productName);
+            pay(orderId, amount, productName);
 
         },
         error: function (e) {
