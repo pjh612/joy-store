@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @AllArgsConstructor
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class RateAmountCouponEntity extends BaseCouponEntity {
     private Double percent;
 
-    public RateAmountCouponEntity(String id, CouponStatus status, Double percent) {
+    public RateAmountCouponEntity(UUID id, CouponStatus status, Double percent) {
         super(id, status);
         this.percent = percent;
     }

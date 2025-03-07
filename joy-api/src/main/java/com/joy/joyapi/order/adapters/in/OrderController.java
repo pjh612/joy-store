@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class OrderController {
     private final SubscribePlaceOrderAlarmUseCase subscribePlaceOrderAlarmUseCase;
 
     @GetMapping
-    public ApiResponse<List<FindOrderResponse>> getAllByMemberId(@RequestParam String memberId) {
+    public ApiResponse<List<FindOrderResponse>> getAllByMemberId(@RequestParam UUID memberId) {
         return ApiResponse.of(queryOrderUsecase.queryByMemberId(memberId));
     }
 
@@ -36,4 +37,10 @@ public class OrderController {
     public SseEmitter subscribeAlarm(@RequestParam Long memberId, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
         return subscribePlaceOrderAlarmUseCase.subscribe(memberId.toString(), lastEventId);
     }
+
+    @GetMapping("/{orderId}")
+    public ApiResponse<FindOrderResponse> getByOrderId(@PathVariable UUID orderId) {
+        return ApiResponse.of(queryOrderUsecase.queryByOrderId(orderId));
+    }
+
 }

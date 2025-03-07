@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class SellerOrderController {
     private final QueryOrderUseCase queryOrderUsecase;
 
     @GetMapping("/{sellerId}/orders")
-    public ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(@PathVariable String sellerId) {
+    public ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(@PathVariable UUID sellerId) {
         return ApiResponse.of(queryOrderUsecase.queryBySellerId(sellerId));
     }
 }

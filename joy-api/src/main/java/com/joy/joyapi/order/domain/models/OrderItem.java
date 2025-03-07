@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
-    private String id;
-    private String itemId;
+    private UUID id;
+    private UUID itemId;
     private BigDecimal unitPrice; // 주문 상품 개당 가격
     private Integer quantity; // 주문 상품 개수
     private BigDecimal discountAmount; // 할인 금액
@@ -23,15 +24,15 @@ public class OrderItem {
     private String creator;
     private String updater;
 
-    public static OrderItem createNew(String itemId, String buyerId, BigDecimal unitPrice, Integer quantity) {
+    public static OrderItem createNew(UUID itemId, UUID buyerId, BigDecimal unitPrice, Integer quantity) {
         OrderItem orderItem = new OrderItem();
         orderItem.itemId = itemId;
         orderItem.unitPrice = unitPrice;
         orderItem.quantity = quantity;
         orderItem.createdAt = Instant.now();
         orderItem.updatedAt = Instant.now();
-        orderItem.creator = buyerId;
-        orderItem.updater = buyerId;
+        orderItem.creator = buyerId.toString();
+        orderItem.updater = buyerId.toString();
 
         return orderItem;
     }

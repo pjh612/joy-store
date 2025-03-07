@@ -8,6 +8,8 @@ import com.joy.joyapi.member.application.dto.QueryMemberResponse;
 import com.joy.joycommon.api.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/members")
 public class MemberController {
@@ -30,7 +32,7 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<QueryMemberResponse> findByMemberId(@PathVariable String id) {
+    public ApiResponse<QueryMemberResponse> findByMemberId(@PathVariable UUID id) {
         return new ApiResponse<>(queryMemberUsecase.queryById(id));
     }
 

@@ -7,6 +7,8 @@ import com.joy.joyapi.order.domain.repository.OrderRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class OrderRepositoryAdapter implements OrderRepository {
@@ -21,7 +23,7 @@ public class OrderRepositoryAdapter implements OrderRepository {
     }
 
     @Override
-    public List<Order> findAllByMemberId(String memberId) {
+    public List<Order> findAllByMemberId(UUID memberId) {
         List<OrderEntity> orderEntities = orderJpaRepository.findAllByBuyerId(memberId);
 
         return orderEntities.stream()
@@ -38,8 +40,8 @@ public class OrderRepositoryAdapter implements OrderRepository {
     }
 
     @Override
-    public List<Order> findAllByItemSequenceIn(List<String> itemSequences) {
-        List<OrderEntity> orderEntities = orderItemJpaRepository.findAllOrderItemByItemIdIn(itemSequences)
+    public List<Order> findAllByItemIdsIn(List<UUID> itemIds) {
+        List<OrderEntity> orderEntities = orderItemJpaRepository.findAllOrderItemByItemIdIn(itemIds)
                 .stream()
                 .map(OrderItemEntity::getOrder)
                 .toList();
@@ -50,8 +52,8 @@ public class OrderRepositoryAdapter implements OrderRepository {
     }
 
     @Override
-    public List<Order> findAllByItemSequence(String itemSequence) {
-        return orderItemJpaRepository.findAllByItemSeq(itemSequence)
+    public List<Order> findAllByItemId(UUID itemId) {
+        return orderItemJpaRepository.findAllByItemSeq(itemId)
                 .stream()
                 .map(it -> orderEntityConverter.toOrderDomain(it.getOrder(), it.getOrder().getOrderItemList()))
                 .toList();

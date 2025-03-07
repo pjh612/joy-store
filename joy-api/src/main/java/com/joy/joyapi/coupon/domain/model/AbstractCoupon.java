@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class AbstractCoupon {
-    private String id;
+    private UUID id;
     private CouponStatus status;
 
     public abstract BigDecimal getAppliedPrice(BigDecimal originalPrice);

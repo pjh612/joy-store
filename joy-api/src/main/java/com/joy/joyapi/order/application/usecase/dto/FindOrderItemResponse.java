@@ -4,9 +4,10 @@ import com.joy.joyapi.item.application.dto.ItemResponse;
 import com.joy.joyapi.order.domain.models.OrderItem;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record FindOrderItemResponse(
-        String id,
+        UUID id,
         ItemResponse item,
         BigDecimal unitPrice,
         Integer quantity,

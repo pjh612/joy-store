@@ -6,6 +6,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class PlaceOrderEventListener {
@@ -21,7 +22,7 @@ public class PlaceOrderEventListener {
                 .stream()
                 .map(Object::toString)
                 .toList();
-        String orderId = event.getOrderId();
+        UUID orderId = event.getOrderId();
         String message = "주문이 들어왔습니다. (주문번호 : " + orderId + ")";
 
         for (String noticeTargetId : noticeTargetIdList) {

@@ -5,10 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
-public interface ItemJpaRepository extends JpaRepository<ItemEntity, String> {
-    Collection<ItemEntity> findAllByIdIn(List<String> ids);
+public interface ItemJpaRepository extends JpaRepository<ItemEntity, UUID> {
+    Collection<ItemEntity> findAllByIdIn(Collection<UUID> ids);
 
-    List<ItemEntity> findAllBySellerId(String sellerId);
+    List<ItemEntity> findAllBySellerId(UUID sellerId);
 
 }

@@ -5,22 +5,23 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 public class Item {
-    private String id;
+    private UUID id;
     private BigDecimal price;
     private String title;
     private String description;
-    private String sellerId;
+    private UUID sellerId;
 
     private Instant createdAt;
     private Instant updatedAt;
     private String creator;
     private String updater;
 
-    public static Item createNew(BigDecimal price, String title, String description, String sellerId) {
+    public static Item createNew(BigDecimal price, String title, String description, UUID sellerId) {
         return new Item(
                 null,
                 price,
@@ -29,8 +30,8 @@ public class Item {
                 sellerId,
                 Instant.now(),
                 Instant.now(),
-                sellerId,
-                sellerId
+                sellerId.toString(),
+                sellerId.toString()
         );
     }
 }

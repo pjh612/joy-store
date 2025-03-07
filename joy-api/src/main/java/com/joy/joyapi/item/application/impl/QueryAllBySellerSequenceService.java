@@ -6,6 +6,7 @@ import com.joy.joyapi.item.domain.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class QueryAllBySellerSequenceService implements QueryAllBySellerSequenceUseCase {
@@ -16,7 +17,7 @@ public class QueryAllBySellerSequenceService implements QueryAllBySellerSequence
     }
 
     @Override
-    public List<ItemResponse> query(String sellerId) {
+    public List<ItemResponse> query(UUID sellerId) {
         return itemRepository.findAllBySellerId(sellerId)
                 .stream()
                 .map(ItemResponse::of)

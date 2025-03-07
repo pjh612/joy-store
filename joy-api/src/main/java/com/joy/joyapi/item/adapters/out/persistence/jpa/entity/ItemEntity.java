@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -20,11 +21,11 @@ import java.time.Instant;
 public class ItemEntity {
     @Id
     @UuidV7Generator
-    private String id;
+    private UUID id;
     private BigDecimal price;
     private String title;
     private String description;
-    private String sellerId;
+    private UUID sellerId;
     private Instant createdAt;
     private Instant updatedAt;
     private String creator;

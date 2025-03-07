@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Entity
@@ -20,9 +21,9 @@ import java.util.List;
 public class OrderEntity {
     @Id
     @UuidV7Generator
-    private String id;
-    private String buyerId;
-    private String couponId;
+    private UUID id;
+    private UUID buyerId;
+    private UUID couponId;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 

@@ -7,7 +7,9 @@ import com.joy.joyapi.item.domain.models.Item;
 import com.joy.joyapi.item.domain.repository.ItemRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class ItemRepositoryAdapter implements ItemRepository {
@@ -20,7 +22,7 @@ public class ItemRepositoryAdapter implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAllByIdIn(List<String> ids) {
+    public List<Item> findAllByIdIn(Collection<UUID> ids) {
         return itemJpaRepository.findAllByIdIn(ids)
                 .stream()
                 .map(itemEntityConverter::toDomain)
@@ -36,7 +38,7 @@ public class ItemRepositoryAdapter implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAllBySellerId(String sellerId) {
+    public List<Item> findAllBySellerId(UUID sellerId) {
         return itemJpaRepository.findAllBySellerId(sellerId)
                 .stream()
                 .map(itemEntityConverter::toDomain)

@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,11 +26,11 @@ public class QueryOrderSummaryUseCaseImpl implements QueryOrderSummaryUseCase {
     }
 
     @Override
-    public OrderSummaryResponse query(String sellerId) {
+    public OrderSummaryResponse query(UUID sellerId) {
         List<Item> items = itemRepository.findAllBySellerId(sellerId);
-        Map<String, List<Order>> orderMap = items.stream()
+        Map<UUID, List<Order>> orderMap = items.stream()
                 .map(Item::getSellerId)
-                .collect(Collectors.toMap(it -> it, orderRepository::findAllByItemSequence));
+                .collect(Collectors.toMap(it -> it, orderRepository::findAllByItemId));
         long orderCount = orderMap.values()
                 .stream()
                 .mapToLong(List::size)

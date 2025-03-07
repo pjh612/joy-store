@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
-    private String id;
+    private UUID id;
     private String username;
     private String password;
     private String name;
@@ -22,7 +22,6 @@ public class Member {
     }
 
     public static Member creatNew(UUID id, String username, String password, String name, Gender gender) {
-      log.info("id {}",id.toString());
-        return new Member(id.toString(), username, password, name, gender);
+        return new Member(id, username, password, name, gender);
     }
 }

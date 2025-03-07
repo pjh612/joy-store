@@ -8,21 +8,22 @@ import com.joy.joyapi.order.domain.service.OrderService;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class OrderServiceImpl implements OrderService {
 
     @Override
-    public Order order(String buyerId, List<Item> orderItems, Map<String, Integer> orderItemMap, AbstractCoupon coupon) {
-        Order newOrder = Order.createNew(buyerId);
+    public Order order(UUID buyerId, List<Item> orderItems, Map<UUID, Integer> orderItemMap, AbstractCoupon coupon) {
+        Order newOrder = Order.createNew(id, buyerId);
 
         for (Item orderItem : orderItems) {
             newOrder.addOrderItem(orderItem.getId(), orderItem.getPrice(), orderItemMap.get(orderItem.getId()));
         }
 
         if (coupon != null) {
-            Map<String, BigDecimal> originalPrices = newOrder.getOriginalPrices();
-            Map<String, BigDecimal> couponAppliedPrices = originalPrices.entrySet()
+            Map<UUID, BigDecimal> originalPrices = newOrder.getOriginalPrices();
+            Map<UUID, BigDecimal> couponAppliedPrices = originalPrices.entrySet()
                     .stream()
                     .collect(Collectors.toMap(Map.Entry::getKey, entry -> coupon.use(entry.getValue())));
             newOrder.applyCoupon(coupon.getId(), couponAppliedPrices);

@@ -10,6 +10,7 @@ import com.joy.joycommon.api.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/items")
@@ -35,7 +36,7 @@ public class ItemController {
     }
 
     @GetMapping("/sellers/{sellerId}")
-    public ApiResponse<List<ItemResponse>> getAllBySellerSequence(@PathVariable String sellerId) {
+    public ApiResponse<List<ItemResponse>> getAllBySellerSequence(@PathVariable UUID sellerId) {
         return ApiResponse.of(queryAllBySellerIdUseCase.query(sellerId));
     }
 }

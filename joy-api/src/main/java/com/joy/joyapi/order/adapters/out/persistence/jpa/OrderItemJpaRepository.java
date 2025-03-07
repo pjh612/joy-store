@@ -6,13 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface OrderItemJpaRepository extends JpaRepository<OrderItemEntity, String> {
-    List<OrderItemEntity> findAllByOrderId(String id);
+public interface OrderItemJpaRepository extends JpaRepository<OrderItemEntity, UUID> {
+    List<OrderItemEntity> findAllByOrderId(UUID id);
 
     @Query("SELECT oi FROM OrderItemEntity oi join fetch oi.order WHERE oi.itemId IN :itemIds")
-    List<OrderItemEntity> findAllOrderItemByItemIdIn(@Param("itemIds") List<String> itemIds);
+    List<OrderItemEntity> findAllOrderItemByItemIdIn(@Param("itemIds") List<UUID> itemIds);
 
     @Query("SELECT oi FROM OrderItemEntity oi JOIN FETCH oi.order WHERE oi.itemId = :itemId")
-    List<OrderItemEntity> findAllByItemSeq(@Param("itemId") String itemId);
+    List<OrderItemEntity> findAllByItemSeq(@Param("itemId") UUID itemId);
 }

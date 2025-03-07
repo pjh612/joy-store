@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @Entity
 @Table(name = "base_coupon")
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class BaseCouponEntity {
     @Id
     @UuidV7Generator
-    private String id;
+    private UUID id;
 
     @Enumerated(EnumType.STRING)
     private CouponStatus status;

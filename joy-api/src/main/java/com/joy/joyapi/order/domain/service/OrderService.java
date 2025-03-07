@@ -6,7 +6,8 @@ import com.joy.joyapi.order.domain.models.Order;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public interface OrderService {
-    Order order(String buyerId, List<Item> items, Map<String, Integer> orderItemMap, AbstractCoupon coupon);
+    Order order(UUID buyerId, List<Item> items, Map<UUID, Integer> orderItemMap, AbstractCoupon coupon);
 }

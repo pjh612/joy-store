@@ -8,18 +8,19 @@ import com.joy.joyapi.order.domain.models.OrderStatus;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public record FindOrderResponse(
-        String id,
-        String buyerId,
+        UUID id,
+        UUID buyerId,
         OrderStatus status,
         List<FindOrderItemResponse> orderItems,
-        String couponId,
+        UUID couponId,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         Instant createdAt
 ) {
 
-    public static FindOrderResponse of(Order order, Map<String, ItemResponse> itemResponseMap) {
+    public static FindOrderResponse of(Order order, Map<UUID, ItemResponse> itemResponseMap) {
         return new FindOrderResponse(order.getId(),
                 order.getBuyerId(),
                 order.getStatus(),

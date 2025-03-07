@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -18,7 +19,7 @@ import java.math.BigDecimal;
 public class FixedAmountCouponEntity extends BaseCouponEntity {
     private BigDecimal amount;
 
-    public FixedAmountCouponEntity(String id, CouponStatus status, BigDecimal amount) {
+    public FixedAmountCouponEntity(UUID id, CouponStatus status, BigDecimal amount) {
         super(id, status);
         this.amount = amount;
     }

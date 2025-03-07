@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
@@ -18,7 +19,7 @@ public class FixedAmountCoupon extends AbstractCoupon {
         return originalPrice.subtract(amount);
     }
 
-    public FixedAmountCoupon(String id, CouponStatus status, BigDecimal amount) {
+    public FixedAmountCoupon(UUID id, CouponStatus status, BigDecimal amount) {
         super(id, status);
         this.amount = amount;
     }

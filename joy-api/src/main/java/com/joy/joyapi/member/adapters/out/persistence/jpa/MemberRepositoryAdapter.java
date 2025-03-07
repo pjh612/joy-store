@@ -7,6 +7,7 @@ import com.joy.joyapi.member.domain.repository.MemberRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class MemberRepositoryAdapter implements MemberRepository {
@@ -27,7 +28,7 @@ public class MemberRepositoryAdapter implements MemberRepository {
         return memberEntityConverter.toDomain(entity);
     }
 
-    public Optional<Member> findById(String id) {
+    public Optional<Member> findById(UUID id) {
         return memberJpaRepository.findById(id)
                 .map(memberEntityConverter::toDomain)
                 .or(Optional::empty);

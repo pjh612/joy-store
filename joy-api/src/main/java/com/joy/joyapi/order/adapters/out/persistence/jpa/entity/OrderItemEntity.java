@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -16,8 +17,8 @@ import java.time.Instant;
 public class OrderItemEntity {
     @Id
     @UuidV7Generator
-    private String id;
-    private String itemId;
+    private UUID id;
+    private UUID itemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")

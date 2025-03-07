@@ -1,7 +1,9 @@
 package com.joy.joyapi.auth.member.application.dto;
 
+import java.util.UUID;
+
 public record MemberAuthResponse(
-        String memberId,
+        UUID memberId,
         String name
 ) {
 }

@@ -5,13 +5,14 @@ import com.joy.joyapi.item.domain.models.Item;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 public record ItemResponse(
-        String id,
+        UUID id,
         BigDecimal price,
         String title,
         String description,
-        String sellerId,
+        UUID sellerId,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul") Instant createdAt,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul") Instant updatedAt,
         String creator,

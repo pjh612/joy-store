@@ -3,13 +3,15 @@ package com.joy.joyapi.order.domain.repository;
 import com.joy.joyapi.order.domain.models.Order;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface OrderRepository {
-    List<Order> findAllByMemberId(String memberId);
+    List<Order> findAllByMemberId(UUID memberId);
 
     Order save(Order order);
 
-    List<Order> findAllByItemSequenceIn(List<String> itemSequences);
+    List<Order> findAllByItemIdsIn(List<UUID> itemIds);
 
-    List<Order> findAllByItemSequence(String itemSequence);
+    List<Order> findAllByItemId(UUID itemId);
 }

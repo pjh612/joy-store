@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -26,14 +27,14 @@ public class QueryOrderService implements QueryOrderUseCase {
     }
 
     @Override
-    public List<FindOrderResponse> queryByMemberId(String memberId) {
+    public List<FindOrderResponse> queryByMemberId(UUID memberId) {
         List<Order> orders = orderRepository.findAllByMemberId(memberId);
-        List<String> itemSequences = orders.stream()
+        List<UUID> itemSequences = orders.stream()
                 .flatMap(it -> it.getOrderItems().stream())
                 .map(OrderItem::getItemId)
                 .toList();
 
-        Map<String, ItemResponse> itemResponseMap = itemRepository.findAllByIdIn(itemSequences)
+        Map<UUID, ItemResponse> itemResponseMap = itemRepository.findAllByIdIn(itemSequences)
                 .stream()
                 .map(ItemResponse::of)
                 .collect(Collectors.toMap(ItemResponse::id, Function.identity()));
@@ -45,16 +46,16 @@ public class QueryOrderService implements QueryOrderUseCase {
     }
 
     @Override
-    public List<FindOrderResponse> queryBySellerId(String sellerId) {
+    public List<FindOrderResponse> queryBySellerId(UUID sellerId) {
         List<Item> items = itemRepository.findAllBySellerId(sellerId);
 
-        Map<String, ItemResponse> itemResponseMap = items.stream()
+        Map<UUID, ItemResponse> itemResponseMap = items.stream()
                 .map(ItemResponse::of)
                 .collect(Collectors.toMap(ItemResponse::id, Function.identity()));
-        List<String> itemSequences = items.stream()
+        List<UUID> itemIds = items.stream()
                 .map(Item::getId)
                 .toList();
-        return orderRepository.findAllByItemSequenceIn(itemSequences)
+        return orderRepository.findAllByItemIdsIn(itemIds)
                 .stream()
                 .map(it -> FindOrderResponse.of(it, itemResponseMap))
                 .toList();

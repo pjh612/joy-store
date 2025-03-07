@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.util.UUID;
+
 @ToString
 @Entity
 @Getter
@@ -15,7 +17,7 @@ import lombok.*;
 public class MemberEntity {
     @Id
     @UuidV7Generator
-    private String id;
+    private UUID id;
     private String username;
     private String password;
     private String name;
