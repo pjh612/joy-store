@@ -147,7 +147,7 @@ const getOrderItemName = () => {
     }
 
     const size = $item.length;
-    const title = $item.closest("tr").find(".item-title").val();
+    const title = $item.closest("tr").find(".item-title").text();
     if(size >= 2) {
         return title + "외 " + size +"건";
     }
