@@ -9,5 +9,6 @@ public interface QueryOrderUseCase {
     List<FindOrderResponse> queryByMemberId(UUID memberId);
 
     List<FindOrderResponse> queryBySellerId(UUID sellerId);
-    
+
+    FindOrderResponse queryByOrderId(UUID orderId);
 }

@@ -58,4 +58,10 @@ public class OrderRepositoryAdapter implements OrderRepository {
                 .map(it -> orderEntityConverter.toOrderDomain(it.getOrder(), it.getOrder().getOrderItemList()))
                 .toList();
     }
+
+    @Override
+    public Optional<Order> findById(UUID orderId) {
+        return orderJpaRepository.findById(orderId)
+                .map(it -> orderEntityConverter.toOrderDomain(it, orderItemJpaRepository.findAllByOrderId(it.getId())));
+    }
 }

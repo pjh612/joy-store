@@ -3,6 +3,7 @@ package com.joy.joyapi.order.domain.models;
 import com.joy.joycommon.type.TypeModel;
 
 public enum OrderStatus implements TypeModel {
+    PAYMENT_WAITING("결제 대기중"),
     ORDER_COMPLETED("주문 완료"),
     DELIVERY_PREPARING("배송 준비 중"),
     SHIPPING("배송 중"),

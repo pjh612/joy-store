@@ -15,7 +15,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order order(UUID buyerId, List<Item> orderItems, Map<UUID, Integer> orderItemMap, AbstractCoupon coupon) {
-        Order newOrder = Order.createNew(id, buyerId);
+        Order newOrder = Order.createNew(buyerId);
 
         for (Item orderItem : orderItems) {
             newOrder.addOrderItem(orderItem.getId(), orderItem.getPrice(), orderItemMap.get(orderItem.getId()));
@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
             Map<UUID, BigDecimal> originalPrices = newOrder.getOriginalPrices();
             Map<UUID, BigDecimal> couponAppliedPrices = originalPrices.entrySet()
                     .stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey, entry -> coupon.use(entry.getValue())));
+                    .collect(Collectors.toMap(Map.Entry::getKey, entry -> coupon.getAppliedPrice(entry.getValue())));
             newOrder.applyCoupon(coupon.getId(), couponAppliedPrices);
         }
 

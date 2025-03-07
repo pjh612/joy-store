@@ -31,7 +31,7 @@ public class Order {
         Order order = new Order();
 
         order.buyerId = buyerId;
-        order.status = OrderStatus.DELIVERY_PREPARING;
+        order.status = OrderStatus.PAYMENT_WAITING;
         order.orderItems = new ArrayList<>();
         order.createdAt = Instant.now();
         order.updatedAt = Instant.now();
@@ -69,5 +69,13 @@ public class Order {
 
     public Map<UUID, BigDecimal> getOriginalPrices() {
         return orderItems.stream().collect(Collectors.toMap(OrderItem::getItemId, OrderItem::getTotalOriginalPrice));
+    }
+
+    public boolean equalsToTotalPayPrice(BigDecimal totalPayPrice) {
+        return this.getTotalPayPrice().compareTo(totalPayPrice) == 0;
+    }
+
+    public void completeOrder() {
+        this.status = OrderStatus.ORDER_COMPLETED;
     }
 }

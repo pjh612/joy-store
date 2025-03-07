@@ -8,6 +8,7 @@ import com.joy.joyapi.order.application.usecase.dto.FindOrderResponse;
 import com.joy.joyapi.order.domain.models.Order;
 import com.joy.joyapi.order.domain.models.OrderItem;
 import com.joy.joyapi.order.domain.repository.OrderRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,8 +40,7 @@ public class QueryOrderService implements QueryOrderUseCase {
                 .map(ItemResponse::of)
                 .collect(Collectors.toMap(ItemResponse::id, Function.identity()));
 
-        return orders
-                .stream()
+        return orders.stream()
                 .map(it -> FindOrderResponse.of(it, itemResponseMap))
                 .toList();
     }
@@ -59,5 +59,19 @@ public class QueryOrderService implements QueryOrderUseCase {
                 .stream()
                 .map(it -> FindOrderResponse.of(it, itemResponseMap))
                 .toList();
+    }
+
+    @Override
+    public FindOrderResponse queryByOrderId(UUID orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new EntityNotFoundException("주문 정보를 찾을 수 없습니다."));
+        List<UUID> itemIds = order.getOrderItems()
+                .stream()
+                .map(OrderItem::getItemId)
+                .toList();
+        Map<UUID, ItemResponse> itemResponseMap = itemRepository.findAllByIdIn(itemIds)
+                .stream()
+                .map(ItemResponse::of)
+                .collect(Collectors.toMap(ItemResponse::id, Function.identity()));
+        return FindOrderResponse.of(order, itemResponseMap);
     }
 }

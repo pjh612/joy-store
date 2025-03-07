@@ -21,6 +21,10 @@ public abstract class AbstractCoupon {
         return this.status == CouponStatus.AVAILABLE;
     }
 
+    public void use() {
+        this.status = CouponStatus.USED;
+    }
+
     public BigDecimal use(BigDecimal originalPrice) {
         if(!isValid()) {
             throw new InvalidCouponException();

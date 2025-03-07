@@ -14,4 +14,6 @@ public interface OrderRepository {
     List<Order> findAllByItemIdsIn(List<UUID> itemIds);
 
     List<Order> findAllByItemId(UUID itemId);
+
+    Optional<Order> findById(UUID orderId);
 }
