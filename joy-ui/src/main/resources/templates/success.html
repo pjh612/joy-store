@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="/css/success.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/harupay.js}"></script>
+    <script type="text/javascript" th:src="@{/js/success.js}"></script>
+    <title>Haru Pay</title>
+</head>
+<body class="align-center bg-gray-900 text-gray-100">
+<div class="align-center  bg-white-800 shadow rounded-lg p-4 confirm-loading">
+    <div>
+        결제 요청이 완료되었습니다. 결제 승인하여 결제를 완료해주세요.
+    </div>
+    <button id="confirmPay"
+            class="bg-yellow-400 text-gray-900 w-full py-3 rounded-lg mt-4 hover:bg-yellow-300 transition w-100">
+        결제 승인하기
+    </button>
+</div>
+
+<div class="flex-column align-center bg-white-800 shadow rounded-lg p-4 confirming">
+    <h2 class="title text-white-800">결제 중입니다 잠시만 기다려주세요.</h2>
+</div>
+
+<div class="flex-column align-center bg-gray-800 shadow rounded-lg p-4 confirm-success">
+    <h2 class="title">결제를 완료했어요</h2>
+    <div class="response-section w-100">
+        <div class="flex justify-between">
+            <span class="response-label">결제 금액</span>
+            <span id="amount" class="response-text"></span>
+        </div>
+        <div class="flex justify-between">
+            <span class="response-label">결제 ID</span>
+            <span id="paymentId" class="response-text"></span>
+        </div>
+        <button id="close"
+                class="bg-yellow-400 text-gray-900 w-full py-3 rounded-lg mt-4 hover:bg-yellow-300 transition w-100">
+            쇼핑 계속하기
+        </button>
+    </div>
+</div>
+<div class="align-center  bg-white-800 shadow rounded-lg p-4 confirm-success">
+
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+/* 응답 섹션 */
+.response-section {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 20px;
+    color: #f5f5f5; /* 밝은 텍스트 색상 */
+}
+
+.flex {
+    display: flex;
+}
+
+/* 레이블 스타일 */
+.response-section .response-label {
+    font-weight: 600;
+    color: #ffeb3b; /* 노란색 */
+    font-size: 17px;
+}
+
+/* 응답 텍스트 스타일 */
+.response-section .response-text {
+    font-weight: 500;
+    color: #f5f5f5; /* 밝은 텍스트 색상 */
+    font-size: 17px;
+    padding-left: 16px;
+    word-break: break-word;
+    text-align: right;
+}
+
+/* 중앙 정렬 클래스 */
+.align-center {
+    align-items: center;
+}
+
+/* 100% 너비 */
+.w-100 {
+    width: 100%;
+}
+
+/* 세로 방향으로 정렬 */
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 성공 메시지 */
+.confirm-success {
+    display: none;
+    margin-top: 72px;
+    background-color: #ffeb3b; /* 노란색 배경 */
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #f5f5f5;
+}
+
+/* 진행 중 메시지 */
+.confirming {
+    display: none;
+    margin-top: 72px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #f5f5f5;
+}

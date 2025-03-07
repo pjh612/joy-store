@@ -1,3 +1,9 @@
+const haruPay = HaruPay.create({
+    clientId: '01954ca4-9926-787e-a3ec-5d75d7a27721',
+    successUrl: window.location.origin + "/pay-success",
+    failureUrl: window.location.origin + "/pay-fail"
+})
+
 $(document).ready(function () {
     getOrders();
     showAllItems();
@@ -109,7 +115,7 @@ const showAllItemsSuccess = (data) => {
             <tr>
                 <td><input type="checkbox" class="item-checkbox" value="${item.id}"></td>
                 <td><span>${item.id}</span></td>
-                <td><span>${item.title}</span></td>
+                <td><span class="item-title">${item.title}</span></td>
                 <td><span>${item.description}</span></td>
                 <td><span>${item.price.toLocaleString()}</span></td>
                 <td><span>${item.createdAt}</span></td>
@@ -131,41 +137,31 @@ const showAllItemsSuccess = (data) => {
             </div>`;
 
     $("#itemContainer").append(html);
-    $("#submitOrderButton").on("click", placeOrder);
+    $("#submitOrderButton").on("click", (e)=> {prepareOrder(e)});
 }
 
-const placeOrder = () => {
-    const orderItems = createOrderItemParameter();
-
-    if (orderItems.length === 0) {
-        alert('하나 이상의 상품을 선택해주세요.');
-        return;
+const getOrderItemName = () => {
+    const $item = $(".item-checkbox:checked");
+    if(!$item) {
+        return null;
     }
-    $.ajax({
-        type: "post",
-        url: "/api/orders",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({
-            "orderItems": orderItems
-        }),
-        success: function (data) {
-            alert("주문이 완료되었습니다.");
-            location.reload();
-        },
-        error: function (e) {
-            alert("주문에 실패했습니다.");
-        }
-    });
+
+    const size = $item.length;
+    const title = $item.closest("tr").find(".item-title").val();
+    if(size >= 2) {
+        return title + "외 " + size +"건";
+    }
+    return title;
 }
 
 const createOrderItemParameter = () => {
     const selectedItems = [];
 
     $(".item-checkbox:checked").each(function () {
-        const itemSeq = $(this).val();
+        const itemId = $(this).val();
         const quantity = $(this).closest("tr").find(".item-quantity").val();
         const orderItem = {
-            itemSeq: Number(itemSeq),
+            itemId: itemId,
             quantity: Number(quantity)
         };
         selectedItems.push(orderItem);
@@ -173,3 +169,52 @@ const createOrderItemParameter = () => {
 
     return selectedItems;
 };
+
+const prepareOrder = (e) => {
+    const orderItems = createOrderItemParameter();
+    $.ajax({
+        type: "post",
+        url: "/api/orders/prepare",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "orderItems": orderItems,
+            "payType": "HARU_PAY"
+        }),
+        success: function (data) {
+            const response = data.data;
+            const amount = response.amount;
+            const orderId = response.id;
+            const productName = getOrderItemName();
+            pay(orderId, amount,productName);
+
+        },
+        error: function (e) {
+            alert("주문에 실패했습니다.");
+        }
+    });
+}
+
+
+const pay = (orderId, amount, productName) => {
+    $.ajax({
+        type: "post",
+        url: `/api/payment/prepare`,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "orderId": orderId,
+            "requestPrice": amount,
+            "productName": productName
+        }),
+        success: function (data) {
+            haruPay.open({
+                "productName": productName,
+                "requestPrice": amount,
+                "paymentId": data.paymentId,
+                "successUrl": "http://localhost:8076/pay/success"
+            });
+        },
+        error: function (e) {
+            alert("결제에 실패했습니다.");
+        }
+    });
+}

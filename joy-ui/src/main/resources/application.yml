@@ -4,6 +4,14 @@ spring:
     thymeleaf:
         cache: false
 server:
-    port: 8080
+    port: 8082
 aes:
     key: "@JYOAIPTER1@JYOAIPTER1@JYOAIPTER"
+harupay:
+    clientId: 01955c05-cf31-7b68-af5d-c892c0847a70
+    apiKey: 01955c05-cf32-7680-b477-cff57d520735
+client:
+    joy-api:
+        url: http://joy-api:8080
+    payment:
+        url: http://payments:8071

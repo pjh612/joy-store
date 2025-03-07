@@ -1,15 +1,33 @@
 package com.joy.joyui.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class WebClientConfig {
+    @Value("${harupay.apiKey}")
+    private String apiKey;
+
+    @Value("${harupay.clientId}")
+    private String clientId;
+
     @Bean
-    WebClient webClient(WebClient.Builder builder) {
+    WebClient webClient(WebClient.Builder builder, @Value("${client.joy-api.url}") String url) {
         return builder.
-                baseUrl("http://localhost:8081")
+                baseUrl(url)
+                .build();
+    }
+
+    @Bean("paymentClient")
+    WebClient paymentClient(WebClient.Builder builder, @Value("${client.payment.url}") String url) {
+        return builder.
+                baseUrl(url)
+                .defaultHeaders(it -> {
+                    it.add("Authorization", apiKey);
+                    it.add("X-PAY-CLIENT-ID", clientId);
+                })
                 .build();
     }
 }

@@ -17,7 +17,7 @@ const signin = (username, password) => {
             document.location = "/";
         },
         error: function(e) {
-            console.log(e);
+            alert(e);
         }
     });//ajax
 }
