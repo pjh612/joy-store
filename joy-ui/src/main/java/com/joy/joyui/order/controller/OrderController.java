@@ -2,9 +2,7 @@ package com.joy.joyui.order.controller;
 
 import com.joy.joycommon.api.response.ApiResponse;
 import com.joy.joyui.order.client.OrderClient;
-import com.joy.joyui.order.dto.FindOrderResponse;
-import com.joy.joyui.order.dto.PlaceOrderRequest;
-import com.joy.joyui.order.dto.PlaceOrderResponse;
+import com.joy.joyui.order.dto.*;
 import com.joy.joyui.security.StoreMemberDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,9 +22,19 @@ public class OrderController {
     }
 
     @PostMapping
-    public ApiResponse<PlaceOrderResponse> placeOrder(@RequestBody PlaceOrderRequest request, @AuthenticationPrincipal StoreMemberDetails storeMemberDetails) {
-        PlaceOrderRequest orderRequest = new PlaceOrderRequest(request.orderItems(), request.couponSequence(), storeMemberDetails.getId());
+    public ApiResponse<ConfirmOrderResponse> placeOrder(@RequestBody ConfirmOrderRequest request) {
+        return orderClient.confirmOrder(request);
+    }
 
-        return orderClient.placeOrder(orderRequest);
+    @PostMapping("/prepare")
+    public ApiResponse<CreateProvisionalOrderResponse> prepareOrder(@RequestBody CreateProvisionalOrderRequest request, @AuthenticationPrincipal StoreMemberDetails storeMemberDetails) {
+        CreateProvisionalOrderCommand command = new CreateProvisionalOrderCommand(
+                request.orderItems().stream().map(it -> new CreateProvisionalOrderCommand.OrderItemRequestDto(it.itemId(), it.quantity())).toList(),
+                request.couponId(),
+                storeMemberDetails.getId(),
+                request.payType()
+        );
+
+        return orderClient.createProvisionalOrder(command);
     }
 }

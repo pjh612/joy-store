@@ -1,15 +1,16 @@
-package com.joy.joyapi.order.application.usecase.dto;
+package com.joy.joyui.order.dto;
 
 import java.util.List;
 
-public record PlaceOrderRequest(
+public record CreateProvisionalOrderRequest(
         List<OrderItemRequestDto> orderItems,
         String couponId,
-        String buyerId) {
-
+        String payType
+) {
     public record OrderItemRequestDto(
             String itemId,
             Integer quantity
     ) {
     }
 }
+
