@@ -5,10 +5,12 @@ import com.joy.joyui.member.dto.FindMemberResponse;
 import com.joy.joyui.member.dto.MemberSignupRequest;
 import com.joy.joyui.member.dto.MemberSignupResponse;
 
+import java.util.UUID;
+
 public interface MemberClient {
     ApiResponse<MemberSignupResponse> signup(MemberSignupRequest request);
 
     ApiResponse<FindMemberResponse> findByUsername(String username);
 
-    ApiResponse<FindMemberResponse> findByMemberId(String memberId);
+    ApiResponse<FindMemberResponse> findByMemberId(UUID memberId);
 }

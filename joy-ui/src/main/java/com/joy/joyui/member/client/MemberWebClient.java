@@ -9,6 +9,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class MemberWebClient implements MemberClient {
@@ -38,7 +40,7 @@ public class MemberWebClient implements MemberClient {
     }
 
     @Override
-    public ApiResponse<FindMemberResponse> findByMemberId(String memberId) {
+    public ApiResponse<FindMemberResponse> findByMemberId(UUID memberId) {
         return webClient.get()
                 .uri("/api/members/{id}", memberId)
                 .retrieve()

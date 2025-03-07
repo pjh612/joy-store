@@ -7,6 +7,8 @@ import com.joy.joyui.member.dto.FindMemberResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.UUID;
+
 public class StoreUserDetailsPrincipalExtractor implements UserDetailsExtractor<StoreMemberDetails> {
     private final MemberClient memberClient;
     private final AesCipher aesCipher;
@@ -27,8 +29,7 @@ public class StoreUserDetailsPrincipalExtractor implements UserDetailsExtractor<
             if (CommonCookie.SESSION_COOKIE.getName().equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                String memberId = String.valueOf(aesCipher.decrypt(value));
-
+                UUID memberId = UUID.fromString(String.valueOf(aesCipher.decrypt(value)));
                 try {
                     ApiResponse<FindMemberResponse> response = memberClient.findByMemberId(memberId);
                     FindMemberResponse member = response.getData();
@@ -53,7 +54,7 @@ public class StoreUserDetailsPrincipalExtractor implements UserDetailsExtractor<
             if (CommonCookie.SESSION_COOKIE.getName().equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                String memberId = String.valueOf(aesCipher.decrypt(value));
+                UUID memberId = UUID.fromString(String.valueOf(aesCipher.decrypt(value)));
                 try {
                     ApiResponse<FindMemberResponse> response = memberClient.findByMemberId(memberId);
                     FindMemberResponse member = response.getData();

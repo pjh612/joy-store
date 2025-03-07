@@ -20,7 +20,6 @@ public class OrderExternalController {
 
     @GetMapping("/summary")
     public ApiResponse<OrderSummaryResponse> getSummaryBySellerId(@AuthenticationPrincipal Jwt jwt) {
-
-        return ApiResponse.of(queryOrderSummaryUseCase.query((String) jwt.getClaims().get("id")));
+        return ApiResponse.of(queryOrderSummaryUseCase.query(UUID.fromString((String) jwt.getClaims().get("id"))));
     }
 }
