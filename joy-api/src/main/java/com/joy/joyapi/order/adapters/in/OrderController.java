@@ -1,15 +1,12 @@
 package com.joy.joyapi.order.adapters.in;
 
-import com.joy.joyapi.order.application.usecase.criteria.QueryOrderCriteria;
-import com.joy.joyapi.order.application.usecase.dto.CreateProvisionalOrderResponse;
 import com.joy.joyapi.order.application.usecase.PlaceOrderUseCase;
 import com.joy.joyapi.order.application.usecase.QueryOrderUseCase;
 import com.joy.joyapi.order.application.usecase.SubscribePlaceOrderAlarmUseCase;
-import com.joy.joyapi.order.application.usecase.dto.CreateProvisionalOrderRequest;
-import com.joy.joyapi.order.application.usecase.dto.FindOrderResponse;
-import com.joy.joyapi.order.application.usecase.dto.ConfirmOrderRequest;
-import com.joy.joyapi.order.application.usecase.dto.ConfirmOrderResponse;
+import com.joy.joyapi.order.application.usecase.criteria.QueryOrderCriteria;
+import com.joy.joyapi.order.application.usecase.dto.*;
 import com.joy.joycommon.api.response.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +29,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ApiResponse<ConfirmOrderResponse> confirmOrder(@RequestBody ConfirmOrderRequest request) {
+    public ApiResponse<ConfirmOrderResponse> confirmOrder(@Valid @RequestBody ConfirmOrderRequest request) {
         return ApiResponse.of(placeOrderUseCase.confirmOrder(request));
     }
 
@@ -48,7 +45,7 @@ public class OrderController {
 
 
     @PostMapping("/provisional")
-    public ApiResponse<CreateProvisionalOrderResponse> createProvisionalOrder(@RequestBody CreateProvisionalOrderRequest request) {
+    public ApiResponse<CreateProvisionalOrderResponse> createProvisionalOrder(@Valid @RequestBody CreateProvisionalOrderRequest request) {
         return ApiResponse.of(placeOrderUseCase.createProvisionalOrder(request));
     }
 }
