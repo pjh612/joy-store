@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface OrderClient {
     ApiResponse<ConfirmOrderResponse> confirmOrder(ConfirmOrderRequest request);
 
-    ApiResponse<List<FindOrderResponse>> getByCriteria(UUID buyerId, Collection<String> excludeStatus);
+    ApiResponse<List<FindOrderResponse>> getByCriteria(UUID buyerId, Collection<String> excludeStatus, String direction, UUID lastId, int size);
 
     ApiResponse<CreateProvisionalOrderResponse> createProvisionalOrder(CreateProvisionalOrderCommand request);
 

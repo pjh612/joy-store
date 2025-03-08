@@ -28,11 +28,15 @@ public class OrderWebClient implements OrderClient {
     }
 
     @Override
-    public ApiResponse<List<FindOrderResponse>> getByCriteria(UUID buyerId, Collection<String> excludeStatus) {
+    public ApiResponse<List<FindOrderResponse>> getByCriteria(UUID buyerId, Collection<String> excludeStatus, String direction, UUID lastId, int size) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/orders")
                         .queryParam("buyerId", buyerId)
                         .queryParam("excludeStatus", excludeStatus)
+                        .queryParam("direction", direction)
+                        .queryParam("lastId", lastId)
+                        .queryParam("sort","id")
+                        .queryParam("size", size)
                         .build())
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<List<FindOrderResponse>>>() {

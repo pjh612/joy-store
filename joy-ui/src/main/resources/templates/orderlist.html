@@ -1,9 +1,10 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <link rel="stylesheet" type="text/css" href="/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/css/orderlist.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://pjh612.github.io/haru-pay/payments/src/main/resources/static/js/harupay.js"></script>
-    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script type="text/javascript" th:src="@{/js/orderlist.js}"></script>
     <title>Joy Store</title>
 </head>
 <body>
@@ -20,11 +21,10 @@
     </header>
 
     <div>
-
-        <div><h3>상품 목록</h3></div>
-        <div id="itemContainer"></div>
-        <div id="orderListButtonContainer">
-            <a class="btn" th:href="@{/orders}">주문 목록 보기</a>
+        <div><h3>내 주문 리스트</h3></div>
+        <div id="orderContainer" class="order-list"></div>
+        <div id="loadMoreContainer">
+            <button id="loadMoreBtn" class="btn">더보기</button>
         </div>
     </div>
 </div>
