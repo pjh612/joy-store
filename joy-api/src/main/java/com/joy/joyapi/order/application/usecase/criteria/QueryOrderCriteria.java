@@ -7,7 +7,11 @@ import java.util.UUID;
 
 public record QueryOrderCriteria(
         UUID buyerId,
-        Collection<OrderStatus> excludeStatus
+        Collection<OrderStatus> excludeStatus,
+        UUID lastId,
+        String sort,
+        String direction,
+        long size
 ) {
 
 }
