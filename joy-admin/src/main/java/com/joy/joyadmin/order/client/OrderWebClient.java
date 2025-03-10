@@ -10,6 +10,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class OrderWebClient implements OrderClient {
     private final WebClient webClient;
 
     @Override
-    public ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(String id) {
+    public ApiResponse<List<FindOrderResponse>> getAllBySellerId(UUID id) {
         return webClient.get()
                 .uri("/api/sellers/{sellerId}/orders", id)
                 .retrieve()
@@ -27,7 +28,7 @@ public class OrderWebClient implements OrderClient {
     }
 
     @Override
-    public Flux<ServerSentEvent<String>> subscribeAlarm(String memberId, String lastEventId) {
+    public Flux<ServerSentEvent<String>> subscribeAlarm(UUID memberId, String lastEventId) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/orders/alarm/subscription")
                         .queryParam("memberId", memberId)

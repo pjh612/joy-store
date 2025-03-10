@@ -27,7 +27,7 @@ public class StoreSellerAuthenticationProvider implements AuthenticationProvider
         try {
             ApiResponse<SellerAuthResponse> apiResponse = sellerAuthClient.authenticate(authRequest);
             SellerAuthResponse authResponse = apiResponse.getData();
-            StoreSellerDetails principal = new StoreSellerDetails(authResponse.sellerSequence(), username, password, authResponse.name());
+            StoreSellerDetails principal = new StoreSellerDetails(authResponse.sellerId(), username, password, authResponse.name());
 
             return new UsernamePasswordAuthenticationToken(principal, null, null);
         } catch (Exception e) {

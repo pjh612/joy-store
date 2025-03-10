@@ -34,7 +34,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/alarm/subscription", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter subscribeAlarm(@RequestParam Long memberId, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+    public SseEmitter subscribeAlarm(@RequestParam UUID memberId, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
         return subscribePlaceOrderAlarmUseCase.subscribe(memberId.toString(), lastEventId);
     }
 

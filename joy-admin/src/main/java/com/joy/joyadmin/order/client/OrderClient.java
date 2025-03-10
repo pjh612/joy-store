@@ -6,9 +6,10 @@ import org.springframework.http.codec.ServerSentEvent;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface OrderClient {
-    ApiResponse<List<FindOrderResponse>> getAllBySellerSequence(String id);
+    ApiResponse<List<FindOrderResponse>> getAllBySellerId(UUID id);
 
-    Flux<ServerSentEvent<String>> subscribeAlarm(String memberId, String lastEventId);
+    Flux<ServerSentEvent<String>> subscribeAlarm(UUID memberId, String lastEventId);
 }

@@ -1,7 +1,9 @@
 package com.joy.joyadmin.auth.dto;
 
+import java.util.UUID;
+
 public record SellerAuthResponse(
-        Long sellerSequence,
+        UUID sellerId,
         String name
 ) {
 }

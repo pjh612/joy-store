@@ -28,7 +28,7 @@ const getAllItemsSuccess = (data) => {
             <table border="1" cellspacing="0" cellpadding="5" style="width:100%;">
                 <tr>
                     <th>선택</th>
-                    <th>상품 번호</th>
+                    <th>상품 ID</th>
                     <th>상품명</th>
                     <th>상품 설명</th>
                     <th>상품 가격</th>
@@ -38,8 +38,8 @@ const getAllItemsSuccess = (data) => {
     data.forEach((item) => {
         html += `
             <tr>
-                <td><input type="checkbox" class="item-checkbox" value="${item.MemberId}"></td>
-                <td><span>${item.MemberId}</span></td>
+                <td><input type="checkbox" class="item-checkbox" value="${item.id}"></td>
+                <td><span>${item.id}</span></td>
                 <td><span>${item.title}</span></td>
                 <td><span>${item.description}</span></td>
                 <td><span>${item.price.toLocaleString()}</span></td>

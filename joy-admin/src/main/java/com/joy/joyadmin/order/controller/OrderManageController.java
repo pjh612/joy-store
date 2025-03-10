@@ -23,7 +23,7 @@ public class OrderManageController {
 
     @GetMapping
     public ApiResponse<List<FindOrderResponse>> getAll(@AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
-        return orderClient.getAllBySellerSequence(storeSellerDetails.getId());
+        return orderClient.getAllBySellerId(storeSellerDetails.getId());
     }
 
     @GetMapping(value = "/alarm/subscription", produces = {"text/event-stream"})
