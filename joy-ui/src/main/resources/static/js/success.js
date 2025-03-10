@@ -11,7 +11,11 @@ $(document).ready(function () {
 
     const confirmLoadingSection = document.querySelector('.confirm-loading');
     const confirmingSection = document.querySelector('.confirming');
+    const confirmResultSection = document.querySelector('.confirm-result');
     const confirmSuccessSection = document.querySelector('.confirm-success');
+    const confirmFailureSection = document.querySelector('.confirm-failure');
+    const confirmFailureReasonSection = document.querySelector('.confirm-failure-reason');
+    const responseReason = document.querySelector('.response-reason');
 
     const subscribe = () => {
         confirmLoadingSection.style.display = 'none';
@@ -26,8 +30,19 @@ $(document).ready(function () {
         alarm.onmessage = (e) => {
             confirmLoadingSection.style.display = 'none';
             confirmingSection.style.display = 'none';
-            confirmSuccessSection.style.display = 'flex';
-            confirmOrder(orderId, requestPrice)
+            confirmResultSection.style.display= 'flex';
+            const json = JSON.parse(e.data);
+
+            if(json.orderStatus === "FAILED") {
+                confirmFailureSection.style.display = 'flex';
+                confirmFailureReasonSection.style.display = 'flex';
+                responseReason.textContent = json.errorMsg;
+                alert("주문이 실패했습니다.");
+            } else {
+                confirmSuccessSection.style.display = 'flex';
+
+                alert("주문이 완료되었습니다.");
+            }
             alarm.close();
         }
     }
@@ -51,24 +66,24 @@ $(document).ready(function () {
 
     })
 
-    const confirmOrder = (orderId, amount) => {
-        $.ajax({
-            type: "post",
-            url: "/api/orders",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({
-                orderId: orderId,
-                amount: amount
-            }),
-            success: function (data) {
-                alert("주문이 완료되었습니다.");
-                window.opener.location.reload();
-            },
-            error: function (e) {
-                alert("주문에 실패했습니다.");
-            }
-        });
-    }
+    // const confirmOrder = (orderId, amount) => {
+    //     $.ajax({
+    //         type: "post",
+    //         url: "/api/orders",
+    //         contentType: "application/json; charset=utf-8",
+    //         data: JSON.stringify({
+    //             orderId: orderId,
+    //             amount: amount
+    //         }),
+    //         success: function (data) {
+    //             alert("주문이 완료되었습니다.");
+    //             window.opener.location.reload();
+    //         },
+    //         error: function (e) {
+    //             alert("주문에 실패했습니다.");
+    //         }
+    //     });
+    // }
 
     $("#close").on("click", function(){
         window.close();

@@ -22,11 +22,6 @@ public class OrderController {
         return orderClient.getByCriteria(storeMemberDetails.getId(), List.of("PAYMENT_WAITING"), "desc", lastId, 5);
     }
 
-    @PostMapping
-    public ApiResponse<ConfirmOrderResponse> placeOrder(@RequestBody ConfirmOrderRequest request) {
-        return orderClient.confirmOrder(request);
-    }
-
     @PostMapping("/prepare")
     public ApiResponse<CreateProvisionalOrderResponse> prepareOrder(@RequestBody CreateProvisionalOrderRequest request, @AuthenticationPrincipal StoreMemberDetails storeMemberDetails) {
         CreateProvisionalOrderCommand command = new CreateProvisionalOrderCommand(

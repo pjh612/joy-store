@@ -46,7 +46,7 @@
 }
 
 /* 성공 메시지 */
-.confirm-success {
+.confirm-result {
     display: none;
     margin-top: 72px;
     background-color: #ffeb3b; /* 노란색 배경 */
@@ -55,6 +55,19 @@
     font-weight: bold;
     color: #f5f5f5;
 }
+
+.confirm-success {
+    display: none;
+}
+
+.confirm-failure {
+    display: none;
+}
+
+.confirm-failure-reason {
+    display: none;
+}
+
 
 /* 진행 중 메시지 */
 .confirming {

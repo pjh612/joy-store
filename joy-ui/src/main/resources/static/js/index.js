@@ -1,5 +1,5 @@
 const haruPay = HaruPay.create({
-    clientId: '01954ca4-9926-787e-a3ec-5d75d7a27721',
+    clientId: '01955c05-cf31-7b68-af5d-c892c0847a70',
     successUrl: window.location.origin + "/pay-success",
     failureUrl: window.location.origin + "/pay-fail"
 })
@@ -135,25 +135,29 @@ const prepareOrder = (e) => {
 
 
 const pay = (orderId, amount, productName) => {
-    $.ajax({
-        type: "post",
-        url: `/api/payment/prepare`,
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({
-            "orderId": orderId,
-            "requestPrice": amount,
-            "productName": productName
-        }),
-        success: function (data) {
-            haruPay.open({
-                "productName": productName,
-                "requestPrice": amount,
-                "paymentId": data.paymentId,
-                "successUrl": "http://localhost:8076/pay/success"
-            });
-        },
-        error: function (e) {
-            alert("결제에 실패했습니다.");
-        }
+    haruPay.open({
+        "productName": productName,
+        "amount": amount,
+        "orderId": orderId
     });
+    // $.ajax({
+    //     type: "post",
+    //     url: `/api/payment/prepare`,
+    //     contentType: "application/json; charset=utf-8",
+    //     data: JSON.stringify({
+    //         "orderId": orderId,
+    //         "requestPrice": amount,
+    //         "productName": productName
+    //     }),
+    //     success: function (data) {
+    //         haruPay.open({
+    //             "productName": productName,
+    //             "requestPrice": amount,
+    //             "paymentId": data.paymentId
+    //         });
+    //     },
+    //     error: function (e) {
+    //         alert("결제에 실패했습니다.");
+    //     }
+    // });
 }

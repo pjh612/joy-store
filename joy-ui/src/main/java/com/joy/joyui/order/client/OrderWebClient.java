@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,14 +18,13 @@ public class OrderWebClient implements OrderClient {
     private final WebClient webClient;
 
     @Override
-    public ApiResponse<ConfirmOrderResponse> confirmOrder(ConfirmOrderRequest request) {
+    public Mono<ApiResponse<ConfirmOrderResponse>> confirmOrder(ConfirmOrderRequest request) {
         return webClient.post()
                 .uri("/api/orders")
                 .bodyValue(request)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<ApiResponse<ConfirmOrderResponse>>() {
-                })
-                .block();
+                .bodyToMono(new ParameterizedTypeReference<>() {
+                });
     }
 
     @Override
