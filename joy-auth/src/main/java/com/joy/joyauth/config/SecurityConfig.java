@@ -21,6 +21,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
@@ -43,18 +44,15 @@ public class SecurityConfig {
     @Order(1)
     SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http, @Qualifier("sellerAuthenticationProvider") AuthenticationProvider sellerAuthenticationProvider) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-        http
-                .getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-                .oidc(oidc -> oidc.clientRegistrationEndpoint(Customizer.withDefaults()));
+        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+                .oidc(Customizer.withDefaults());
 
         LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> entryPoint = new LinkedHashMap<>();
         entryPoint.put(new ParameterRequestMatcher("client_id", "joy-ad"), new RedirectLoginUrlAuthenticationEntryPoint("/seller/login"));
         entryPoint.put(new ParameterRequestMatcher("client_id", "joy-payment"), new RedirectLoginUrlAuthenticationEntryPoint("/member/login"));
 
 
-
-        return http
-                .exceptionHandling(exceptions -> exceptions.defaultAuthenticationEntryPointFor(
+        return http.exceptionHandling(exceptions -> exceptions.defaultAuthenticationEntryPointFor(
                         new DelegatingAuthenticationEntryPoint(entryPoint),
                         new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
 
@@ -64,10 +62,11 @@ public class SecurityConfig {
 
     @Bean
     @Order(2)
-    SecurityFilterChain sellerSecurityMatcher(HttpSecurity http, AuthenticationProvider sellerAuthenticationProvider, AuthenticationProvider memberAuthenticationProvider) throws Exception {
+    SecurityFilterChain sellerSecurityMatcher(HttpSecurity http, AuthenticationProvider sellerAuthenticationProvider) throws Exception {
         http.securityMatcher("/seller/**")
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/seller/login").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(it -> it
                         .loginPage("/seller/login")
@@ -111,6 +110,7 @@ public class SecurityConfig {
     @Order
     SecurityFilterChain defaultSecurityMatcher(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().hasRole("ADMIN")
         );
         return http.build();
@@ -133,13 +133,20 @@ public class SecurityConfig {
             if (OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType())) {
                 Authentication authenticationToken = context.getPrincipal();
 
-                // 사용자 정보를 가져오기 (예: CustomUserDetails 사용)
                 Object principal = authenticationToken.getPrincipal();
                 if (principal instanceof SellerPrincipal) {
                     context.getClaims().claim("id", ((SellerPrincipal) principal).getId());
                 } else if (principal instanceof MemberPrincipal) {
                     context.getClaims().claim("id", ((MemberPrincipal) principal).getId());
                 }
+            } else if (context.getTokenType().getValue().equals(OidcParameterNames.ID_TOKEN)) {
+                Authentication authenticationToken = context.getPrincipal();
+
+                Object principal = authenticationToken.getPrincipal();
+                if (principal instanceof SellerPrincipal) {
+                    context.getClaims().claim("id", ((SellerPrincipal) principal).getId());
+                }
+
             }
         };
     }

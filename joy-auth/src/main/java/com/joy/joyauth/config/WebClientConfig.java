@@ -13,7 +13,7 @@ public class WebClientConfig {
         HttpClient httpClient = HttpClient.create();
 
         return builder
-                .baseUrl("http://joy-api:8080")
+                .baseUrl("http://joy-api:8081")
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
     }
