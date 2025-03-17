@@ -4,9 +4,11 @@ import com.joy.joyorder.adapters.out.persistence.jpa.entity.OrderEntity;
 import com.joy.joyorder.adapters.out.persistence.jpa.entity.QOrderEntity;
 import com.joy.joyorder.adapters.out.persistence.jpa.entity.QOrderItemEntity;
 import com.joy.joyorder.application.usecase.criteria.QueryOrderCriteria;
+import com.joy.joyorder.application.usecase.dto.OrderSummaryResponse;
 import com.joy.joyorder.domain.models.OrderStatus;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -70,5 +72,16 @@ public class OrderQuerydslRepository {
         Order order = "ASC".equalsIgnoreCase(direction) ? Order.ASC : Order.DESC;
 
         return new OrderSpecifier<>(order, pathBuilder.getString(sort));
+    }
+
+    public OrderSummaryResponse findOrderSummaryBySellerId(UUID sellerId) {
+        return jpaQueryFactory.select(Projections.constructor(
+                        OrderSummaryResponse.class,
+                        QOrderItemEntity.orderItemEntity.count(),
+                        QOrderItemEntity.orderItemEntity.unitPrice.multiply(QOrderItemEntity.orderItemEntity.quantity).subtract(QOrderItemEntity.orderItemEntity.discountAmount).sumBigDecimal()))
+                .from(QOrderItemEntity.orderItemEntity)
+                .where(QOrderItemEntity.orderItemEntity.sellerId.eq(sellerId))
+                .groupBy(QOrderItemEntity.orderItemEntity.sellerId)
+                .fetchOne();
     }
 }
