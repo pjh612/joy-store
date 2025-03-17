@@ -67,8 +67,6 @@ clean {
 
 tasks.withType(JavaCompile) {
     options.generatedSourceOutputDirectory = file(querydslSrcDir)
-    options.compilerArgs += ['-AexportModulePath=' + project.projectDir]
-    options.compilerArgs += ['-AapplicationName=' + "${project.name}"]
 
 }
 
