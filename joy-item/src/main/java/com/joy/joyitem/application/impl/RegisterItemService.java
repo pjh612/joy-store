@@ -1,10 +1,10 @@
-package com.joy.joyapi.item.application.impl;
+package com.joy.joyitem.application.impl;
 
-import com.joy.joyapi.item.application.RegisterItemUseCase;
-import com.joy.joyapi.item.application.dto.RegisterItemRequest;
-import com.joy.joyapi.item.application.dto.RegisterItemResponse;
-import com.joy.joyapi.item.domain.models.Item;
-import com.joy.joyapi.item.domain.repository.ItemRepository;
+import com.joy.joyitem.application.RegisterItemUseCase;
+import com.joy.joyitem.application.dto.RegisterItemRequest;
+import com.joy.joyitem.application.dto.RegisterItemResponse;
+import com.joy.joyitem.domain.models.Item;
+import com.joy.joyitem.domain.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

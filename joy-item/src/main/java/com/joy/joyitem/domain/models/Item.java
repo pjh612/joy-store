@@ -1,4 +1,4 @@
-package com.joy.joyapi.item.domain.models;
+package com.joy.joyitem.domain.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

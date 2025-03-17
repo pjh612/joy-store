@@ -1,8 +1,8 @@
-package com.joy.joyapi.item.application.impl;
+package com.joy.joyitem.application.impl;
 
-import com.joy.joyapi.item.application.QueryAllBySellerSequenceUseCase;
-import com.joy.joyapi.item.application.dto.ItemResponse;
-import com.joy.joyapi.item.domain.repository.ItemRepository;
+import com.joy.joyitem.application.QueryAllBySellerSequenceUseCase;
+import com.joy.joyitem.application.dto.ItemResponse;
+import com.joy.joyitem.domain.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

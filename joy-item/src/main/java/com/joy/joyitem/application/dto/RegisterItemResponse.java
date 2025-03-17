@@ -1,4 +1,4 @@
-package com.joy.joyapi.item.application.dto;
+package com.joy.joyitem.application.dto;
 
 import java.util.UUID;
 

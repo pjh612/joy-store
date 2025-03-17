@@ -1,6 +1,6 @@
-package com.joy.joyapi.item.application;
+package com.joy.joyitem.application;
 
-import com.joy.joyapi.item.application.dto.ItemResponse;
+import com.joy.joyitem.application.dto.ItemResponse;
 
 import java.util.List;
 import java.util.UUID;

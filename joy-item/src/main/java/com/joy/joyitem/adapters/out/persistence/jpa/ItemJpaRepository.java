@@ -1,6 +1,6 @@
-package com.joy.joyapi.item.adapters.out.persistence.jpa;
+package com.joy.joyitem.adapters.out.persistence.jpa;
 
-import com.joy.joyapi.item.adapters.out.persistence.jpa.entity.ItemEntity;
+import com.joy.joyitem.adapters.out.persistence.jpa.entity.ItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;

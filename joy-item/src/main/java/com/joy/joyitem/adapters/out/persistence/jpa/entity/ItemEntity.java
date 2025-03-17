@@ -1,4 +1,4 @@
-package com.joy.joyapi.item.adapters.out.persistence.jpa.entity;
+package com.joy.joyitem.adapters.out.persistence.jpa.entity;
 
 import com.joy.joycommon.hibernate.annotations.UuidV7Generator;
 import jakarta.persistence.Entity;

@@ -1,7 +1,7 @@
-package com.joy.joyapi.item.adapters.out.persistence.jpa;
+package com.joy.joyitem.adapters.out.persistence.jpa;
 
-import com.joy.joyapi.item.adapters.out.persistence.jpa.entity.ItemEntity;
-import com.joy.joyapi.item.domain.models.Item;
+import com.joy.joyitem.adapters.out.persistence.jpa.entity.ItemEntity;
+import com.joy.joyitem.domain.models.Item;
 import org.springframework.stereotype.Component;
 
 @Component

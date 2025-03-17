@@ -1,6 +1,6 @@
-package com.joy.joyapi.item.application.dto;
+package com.joy.joyitem.application.dto;
 
-import com.joy.joyapi.item.domain.models.Item;
+import com.joy.joyitem.domain.models.Item;
 
 import java.math.BigDecimal;
 import java.util.UUID;

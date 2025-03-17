@@ -1,10 +1,10 @@
-package com.joy.joyapi.item.adapters.out.persistence;
+package com.joy.joyitem.adapters.out.persistence.jpa;
 
-import com.joy.joyapi.item.adapters.out.persistence.jpa.ItemEntityConverter;
-import com.joy.joyapi.item.adapters.out.persistence.jpa.ItemJpaRepository;
-import com.joy.joyapi.item.adapters.out.persistence.jpa.entity.ItemEntity;
-import com.joy.joyapi.item.domain.models.Item;
-import com.joy.joyapi.item.domain.repository.ItemRepository;
+import com.joy.joyitem.adapters.in.ItemCriteria;
+import com.joy.joyitem.adapters.out.persistence.jpa.entity.ItemEntity;
+import com.joy.joyitem.domain.models.Item;
+import com.joy.joyitem.domain.repository.ItemRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -14,10 +14,12 @@ import java.util.UUID;
 @Repository
 public class ItemRepositoryAdapter implements ItemRepository {
     private final ItemJpaRepository itemJpaRepository;
+    private final ItemQuerydslRepository itemQuerydslRepository;
     private final ItemEntityConverter itemEntityConverter;
 
-    public ItemRepositoryAdapter(ItemJpaRepository itemJpaRepository, ItemEntityConverter itemEntityConverter) {
+    public ItemRepositoryAdapter(ItemJpaRepository itemJpaRepository, ItemQuerydslRepository itemQuerydslRepository, ItemEntityConverter itemEntityConverter) {
         this.itemJpaRepository = itemJpaRepository;
+        this.itemQuerydslRepository = itemQuerydslRepository;
         this.itemEntityConverter = itemEntityConverter;
     }
 
@@ -30,11 +32,16 @@ public class ItemRepositoryAdapter implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAll() {
-        return itemJpaRepository.findAll()
+    public List<Item> findAll(ItemCriteria itemCriteria) {
+        return itemQuerydslRepository.findAll(itemCriteria)
                 .stream()
                 .map(itemEntityConverter::toDomain)
                 .toList();
+    }
+
+    @Override
+    public Long countAll() {
+        return itemQuerydslRepository.countAll();
     }
 
     @Override
