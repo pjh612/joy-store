@@ -154,6 +154,18 @@ services:
       - joy-kafka
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
+  joy-admin:
+    image: joy-store-joy-admin:0.0.1-SNAPSHOT
+    networks:
+      - joy_network
+    ports:
+      - "8087:8087"
+    depends_on:
+      - mysql2
+      - joy-redis
+      - joy-kafka
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
 networks:
   joy_network:
     driver: bridge

@@ -3,13 +3,12 @@ package com.joy.joyadmin.item.client;
 import com.joy.joyadmin.item.dto.ItemResponse;
 import com.joy.joyadmin.item.dto.RegisterItemRequest;
 import com.joy.joyadmin.item.dto.RegisterItemResponse;
-import com.joy.joycommon.api.response.ApiResponse;
+import com.joy.joycommon.api.response.PageDto;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface ItemClient {
-    ApiResponse<List<ItemResponse>> getAllBySellerId(UUID sellerId);
+    PageDto<ItemResponse> getAllBySellerId(UUID sellerId, int page, int size);
 
-    ApiResponse<RegisterItemResponse> register(RegisterItemRequest request);
+    RegisterItemResponse register(RegisterItemRequest request);
 }

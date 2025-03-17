@@ -11,12 +11,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 @RequiredArgsConstructor
-public class SellerWebClient implements SellerClient {
-    private final WebClient webClient;
+public class SellerClientAdapter implements SellerClient {
+    private final WebClient joyApiWebClient;
 
     @Override
     public ApiResponse<SellerSignupResponse> signup(SellerSignupRequest request) {
-        return webClient.post()
+        return joyApiWebClient.post()
                 .uri("/api/sellers")
                 .bodyValue(request)
                 .retrieve()
@@ -27,7 +27,7 @@ public class SellerWebClient implements SellerClient {
 
     @Override
     public ApiResponse<FindSellerResponse> findByUsername(String username) {
-        return webClient.get()
+        return joyApiWebClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/sellers")
                         .queryParam("username", username)
                         .build())
@@ -40,7 +40,7 @@ public class SellerWebClient implements SellerClient {
 
     @Override
     public ApiResponse<FindSellerResponse> findByMemberId(String memberId) {
-        return webClient.get()
+        return joyApiWebClient.get()
                 .uri("/api/sellers/{memberId}", memberId)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<FindSellerResponse>>() {

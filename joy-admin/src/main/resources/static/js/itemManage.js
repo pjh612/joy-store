@@ -5,9 +5,9 @@ $(document).ready(function () {
 const getAllItems = () => {
     $.ajax({
         type: "get",
-        url: "/api/items",
+        url: "/api/items?page=0&size=100",
         success: function (data) {
-            getAllItemsSuccess(data.data);
+            getAllItemsSuccess(data);
         },
         error: function (e) {
             alert(e);
@@ -18,7 +18,7 @@ const getAllItems = () => {
 const getAllItemsSuccess = (data) => {
     $("#itemContainer").empty();
 
-    if (data.length === 0) {
+    if (data.content.length === 0) {
         $("#itemContainer").append("판매 상품 목록이 없습니다.");
         return;
     }
@@ -35,7 +35,7 @@ const getAllItemsSuccess = (data) => {
                     <th>상품등록일</th>
                 </tr>`;
 
-    data.forEach((item) => {
+    data.content.forEach((item) => {
         html += `
             <tr>
                 <td><input type="checkbox" class="item-checkbox" value="${item.id}"></td>

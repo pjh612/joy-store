@@ -2,7 +2,7 @@ package com.joy.joyadmin.order.client;
 
 import com.joy.joyadmin.order.dto.FindOrderResponse;
 import com.joy.joycommon.api.response.ApiResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.stereotype.Component;
@@ -13,13 +13,17 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-@RequiredArgsConstructor
-public class OrderWebClient implements OrderClient {
-    private final WebClient webClient;
+
+public class OrderClientAdapter implements OrderClient {
+    private final WebClient orderWebClient;
+
+    public OrderClientAdapter(@Qualifier("orderWebClient") WebClient orderWebClient) {
+        this.orderWebClient = orderWebClient;
+    }
 
     @Override
     public ApiResponse<List<FindOrderResponse>> getAllBySellerId(UUID id) {
-        return webClient.get()
+        return orderWebClient.get()
                 .uri("/api/sellers/{sellerId}/orders", id)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<List<FindOrderResponse>>>() {
@@ -29,7 +33,7 @@ public class OrderWebClient implements OrderClient {
 
     @Override
     public Flux<ServerSentEvent<String>> subscribeAlarm(UUID memberId, String lastEventId) {
-        return webClient.get()
+        return orderWebClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/orders/alarm/subscription")
                         .queryParam("memberId", memberId)
                         .build())

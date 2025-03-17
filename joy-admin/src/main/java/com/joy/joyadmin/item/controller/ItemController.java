@@ -5,12 +5,10 @@ import com.joy.joyadmin.item.dto.ItemResponse;
 import com.joy.joyadmin.item.dto.RegisterItemRequest;
 import com.joy.joyadmin.item.dto.RegisterItemResponse;
 import com.joy.joyadmin.security.StoreSellerDetails;
-import com.joy.joycommon.api.response.ApiResponse;
+import com.joy.joycommon.api.response.PageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,12 +17,13 @@ public class ItemController {
     private final ItemClient itemClient;
 
     @GetMapping
-    public ApiResponse<List<ItemResponse>> getAllMyItems(@AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
-        return itemClient.getAllBySellerId(storeSellerDetails.getId());
+    public PageDto<ItemResponse> getAllMyItems(@AuthenticationPrincipal StoreSellerDetails storeSellerDetails,
+                                               @RequestParam int page, @RequestParam int size) {
+        return itemClient.getAllBySellerId(storeSellerDetails.getId(), page, size);
     }
 
     @PostMapping
-    public ApiResponse<RegisterItemResponse> register(@RequestBody RegisterItemRequest request, @AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
+    public RegisterItemResponse register(@RequestBody RegisterItemRequest request, @AuthenticationPrincipal StoreSellerDetails storeSellerDetails) {
         RegisterItemRequest registerItemRequest = new RegisterItemRequest(request.title(),
                 request.description(),
                 storeSellerDetails.getId(),

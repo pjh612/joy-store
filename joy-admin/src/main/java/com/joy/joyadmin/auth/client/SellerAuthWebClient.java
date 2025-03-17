@@ -11,11 +11,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 @RequiredArgsConstructor
 public class SellerAuthWebClient implements SellerAuthClient {
-    private final WebClient webClient;
+    private final WebClient joyApiWebClient;
 
     @Override
     public ApiResponse<SellerAuthResponse> authenticate(SellerAuthRequest request) {
-        return webClient.post()
+        return joyApiWebClient.post()
                 .uri("/api/seller/authentication")
                 .bodyValue(request)
                 .retrieve()
