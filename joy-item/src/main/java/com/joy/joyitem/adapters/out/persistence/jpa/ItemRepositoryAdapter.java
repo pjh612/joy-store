@@ -45,8 +45,8 @@ public class ItemRepositoryAdapter implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAllBySellerId(UUID sellerId) {
-        return itemJpaRepository.findAllBySellerId(sellerId)
+    public List<Item> findAllBySellerId(UUID sellerId, int size, long offset) {
+        return itemQuerydslRepository.findAllBySellerId(sellerId, size, offset)
                 .stream()
                 .map(itemEntityConverter::toDomain)
                 .toList();
@@ -59,5 +59,10 @@ public class ItemRepositoryAdapter implements ItemRepository {
         ItemEntity savedItemEntity = itemJpaRepository.save(itemEntity);
 
         return itemEntityConverter.toDomain(savedItemEntity);
+    }
+
+    @Override
+    public Long countBySellerId(UUID sellerId) {
+        return itemQuerydslRepository.countBySellerId(sellerId);
     }
 }

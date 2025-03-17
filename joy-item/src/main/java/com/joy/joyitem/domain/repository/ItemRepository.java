@@ -15,7 +15,9 @@ public interface ItemRepository {
 
     Long countAll();
 
-    List<Item> findAllBySellerId(UUID sellerId);
+    List<Item> findAllBySellerId(UUID sellerId, int size, long offset);
 
     Item save(Item item);
+
+    Long countBySellerId(UUID sellerId);
 }

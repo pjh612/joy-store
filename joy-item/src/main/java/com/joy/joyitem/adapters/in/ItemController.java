@@ -1,7 +1,7 @@
 package com.joy.joyitem.adapters.in;
 
 import com.joy.joyitem.application.QueryAllByItemIdUseCase;
-import com.joy.joyitem.application.QueryAllBySellerSequenceUseCase;
+import com.joy.joyitem.application.QueryAllBySellerIdUseCase;
 import com.joy.joyitem.application.QueryAllItemUseCase;
 import com.joy.joyitem.application.RegisterItemUseCase;
 import com.joy.joyitem.application.dto.ItemResponse;
@@ -19,9 +19,9 @@ public class ItemController {
     private final RegisterItemUseCase registerItemUsecase;
     private final QueryAllItemUseCase queryAllItemUsecase;
     private final QueryAllByItemIdUseCase queryAllByItemIdUseCase;
-    private final QueryAllBySellerSequenceUseCase queryAllBySellerIdUseCase;
+    private final QueryAllBySellerIdUseCase queryAllBySellerIdUseCase;
 
-    public ItemController(RegisterItemUseCase registerItemUsecase, QueryAllItemUseCase queryAllItemUsecase, QueryAllByItemIdUseCase queryAllByItemIdUseCase, QueryAllBySellerSequenceUseCase queryAllBySellerIdUseCase) {
+    public ItemController(RegisterItemUseCase registerItemUsecase, QueryAllItemUseCase queryAllItemUsecase, QueryAllByItemIdUseCase queryAllByItemIdUseCase, QueryAllBySellerIdUseCase queryAllBySellerIdUseCase) {
         this.registerItemUsecase = registerItemUsecase;
         this.queryAllItemUsecase = queryAllItemUsecase;
         this.queryAllByItemIdUseCase = queryAllByItemIdUseCase;
@@ -44,7 +44,7 @@ public class ItemController {
     }
 
     @GetMapping("/sellers/{sellerId}")
-    public List<ItemResponse> getAllBySellerSequence(@PathVariable UUID sellerId) {
-        return queryAllBySellerIdUseCase.query(sellerId);
+    public Page<ItemResponse> getAllBySellerId(@PathVariable UUID sellerId, @RequestParam int size, @RequestParam int page) {
+        return queryAllBySellerIdUseCase.query(sellerId, size, page);
     }
 }
