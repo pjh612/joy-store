@@ -1,0 +1,13 @@
+package com.joy.joyorder.adapters.out.alarm;
+
+public record MessageDto(String targetId, String type, String body) {
+    private static final String DEFAULT_MESSAGE_TYPE = "message";
+
+    public static MessageDto of(String targetId, String message) {
+        return new MessageDto(targetId, DEFAULT_MESSAGE_TYPE, message);
+    }
+
+    public static MessageDto of(String targetId, String type, String message) {
+        return new MessageDto(targetId, type, message);
+    }
+}

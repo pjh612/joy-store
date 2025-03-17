@@ -8,4 +8,5 @@ include "joy-admin"
 include "joy-common"
 include "joy-coupon"
 include "joy-item"
+include "joy-order"
 
