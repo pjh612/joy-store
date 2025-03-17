@@ -6,4 +6,5 @@ include "joy-ad"
 include "joy-auth"
 include "joy-admin"
 include "joy-common"
+include "joy-coupon"
 

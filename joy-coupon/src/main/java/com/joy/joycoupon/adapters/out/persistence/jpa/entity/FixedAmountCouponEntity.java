@@ -1,6 +1,6 @@
-package com.joy.joyapi.coupon.adapters.out.persistence.jpa.entity;
+package com.joy.joycoupon.adapters.out.persistence.jpa.entity;
 
-import com.joy.joyapi.coupon.domain.model.CouponStatus;
+import com.joy.joycoupon.domain.model.CouponStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -14,13 +14,13 @@ import java.util.UUID;
 @Entity
 @Getter
 @AllArgsConstructor
-@Table(name="fixed_amount_coupon")
+@Table(name = "fixed_amount_coupon")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FixedAmountCouponEntity extends BaseCouponEntity {
-    private BigDecimal amount;
+    private Long amount;
 
-    public FixedAmountCouponEntity(UUID id, CouponStatus status, BigDecimal amount) {
-        super(id, status);
+    public FixedAmountCouponEntity(UUID id, String issuer, String issuerType, String couponName, CouponStatus status, Long amount) {
+        super(id, issuer, issuerType, couponName, status);
         this.amount = amount;
     }
 }

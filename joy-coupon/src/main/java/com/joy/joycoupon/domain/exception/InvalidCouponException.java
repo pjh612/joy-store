@@ -1,4 +1,4 @@
-package com.joy.joyapi.coupon.domain.exception;
+package com.joy.joycoupon.domain.exception;
 
 public class InvalidCouponException extends RuntimeException {
     public InvalidCouponException() {

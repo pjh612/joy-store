@@ -1,11 +1,10 @@
-package com.joy.joyapi.coupon.domain.model;
+package com.joy.joycoupon.domain.model;
 
-import com.joy.joyapi.coupon.domain.exception.InvalidCouponException;
+import com.joy.joycoupon.domain.exception.InvalidCouponException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Getter
@@ -13,24 +12,20 @@ import java.util.UUID;
 @AllArgsConstructor
 public abstract class AbstractCoupon {
     private UUID id;
+    private String issuer;
+    private String issuerType;
+    private String couponName;
     private CouponStatus status;
-
-    public abstract BigDecimal getAppliedPrice(BigDecimal originalPrice);
 
     public Boolean isValid() {
         return this.status == CouponStatus.AVAILABLE;
     }
 
     public void use() {
-        this.status = CouponStatus.USED;
-    }
-
-    public BigDecimal use(BigDecimal originalPrice) {
-        if(!isValid()) {
+        if (!isValid()) {
             throw new InvalidCouponException();
         }
-        this.status = CouponStatus.USED;
 
-        return getAppliedPrice(originalPrice);
+        this.status = CouponStatus.USED;
     }
 }

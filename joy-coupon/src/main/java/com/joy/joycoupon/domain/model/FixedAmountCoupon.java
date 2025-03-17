@@ -1,4 +1,4 @@
-package com.joy.joyapi.coupon.domain.model;
+package com.joy.joycoupon.domain.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,15 +12,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FixedAmountCoupon extends AbstractCoupon {
-    private BigDecimal amount;
+    private Long amount;
 
-    @Override
-    public BigDecimal getAppliedPrice(BigDecimal originalPrice) {
-        return originalPrice.subtract(amount);
-    }
-
-    public FixedAmountCoupon(UUID id, CouponStatus status, BigDecimal amount) {
-        super(id, status);
+    public FixedAmountCoupon(UUID id, String issuer, String issuerType, String couponName, CouponStatus status, Long amount) {
+        super(id, issuer, issuerType, couponName, status);
         this.amount = amount;
     }
 }

@@ -1,4 +1,4 @@
-package com.joy.joyapi.coupon.domain.model;
+package com.joy.joycoupon.domain.model;
 
 public enum CouponStatus {
     AVAILABLE,
