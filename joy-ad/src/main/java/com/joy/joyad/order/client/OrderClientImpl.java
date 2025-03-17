@@ -18,7 +18,7 @@ public class OrderClientImpl implements OrderClient {
     @Override
     public ApiResponse<OrderSummaryResponse> getOrderSummary(OAuth2AuthorizedClient authorizedClient) {
         return this.webClient.get()
-                .uri("http://joy-api:8080/api/external/orders/summary")
+                .uri("http://joy-order:8084/api/external/orders/summary")
                 .attributes(oauth2AuthorizedClient(authorizedClient))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<OrderSummaryResponse>>() {

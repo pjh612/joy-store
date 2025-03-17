@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
     id 'io.spring.dependency-management' version '1.1.6'
-    id 'com.palantir.docker' version '0.35.0'
+    id("com.google.cloud.tools.jib") version "3.4.4"
 }
 
 group = 'com.joy'
@@ -43,13 +43,23 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-docker {
-    println(tasks.bootJar.outputs.files)
-    name rootProject.name+'-'+project.name + ":" + version
-    dockerfile file('../Dockerfile')
-    files tasks.bootJar.outputs.files
-    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
+jib {
+    from {
+        image = 'openjdk:17-jdk-slim'
+        platforms {
+            platform {
+                architecture = "arm64"
+                os = "linux"
+            }
+        } // 기본 이미지
+    }
+    to {
+        image = rootProject.name + '-' + project.name + ":" + version
+        tags = ['latest']
+    }
 }
 
-
-tasks.register("prepareKotlinBuildScriptModel"){}
+tasks.register('buildDockerImage') {
+    dependsOn 'build'
+    finalizedBy 'jibDockerBuild'
+}
