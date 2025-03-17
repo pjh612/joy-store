@@ -7,11 +7,11 @@ import java.util.List;
 public record CreateProvisionalOrderRequest(
         @Size(min = 1)
         List<OrderItemRequestDto> orderItems,
-        String couponId,
         String payType
 ) {
     public record OrderItemRequestDto(
             String itemId,
+            String couponId,
             Integer quantity
     ) {
     }

@@ -5,12 +5,12 @@ import java.util.UUID;
 
 public record CreateProvisionalOrderCommand(
         List<OrderItemRequestDto> orderItems,
-        String couponId,
         UUID buyerId,
         String payType
 ) {
     public record OrderItemRequestDto(
             String itemId,
+            String couponId,
             Integer quantity
     ) {
     }

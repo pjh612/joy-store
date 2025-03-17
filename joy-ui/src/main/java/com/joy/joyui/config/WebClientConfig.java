@@ -30,4 +30,18 @@ public class WebClientConfig {
                 })
                 .build();
     }
+
+    @Bean("orderClient")
+    WebClient orderClient(WebClient.Builder builder, @Value("${client.joy-order.url}") String url) {
+        return builder.
+                baseUrl(url)
+                .build();
+    }
+
+    @Bean("itemClient")
+    WebClient itemClient(WebClient.Builder builder, @Value("${client.joy-item.url}") String url) {
+        return builder.
+                baseUrl(url)
+                .build();
+    }
 }

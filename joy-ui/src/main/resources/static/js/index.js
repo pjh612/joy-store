@@ -11,9 +11,9 @@ $(document).ready(function () {
 const showAllItems = () => {
     $.ajax({
         type: "get",
-        url: "/api/items",
+        url: "/api/items?page=0&size=10",
         success: function (data) {
-            showAllItemsSuccess(data.data);
+            showAllItemsSuccess(data);
         },
         error: function (e) {
             alert(e);
@@ -24,7 +24,7 @@ const showAllItems = () => {
 const showAllItemsSuccess = (data) => {
     $("#itemContainer").empty();
 
-    if (data.length === 0) {
+    if (data.content.length === 0) {
         $("#itemContainer").append("상품 목록이 없습니다.");
         return;
     }
@@ -42,7 +42,7 @@ const showAllItemsSuccess = (data) => {
                     <th>수량</th>
                 </tr>`;
 
-    data.forEach((item) => {
+    data.content.forEach((item) => {
         html += `
             <tr>
                 <td><input type="checkbox" class="item-checkbox" value="${item.id}"></td>

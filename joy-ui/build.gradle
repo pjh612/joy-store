@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
     id 'io.spring.dependency-management' version '1.1.6'
-    id 'com.palantir.docker' version '0.35.0'
 }
 
 group = 'com.joy'
@@ -52,14 +51,6 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-
-docker {
-    println(tasks.bootJar.outputs.files)
-    name rootProject.name+'-'+project.name + ":" + version
-    dockerfile file('../Dockerfile')
-    files tasks.bootJar.outputs.files
-    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
 }
 
 

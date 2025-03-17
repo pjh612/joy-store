@@ -15,11 +15,11 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class OrderWebClient implements OrderClient {
-    private final WebClient webClient;
+    private final WebClient orderClient;
 
     @Override
     public Mono<ApiResponse<ConfirmOrderResponse>> confirmOrder(ConfirmOrderRequest request) {
-        return webClient.post()
+        return orderClient.post()
                 .uri("/api/orders")
                 .bodyValue(request)
                 .retrieve()
@@ -29,7 +29,7 @@ public class OrderWebClient implements OrderClient {
 
     @Override
     public ApiResponse<List<FindOrderResponse>> getByCriteria(UUID buyerId, Collection<String> excludeStatus, String direction, UUID lastId, int size) {
-        return webClient.get()
+        return orderClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/orders")
                         .queryParam("buyerId", buyerId)
                         .queryParam("excludeStatus", excludeStatus)
@@ -46,7 +46,7 @@ public class OrderWebClient implements OrderClient {
 
     @Override
     public ApiResponse<CreateProvisionalOrderResponse> createProvisionalOrder(CreateProvisionalOrderCommand request) {
-        return webClient.post()
+        return orderClient.post()
                 .uri("/api/orders/provisional")
                 .bodyValue(request)
                 .retrieve()
@@ -57,7 +57,7 @@ public class OrderWebClient implements OrderClient {
 
     @Override
     public ApiResponse<FindOrderResponse> getByOrderId(UUID orderId) {
-        return webClient.get()
+        return orderClient.get()
                 .uri("/api/orders/{orderId}", orderId.toString())
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<FindOrderResponse>>() {
