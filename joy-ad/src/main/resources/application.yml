@@ -23,6 +23,6 @@ spring:
                         client-name: joy-ad-authorization-code
                 provider:
                     spring:
-                        issuer-uri: http://auth:8081
+                        issuer-uri: http://joy-auth:8080
 server:
     port: 8092

@@ -1,61 +1,49 @@
 services:
-
-  zookeeper:
+  joy-zookeeper:
+    container_name: joy-zookeeper
     image: 'arm64v8/zookeeper:3.8'
     networks:
       - joy_network
     ports:
-      - '2181:2181'
+      - '2182:2182'
     environment:
+      - ZOO_SERVERS=server.1=joy-zookeeper:2889:3889;2182
       - ALLOW_ANONYMOUS_LOGIN=yes
       - ZOO_TLS_CLIENT_AUTH=none
       - ZOO_TLS_QUORUM_CLIENT_AUTH=none
-  kafka:
+  joy-kafka:
     image: 'docker.io/bitnami/kafka:3.5'
+    container_name: joy-kafka
+    hostname: joy-kafka
     networks:
       - joy_network
     ports:
-      - '9092:9092'
+      - '9093:9093'
     environment:
       - KAFKA_BROKER_ID=1
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=joy-zookeeper:2182
       - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENERS=LC://kafka:29092,LX://kafka:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=LC://kafka:29092,LX://${DOCKER_HOST_IP:-localhost}:9092
+      - KAFKA_CFG_LISTENERS=LC://:29093,LX://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=LC://joy-kafka:29093,LX://${DOCKER_HOST_IP:-localhost}:9093
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=LC:PLAINTEXT,LX:PLAINTEXT
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=LC
     depends_on:
-      - zookeeper
-
-  kafka-ui:
+      - joy-zookeeper
+  joy-kafka-ui:
     image: provectuslabs/kafka-ui
-    container_name: kafka-ui
+    container_name: joy-kafka-ui
     networks:
       - joy_network
     ports:
-      - "8989:8080"
+      - "8990:8080"
     restart: always
     depends_on:
-      - kafka
-      - zookeeper
+      - joy-kafka
+      - joy-zookeeper
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
-      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
-
-  mysql:
-    image: mysql:8.0
-    networks:
-      - joy_network
-
-    env_file: .env
-    ports:
-      - "3306:3306"
-    environment:
-      - TZ=Asia/Seoul
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=password
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=joy-kafka:29093
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=joy-zookeeper:2182
   mysql2:
     image: mysql/mysql-server:8.0
     networks:
@@ -71,45 +59,67 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
       - --skip-character-set-client-handshake
-  redis:
+  joy-redis:
     image: redis:latest
     networks:
       - joy_network
     ports:
-      - 6379:6379
+      - 6380:6379
     platform: linux/x86_64
     restart: always
-
-  redis-commander:
-    image: rediscommander/redis-commander:latest
+  joy-order:
+    image: joy-store-joy-order:0.0.1-SNAPSHOT
     networks:
       - joy_network
-    environment:
-      - REDIS_HOSTS=local:redis:6379
     ports:
-      - 9000:8081
-    platform: linux/x86_64
-    restart: always
+      - "8084:8084"
+    depends_on:
+      - mysql2
+      - joy-redis
+      - joy-kafka
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+  joy-item:
+    image: joy-store-joy-item:0.0.1-SNAPSHOT
+    networks:
+      - joy_network
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mysql2
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+  joy-coupon:
+    image: joy-store-joy-coupon:0.0.1-SNAPSHOT
+    networks:
+      - joy_network
+    ports:
+      - "8086:8086"
+    depends_on:
+      - mysql2
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
   joy-api:
     image: joy-store-joy-api:0.0.1-SNAPSHOT
     networks:
       - joy_network
     ports:
-      - "8081:8080"
+      - "8081:8081"
     depends_on:
-      - mysql
-      - redis
-      - kafka
+      - mysql2
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
   joy-ui:
     image: joy-store-joy-ui:0.0.1-SNAPSHOT
     networks:
       - joy_network
+      - haru_haru_network
     ports:
       - "8082:8082"
     depends_on:
-      - mysql
+      - mysql2
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
   logging-consumer:
     image: joy-store-logging-consumer:0.0.1-SNAPSHOT
     networks:
@@ -117,8 +127,8 @@ services:
     ports:
       - "8088:8080"
     depends_on:
-      - mysql
-      - kafka
+      - mysql2
+      - joy-kafka
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
   ad:
@@ -128,69 +138,24 @@ services:
     ports:
       - "8092:8092"
     depends_on:
-      - mysql
-      - kafka
+      - mysql2
+      - joy-kafka
+      - joy-auth
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
-  auth:
+  joy-auth:
     image: joy-store-joy-auth:0.0.1-SNAPSHOT
     networks:
       - joy_network
     ports:
       - "8080:8080"
     depends_on:
-      - mysql
-      - kafka
+      - mysql2
+      - joy-kafka
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
-  connect:
-    container_name: connect
-    image: quay.io/debezium/connect
-    platform: linux/x86_64
-    depends_on:
-      - kafka
-      - mysql
-    links:
-      - kafka:kafka
-      - mysql2:mysql2
-      - mysql:mysql
-    ports:
-      - "8083:8083"
-    environment:
-      - BOOTSTRAP_SERVERS=kafka:29092
-      - GROUP_ID=1
-      - CONFIG_STORAGE_TOPIC=my_connect_configs
-      - OFFSET_STORAGE_TOPIC=my_connect_offsets
-      - STATUS_STORAGE_TOPIC=my_connect_statuses
-    networks:
-      - joy_network
-  # This "container" is a workaround to register connectors to connect
-  kafka-setup:
-    image: confluentinc/cp-kafka:7.4.1
-    container_name: kafka-setup
-    depends_on:
-      - kafka
-      - connect
-    volumes:
-      - $PWD/joy-money/pay-outbox-connector.json:/tmp/connectors/joy-money-outbox-connector.json
-      - $PWD/joy-banking/pay-outbox-connector.json:/tmp/connectors/joy-banking-outbox-connector.json
-      - $PWD/joy-orchestrator/pay-outbox-connector.json:/tmp/connectors/joy-orchestrator-outbox-connector.json
-    command: "bash -c 'echo Waiting for Kafka to be ready... && \
-                       cub kafka-ready -b kafka:29092 1 20 && \
-                       echo Waiting 20 seconds for Connect to be ready... && \
-                       sleep 20 && \
-                       curl -i -X PUT -H Accept:application/json -H Content-Type:application/json http://connect:8083/connectors/joy-money-outbox-connector/config -d @/tmp/connectors/joy-money-outbox-connector.json && \
-                       curl -i -X PUT -H Accept:application/json -H Content-Type:application/json http://connect:8083/connectors/joy-banking-outbox-connector/config -d @/tmp/connectors/joy-banking-outbox-connector.json && \
-                       curl -i -X PUT -H Accept:application/json -H Content-Type:application/json http://connect:8083/connectors/joy-orchestrator-outbox-connector/config -d @/tmp/connectors/joy-orchestrator-outbox-connector.json
-                  '"
-    environment:
-      # The following settings are listed here only to satisfy the image's requirements.
-      # We override the image's `command` anyways, hence this container will not start a broker.
-      KAFKA_BROKER_ID: ignored
-      KAFKA_ZOOKEEPER_CONNECT: ignored
-    networks:
-      - joy_network
-
 networks:
   joy_network:
     driver: bridge
+  haru_haru_network:
+    external: true

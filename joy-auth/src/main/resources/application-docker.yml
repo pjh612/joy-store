@@ -19,7 +19,7 @@ spring:
     security:
         oauth2:
             authorizationserver:
-                issuer: http://auth:8080
+                issuer: http://joy-auth:8080
 server:
     port: 8080
 logging:

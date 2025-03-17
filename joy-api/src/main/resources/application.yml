@@ -19,9 +19,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://auth:8081
+          issuer-uri: http://joy-auth:8080
 server:
-  port: 8080
+  port: 8081
 
 logging:
   topic: "joy.logging.out.stdout"

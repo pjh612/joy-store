@@ -12,10 +12,10 @@ harupay:
     apiKey: 01955c05-cf32-7680-b477-cff57d520735
 client:
     joy-order:
-        url: http://localhost:8084
+        url: http://joy-order:8084
     joy-item:
-        url: http://localhost:8085
+        url: http://joy-item:8085
     joy-api:
-        url: http://joy-api:8080
+        url: http://joy-api:8081
     payment:
         url: http://payments:8071

@@ -17,15 +17,15 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host: redis
+      host: joy-redis
       port: 6379
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://auth:8081
+          issuer-uri: http://joy-auth:8080
   kafka:
-    bootstrap-servers: kafka:29092
+    bootstrap-servers: "joy-kafka:29093"
 client:
   coupon:
     url: http://joy-coupon:8086

@@ -8,7 +8,7 @@ server:
   port: 8080
 kafka:
   clusters:
-    bootstrapservers: kafka:29092
+    bootstrapservers: joy-kafka:29093
 
 logging:
   topic: "joy.logging.out.stdout"

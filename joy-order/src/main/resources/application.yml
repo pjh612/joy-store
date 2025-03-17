@@ -23,9 +23,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://auth:8081
+          issuer-uri: http://joy-auth:8080
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:9093
 client:
   coupon:
     url: http://localhost:8086
