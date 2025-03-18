@@ -6,6 +6,7 @@ import com.joy.joyorder.adapters.out.persistence.jpa.entity.QOrderItemEntity;
 import com.joy.joyorder.application.usecase.criteria.QueryOrderCriteria;
 import com.joy.joyorder.application.usecase.dto.OrderSummaryResponse;
 import com.joy.joyorder.domain.models.OrderStatus;
+import com.querydsl.core.types.NullExpression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
@@ -67,6 +68,9 @@ public class OrderQuerydslRepository {
     }
 
     private OrderSpecifier<?> orderBy(String sort, String direction) {
+        if(sort == null || sort.isEmpty()) {
+            return new OrderSpecifier(Order.ASC, NullExpression.DEFAULT, OrderSpecifier.NullHandling.Default);
+        }
         PathBuilder<? extends OrderEntity> pathBuilder = new PathBuilder<>(QOrderEntity.orderEntity.getType(), QOrderEntity.orderEntity.getMetadata());
 
         Order order = "ASC".equalsIgnoreCase(direction) ? Order.ASC : Order.DESC;
