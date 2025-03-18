@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface OrderClient {
-    ApiResponse<List<FindOrderResponse>> getAllBySellerId(UUID id);
+    ApiResponse<List<FindOrderResponse>> getAllBySellerId(UUID sellerId, UUID lastId, int size);
 
     Flux<ServerSentEvent<String>> subscribeAlarm(UUID memberId, String lastEventId);
 }

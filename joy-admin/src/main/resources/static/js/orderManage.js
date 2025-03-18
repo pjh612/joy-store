@@ -1,13 +1,33 @@
+let lastId = null;
+
 $(document).ready(function () {
-    getOrders();
+    getOrders(null);
     subscribe();
+
+    // 스크롤 이벤트
+    function onScroll() {
+        const container = document.getElementById('orderContainer');
+        if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+            getOrders(lastId);
+        }
+    }
+
+    // 스크롤 이벤트 바인딩
+    const container = document.getElementById('orderContainer');
+    container.addEventListener('scroll', onScroll);
 })
 
 
-const getOrders = () => {
+const getOrders = (lastId) => {
+    let url = `/api/orders?size=10`;
+    if (lastId) {
+        url += `&lastId=${lastId}`;
+    }
+
+    // AJAX 요청
     $.ajax({
         type: "get",
-        url: "/api/orders",
+        url: url,
         success: function (data) {
             getOrdersSuccess(data.data);
         },
@@ -15,13 +35,13 @@ const getOrders = () => {
             alert(e);
         }
     });
-}
+};
 
 const getOrdersSuccess = (data) => {
-    $("#orderContainer").empty();
-
-    if (data.length === 0) {
+    if (lastId == null && data.length === 0) {
         $("#orderContainer").append("주문 내역이 없습니다.");
+        return;
+    } else if(data.length === 0) {
         return;
     }
 
@@ -67,6 +87,8 @@ const getOrdersSuccess = (data) => {
     html += `</table>`;
 
     $("#orderContainer").append(html);
+
+    lastId = data[data.length - 1].id;
 }
 
 const subscribe = () => {

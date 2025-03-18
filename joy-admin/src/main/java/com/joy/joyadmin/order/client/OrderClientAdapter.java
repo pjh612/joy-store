@@ -22,9 +22,15 @@ public class OrderClientAdapter implements OrderClient {
     }
 
     @Override
-    public ApiResponse<List<FindOrderResponse>> getAllBySellerId(UUID id) {
+    public ApiResponse<List<FindOrderResponse>> getAllBySellerId(UUID sellerId, UUID lastId, int size) {
         return orderWebClient.get()
-                .uri("/api/sellers/{sellerId}/orders", id)
+                .uri(uriBuilder -> uriBuilder.path("/api/sellers/" + sellerId + "/orders")
+                        .queryParam("size", size)
+                        .queryParam("lastId", lastId)
+                        .queryParam("sellerId", sellerId)
+                        .queryParam("sort", "id")
+                        .queryParam("direction", "DESC")
+                        .build())
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<List<FindOrderResponse>>>() {
                 })
