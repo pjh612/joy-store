@@ -108,3 +108,30 @@ table tr:nth-child(odd) {
     background-color: #fbc02d; /* 어두운 노란색 */
     color: #212121; /* 더 어두운 텍스트 색상 */
 }
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.page-btn {
+    background-color: #ffeb3b;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.page-btn:hover {
+    background-color: #fbc02d;
+}
+
+.page-btn.active {
+    background-color: #f57f17;
+    color: #fff;
+}

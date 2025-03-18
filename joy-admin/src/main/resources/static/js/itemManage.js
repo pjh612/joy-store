@@ -1,11 +1,11 @@
 $(document).ready(function () {
-    getAllItems();
+    getAllItems(0);
 })
 
-const getAllItems = () => {
+const getAllItems = (page) => {
     $.ajax({
         type: "get",
-        url: "/api/items?page=0&size=100",
+        url: `/api/items?page=${page}&size=100`,
         success: function (data) {
             getAllItemsSuccess(data);
         },
@@ -50,4 +50,16 @@ const getAllItemsSuccess = (data) => {
     html += `</table>`;
 
     $("#itemContainer").append(html);
+
+    let paginationHtml = '<div class="pagination">';
+    for (let i = 0; i < data.page.totalPages; i++) {
+        paginationHtml += `<button class="page-btn" data-page="${i}">${i + 1}</button>`;
+    }
+    paginationHtml += '</div>';
+    $("#itemContainer").append(paginationHtml);
+
+    $(".page-btn").click(function () {
+        const page = $(this).data("page");
+        getAllItems(page);
+    });
 }
