@@ -140,24 +140,4 @@ const pay = (orderId, amount, productName) => {
         "amount": amount,
         "orderId": orderId
     });
-    // $.ajax({
-    //     type: "post",
-    //     url: `/api/payment/prepare`,
-    //     contentType: "application/json; charset=utf-8",
-    //     data: JSON.stringify({
-    //         "orderId": orderId,
-    //         "requestPrice": amount,
-    //         "productName": productName
-    //     }),
-    //     success: function (data) {
-    //         haruPay.open({
-    //             "productName": productName,
-    //             "requestPrice": amount,
-    //             "paymentId": data.paymentId
-    //         });
-    //     },
-    //     error: function (e) {
-    //         alert("결제에 실패했습니다.");
-    //     }
-    // });
 }

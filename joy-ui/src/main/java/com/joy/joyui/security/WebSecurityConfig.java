@@ -6,7 +6,10 @@ import com.joy.joyui.auth.client.MemberAuthClient;
 import com.joy.joyui.member.client.MemberClient;
 import com.joy.joyui.security.filter.CookieAuthenticationProcessingFilter;
 import com.joy.joyui.security.filter.SignInProcessingFilter;
-import com.joy.joyui.security.handler.*;
+import com.joy.joyui.security.handler.CookieAuthenticationEntryPoint;
+import com.joy.joyui.security.handler.CookieRefreshHandler;
+import com.joy.joyui.security.handler.StoreMemberSignInFailureHandler;
+import com.joy.joyui.security.handler.StoreMemberSignInSuccessHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,15 +45,9 @@ public class WebSecurityConfig {
     public AbstractPreAuthenticatedProcessingFilter cookieAuthenticationProcessingFilter(String[] PERMIT_ALL_PATHS, MemberClient memberClient, AesCipher aesCipher, AuthenticationManager authenticationManager) {
         CookieAuthenticationProcessingFilter cookieAuthenticationProcessingFilter = new CookieAuthenticationProcessingFilter(storeMemberPrincipalExtractor(memberClient, aesCipher), PERMIT_ALL_PATHS);
         cookieAuthenticationProcessingFilter.setAuthenticationSuccessHandler(cookieRefreshHandler());
-        cookieAuthenticationProcessingFilter.setAuthenticationFailureHandler(cookieAuthenticationFailureHandler());
         cookieAuthenticationProcessingFilter.setAuthenticationManager(authenticationManager);
 
         return cookieAuthenticationProcessingFilter;
-    }
-
-    @Bean
-    public AuthenticationFailureHandler cookieAuthenticationFailureHandler() {
-        return new CookieAuthenticationFailureHandler();
     }
 
     @Bean
@@ -103,7 +100,9 @@ public class WebSecurityConfig {
                                     .anyRequest().authenticated();
                         }
                 )
-                .exceptionHandling(it -> it.accessDeniedHandler(new CookieAccessDeniedHandler()).authenticationEntryPoint(new CookieAuthenticationEntryPoint()))
+                .exceptionHandling(it -> it.authenticationEntryPoint(new CookieAuthenticationEntryPoint())
+                        .authenticationEntryPoint(new CookieAuthenticationEntryPoint())
+                )
                 .addFilterBefore(cookieAuthenticationProcessingFilter(PERMIT_ALL_PATHS, memberClient, aesCipher, authenticationManager), AbstractPreAuthenticatedProcessingFilter.class)
                 .addFilterBefore(signInProcessingFilter(objectMapper, aesCipher, authenticationManager), UsernamePasswordAuthenticationFilter.class)
                 .authenticationManager(authenticationManager)

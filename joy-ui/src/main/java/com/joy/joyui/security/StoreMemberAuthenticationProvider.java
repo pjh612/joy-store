@@ -5,7 +5,6 @@ import com.joy.joyui.auth.client.MemberAuthClient;
 import com.joy.joyui.auth.dto.MemberAuthRequest;
 import com.joy.joyui.auth.dto.MemberAuthResponse;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -25,15 +24,11 @@ public class StoreMemberAuthenticationProvider implements AuthenticationProvider
 
         MemberAuthRequest authRequest = new MemberAuthRequest(username, password);
 
-        try {
-            ApiResponse<MemberAuthResponse> apiResponse = memberAuthClient.authenticate(authRequest);
-            MemberAuthResponse authResponse = apiResponse.getData();
-            StoreMemberDetails principal = new StoreMemberDetails(authResponse.memberId(), username, password, authResponse.name());
+        ApiResponse<MemberAuthResponse> apiResponse = memberAuthClient.authenticate(authRequest);
+        MemberAuthResponse authResponse = apiResponse.getData();
+        StoreMemberDetails principal = new StoreMemberDetails(authResponse.memberId(), username, password, authResponse.name());
 
-            return new UsernamePasswordAuthenticationToken(principal, null, null);
-        } catch (Exception e) {
-            throw new BadCredentialsException("아이디 비밀번호 확인 필요");
-        }
+        return new UsernamePasswordAuthenticationToken(principal, null, null);
     }
 
     @Override

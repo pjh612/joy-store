@@ -2,7 +2,6 @@ package com.joy.joyui.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joy.joycommon.api.response.ApiExceptionResponse;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
@@ -22,11 +21,11 @@ public class StoreMemberSignInFailureHandler implements AuthenticationFailureHan
     }
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(UTF_8.name());
         response.setStatus(SC_BAD_REQUEST);
-        ApiExceptionResponse responseDto = new ApiExceptionResponse("아이디 비밀번호를 확인하세요.");
+        ApiExceptionResponse responseDto = new ApiExceptionResponse(exception.getMessage());
         objectMapper.writeValue(response.getWriter(), responseDto);
     }
 }
