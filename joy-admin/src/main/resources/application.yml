@@ -11,4 +11,4 @@ client:
   joy-order:
     url: http://joy-order:8084
   joy-item:
-    url: http://joy-order:8085
+    url: http://joy-item:8085
