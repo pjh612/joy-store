@@ -11,11 +11,11 @@ import java.util.List;
 
 @Component
 public class OrderEntityConverter {
-    public Order toOrderDomain(OrderEntity orderEntity, List<OrderItemEntity> orderItemEntityList) {
+    public Order toOrderDomain(OrderEntity orderEntity) {
         return new Order(orderEntity.getId(),
                 orderEntity.getBuyerId(),
                 orderEntity.getStatus(),
-                orderItemEntityList.stream()
+                orderEntity.getOrderItemList().stream()
                         .map(it -> new OrderItem(it.getId(), it.getItemId(), it.getItemName(), it.getSellerId(), it.getCouponId(), it.getUnitPrice(), it.getQuantity(), it.getDiscountAmount(), it.getCreatedAt(), it.getUpdatedAt(), it.getCreator(), it.getUpdater()))
                         .toList(),
                 orderEntity.getCreatedAt(),

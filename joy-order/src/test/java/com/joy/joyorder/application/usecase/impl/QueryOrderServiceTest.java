@@ -2,8 +2,8 @@ package com.joy.joyorder.application.usecase.impl;
 
 import com.joy.joyorder.application.client.ItemClient;
 import com.joy.joyorder.application.client.dto.ItemResponse;
-import com.joy.joyorder.application.usecase.criteria.QueryOrderBySellerIdCriteria;
 import com.joy.joyorder.application.usecase.dto.FindOrderResponse;
+import com.joy.joyorder.application.usecase.dto.QueryOrderBySellerIdRequest;
 import com.joy.joyorder.domain.models.Item;
 import com.joy.joyorder.domain.models.Order;
 import com.joy.joyorder.domain.repository.OrderRepository;
@@ -45,8 +45,8 @@ class QueryOrderServiceTest {
         order2.addOrderItem(item.getId(), item.getItemName(), item.getSellerId(), null, item.getPrice(), 1, null);
 
 
-        QueryOrderBySellerIdCriteria queryOrderBySellerIdCriteria = new QueryOrderBySellerIdCriteria(item.getSellerId(), null, "id", "DESC", 5);
-        given(orderRepository.findBySellerId(queryOrderBySellerIdCriteria)).willReturn(List.of(order2, order1));
+        QueryOrderBySellerIdRequest queryOrderBySellerIdRequest = new QueryOrderBySellerIdRequest(item.getSellerId(), null, null, null, 5);
+        given(orderRepository.findBySellerId(queryOrderBySellerIdRequest.toCriteria())).willReturn(List.of(order2, order1));
         given(itemClient.findAllByIdIn(any())).willReturn(List.of(itemResponse));
 
         Map<UUID, ItemResponse> itemResponseMap = Stream.of(itemResponse)
@@ -54,7 +54,7 @@ class QueryOrderServiceTest {
         List<FindOrderResponse> expect = List.of(FindOrderResponse.of(order2, itemResponseMap), FindOrderResponse.of(order1, itemResponseMap));
 
         //when
-        List<FindOrderResponse> actual = queryOrderService.queryBySellerId(queryOrderBySellerIdCriteria);
+        List<FindOrderResponse> actual = queryOrderService.queryBySellerId(queryOrderBySellerIdRequest);
 
         assertThat(actual).isEqualTo(expect);
     }

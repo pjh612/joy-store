@@ -1,19 +1,16 @@
-package com.joy.joyorder.application.usecase.criteria;
+package com.joy.joyorder.domain.repository.criteria;
 
 import com.joy.joyorder.domain.models.OrderStatus;
 
 import java.util.Collection;
 import java.util.UUID;
 
-public record QueryOrderCriteria(
-        UUID buyerId,
+public record QueryOrderBySellerIdCriteria(
         UUID sellerId,
         Collection<OrderStatus> excludeStatus,
-        String cursorType,
         UUID lastId,
         String sort,
         String direction,
         long size
 ) {
-
 }

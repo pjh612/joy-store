@@ -1,19 +1,18 @@
 package com.joy.joyorder.adapters.out.persistence.jpa;
 
-import com.joy.joyorder.adapters.out.persistence.jpa.OrderJpaRepository;
-import com.joy.joyorder.adapters.out.persistence.jpa.OrderQuerydslRepository;
 import com.joy.joyorder.adapters.out.persistence.jpa.entity.OrderEntity;
 import com.joy.joyorder.adapters.out.persistence.jpa.entity.OrderItemEntity;
-import com.joy.joyorder.application.usecase.criteria.QueryOrderBySellerIdCriteria;
-import com.joy.joyorder.application.usecase.criteria.QueryOrderCriteria;
 import com.joy.joyorder.domain.models.Order;
-import com.joy.joyorder.domain.models.OrderStatus;
 import com.joy.joyorder.domain.repository.OrderRepository;
+import com.joy.joyorder.domain.repository.criteria.QueryOrderBySellerIdCriteria;
+import com.joy.joyorder.domain.repository.criteria.QueryOrderCriteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 public class OrderRepositoryAdapter implements OrderRepository {
@@ -31,9 +30,14 @@ public class OrderRepositoryAdapter implements OrderRepository {
 
     public List<Order> findByCriteria(QueryOrderCriteria criteria) {
         List<OrderEntity> orderEntities = orderQuerydslRepository.findByCriteria(criteria);
+        Map<UUID, List<OrderItemEntity>> orderItemMap = loadOrderItemsByOrder(orderEntities);
+
+        for (OrderEntity orderEntity : orderEntities) {
+            orderEntity.setOrderItemList(orderItemMap.get(orderEntity.getId()));
+        }
 
         return orderEntities.stream()
-                .map(it -> orderEntityConverter.toOrderDomain(it, orderItemJpaRepository.findAllByOrderId(it.getId())))
+                .map(orderEntityConverter::toOrderDomain)
                 .toList();
     }
 
@@ -42,40 +46,42 @@ public class OrderRepositoryAdapter implements OrderRepository {
         OrderEntity orderEntity = orderEntityConverter.toOrderEntity(order);
         OrderEntity savedOrder = orderJpaRepository.save(orderEntity);
 
-        return orderEntityConverter.toOrderDomain(savedOrder, savedOrder.getOrderItemList());
-    }
-
-    @Override
-    public List<Order> findAllByItemIdsIn(List<UUID> itemIds) {
-        List<OrderEntity> orderEntities = orderItemJpaRepository.findAllOrderItemByItemIdIn(itemIds)
-                .stream()
-                .map(OrderItemEntity::getOrder)
-                .toList();
-
-        return orderEntities.stream()
-                .map(it -> orderEntityConverter.toOrderDomain(it, it.getOrderItemList()))
-                .toList();
-    }
-
-    @Override
-    public List<Order> findAllByItemId(UUID itemId) {
-        return orderItemJpaRepository.findAllByItemSeq(itemId)
-                .stream()
-                .map(it -> orderEntityConverter.toOrderDomain(it.getOrder(), it.getOrder().getOrderItemList()))
-                .toList();
+        return orderEntityConverter.toOrderDomain(savedOrder);
     }
 
     @Override
     public Optional<Order> findById(UUID orderId) {
         return orderJpaRepository.findById(orderId)
-                .map(it -> orderEntityConverter.toOrderDomain(it, orderItemJpaRepository.findAllByOrderId(it.getId())));
+                .map(orderEntity -> {
+                    orderEntity.setOrderItemList(orderItemJpaRepository.findAllByOrderId(orderId));
+                    return orderEntityConverter.toOrderDomain(orderEntity);
+                });
     }
 
     @Override
     public List<Order> findBySellerId(QueryOrderBySellerIdCriteria criteria) {
-        List<OrderEntity> orderEntities = orderQuerydslRepository.find(new QueryOrderCriteria(null, criteria.sellerId(), List.of(OrderStatus.PAYMENT_WAITING), null, criteria.lastId(), criteria.sort(), criteria.direction(), criteria.size()));
+        List<OrderEntity> orderEntities = orderQuerydslRepository.findBySellerId(criteria);
+        Map<UUID, List<OrderItemEntity>> orderItemMap = loadOrderItemsByOrder(orderEntities);
+
+        for (OrderEntity orderEntity : orderEntities) {
+            orderEntity.setOrderItemList(orderItemMap.get(orderEntity.getId()));
+        }
+
         return orderEntities.stream()
-                .map(it -> orderEntityConverter.toOrderDomain(it, orderItemJpaRepository.findAllByOrderId(it.getId())))
+                .map(orderEntityConverter::toOrderDomain)
                 .toList();
     }
+
+    private Map<UUID, List<OrderItemEntity>> loadOrderItemsByOrder(List<OrderEntity> orderEntities) {
+        return loadOrderItemsByOrderIds(orderEntities.stream()
+                .map(OrderEntity::getId)
+                .toList());
+    }
+
+    private Map<UUID, List<OrderItemEntity>> loadOrderItemsByOrderIds(List<UUID> orderIds) {
+        return orderItemJpaRepository.findAllByOrderIdIn(orderIds)
+                .stream()
+                .collect(Collectors.groupingBy(item -> item.getOrder().getId()));
+    }
+
 }

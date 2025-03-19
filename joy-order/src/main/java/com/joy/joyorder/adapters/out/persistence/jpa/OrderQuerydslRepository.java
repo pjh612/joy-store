@@ -3,7 +3,8 @@ package com.joy.joyorder.adapters.out.persistence.jpa;
 import com.joy.joyorder.adapters.out.persistence.jpa.entity.OrderEntity;
 import com.joy.joyorder.adapters.out.persistence.jpa.entity.QOrderEntity;
 import com.joy.joyorder.adapters.out.persistence.jpa.entity.QOrderItemEntity;
-import com.joy.joyorder.application.usecase.criteria.QueryOrderCriteria;
+import com.joy.joyorder.domain.repository.criteria.QueryOrderBySellerIdCriteria;
+import com.joy.joyorder.domain.repository.criteria.QueryOrderCriteria;
 import com.joy.joyorder.application.usecase.dto.OrderSummaryResponse;
 import com.joy.joyorder.domain.models.OrderStatus;
 import com.querydsl.core.types.NullExpression;
@@ -36,10 +37,9 @@ public class OrderQuerydslRepository {
                 .fetch();
     }
 
-    public List<OrderEntity> find(QueryOrderCriteria criteria) {
+    public List<OrderEntity> findBySellerId(QueryOrderBySellerIdCriteria criteria) {
         return jpaQueryFactory.selectFrom(QOrderEntity.orderEntity)
-                .leftJoin(QOrderEntity.orderEntity.orderItemList, QOrderItemEntity.orderItemEntity).fetchJoin()
-                .fetchJoin()
+                .join(QOrderEntity.orderEntity.orderItemList, QOrderItemEntity.orderItemEntity)
                 .where(ltLastId(criteria.lastId()), orderStatusNotIn(criteria.excludeStatus()), QOrderItemEntity.orderItemEntity.sellerId.eq(criteria.sellerId()))
                 .orderBy(orderBy(criteria.sort(), criteria.direction()))
                 .limit(criteria.size())

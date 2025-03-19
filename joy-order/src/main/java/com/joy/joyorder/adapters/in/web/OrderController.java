@@ -1,10 +1,9 @@
 package com.joy.joyorder.adapters.in.web;
 
+import com.joy.joycommon.api.response.ApiResponse;
 import com.joy.joyorder.application.usecase.PlaceOrderUseCase;
 import com.joy.joyorder.application.usecase.QueryOrderUseCase;
 import com.joy.joyorder.application.usecase.SubscribePlaceOrderAlarmUseCase;
-import com.joy.joyorder.application.usecase.criteria.QueryOrderCriteria;
-import com.joy.joycommon.api.response.ApiResponse;
 import com.joy.joyorder.application.usecase.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +23,8 @@ public class OrderController {
     private final SubscribePlaceOrderAlarmUseCase subscribePlaceOrderAlarmUseCase;
 
     @GetMapping
-    public ApiResponse<List<FindOrderResponse>> getByCriteria(QueryOrderCriteria criteria) {
-        return ApiResponse.of(queryOrderUsecase.queryByCriteria(criteria));
+    public ApiResponse<List<FindOrderResponse>> getByCriteria(QueryOrderRequest request) {
+        return ApiResponse.of(queryOrderUsecase.queryByCriteria(request));
     }
 
     @PostMapping

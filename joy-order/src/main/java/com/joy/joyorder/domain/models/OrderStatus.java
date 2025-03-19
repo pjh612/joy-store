@@ -2,6 +2,9 @@ package com.joy.joyorder.domain.models;
 
 import com.joy.joycommon.type.TypeModel;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum OrderStatus implements TypeModel {
     PAYMENT_WAITING("결제 대기중"),
     ORDER_COMPLETED("주문 완료"),
@@ -18,5 +21,9 @@ public enum OrderStatus implements TypeModel {
     @Override
     public String getDescription() {
         return this.description;
+    }
+
+    public static List<OrderStatus> getVisibleStatusesForUser() {
+        return Arrays.stream(OrderStatus.values()).filter(it -> it != PAYMENT_WAITING).toList();
     }
 }

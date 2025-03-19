@@ -3,9 +3,9 @@ package com.joy.joyorder.application.usecase.impl;
 import com.joy.joyorder.application.client.ItemClient;
 import com.joy.joyorder.application.client.dto.ItemResponse;
 import com.joy.joyorder.application.usecase.QueryOrderUseCase;
-import com.joy.joyorder.application.usecase.criteria.QueryOrderBySellerIdCriteria;
-import com.joy.joyorder.application.usecase.criteria.QueryOrderCriteria;
 import com.joy.joyorder.application.usecase.dto.FindOrderResponse;
+import com.joy.joyorder.application.usecase.dto.QueryOrderBySellerIdRequest;
+import com.joy.joyorder.application.usecase.dto.QueryOrderRequest;
 import com.joy.joyorder.domain.models.Order;
 import com.joy.joyorder.domain.models.OrderItem;
 import com.joy.joyorder.domain.repository.OrderRepository;
@@ -29,13 +29,12 @@ public class QueryOrderService implements QueryOrderUseCase {
     }
 
     @Override
-    public List<FindOrderResponse> queryByCriteria(QueryOrderCriteria criteria) {
-        List<Order> orders = orderRepository.findByCriteria(criteria);
+    public List<FindOrderResponse> queryByCriteria(QueryOrderRequest request) {
+        List<Order> orders = orderRepository.findByCriteria(request.toCriteria());
         List<UUID> itemIds = orders.stream()
                 .flatMap(it -> it.getOrderItems().stream())
                 .map(OrderItem::getItemId)
                 .toList();
-
         Map<UUID, ItemResponse> itemResponseMap = itemClient.findAllByIdIn(itemIds)
                 .stream()
                 .collect(Collectors.toMap(ItemResponse::id, Function.identity()));
@@ -46,8 +45,8 @@ public class QueryOrderService implements QueryOrderUseCase {
     }
 
     @Override
-    public List<FindOrderResponse> queryBySellerId(QueryOrderBySellerIdCriteria criteria) {
-        List<Order> orders = orderRepository.findBySellerId(criteria);
+    public List<FindOrderResponse> queryBySellerId(QueryOrderBySellerIdRequest request) {
+        List<Order> orders = orderRepository.findBySellerId(request.toCriteria());
         List<UUID> itemIds = orders.stream()
                 .flatMap(it -> it.getOrderItems().stream())
                 .map(OrderItem::getItemId)

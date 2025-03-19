@@ -43,4 +43,8 @@ public class OrderEntity {
             orderItemEntity.setOrder(this);
         }
     }
+
+    public void setOrderItemList(List<OrderItemEntity> orderItemList) {
+        this.orderItemList = orderItemList;
+    }
 }
