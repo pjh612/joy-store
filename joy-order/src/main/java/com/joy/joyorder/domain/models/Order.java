@@ -51,8 +51,7 @@ public class Order {
     }
 
     public void addOrderItem(UUID itemId, String itemName, UUID sellerId, UUID couponId, BigDecimal unitPrice, Integer quantity, BigDecimal disCountPrice) {
-        BigDecimal originalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity));
-        OrderItem orderItem = OrderItem.createNew(itemId, itemName, sellerId, this.buyerId, couponId, originalPrice, quantity);
+        OrderItem orderItem = OrderItem.createNew(itemId, itemName, sellerId, this.buyerId, couponId, unitPrice, quantity);
         orderItem.applyDiscount(disCountPrice);
         this.getOrderItems().add(orderItem);
     }
